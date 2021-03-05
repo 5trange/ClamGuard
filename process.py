@@ -25,6 +25,7 @@
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 # Imports
+import os
 import subprocess
 from subprocess import Popen, PIPE
 from shlex import split
@@ -51,6 +52,3 @@ class RunProcess:
             self.process.kill()
         except:
             print('Process cannot be stopped!')
-
-
-

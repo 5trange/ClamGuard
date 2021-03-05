@@ -2,6 +2,7 @@ import sys
 import platform
 import sys
 import time
+import os
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
@@ -58,6 +59,7 @@ class MainWindow(QMainWindow):
 
         #SCANBUTTONS
         self.ui.quickscanButton.clicked.connect(self.startThread)
+        self.ui.cancelscanButton.clicked.connect(self.stopThread)
 
         ## Window Control Buttons
         self.ui.minButton.clicked.connect(lambda: self.showMinimized())
@@ -86,15 +88,17 @@ class MainWindow(QMainWindow):
         self.thread = WorkerThread()
         self.thread.out_string.connect(self.setValue)
         self.thread.start()
+        self.ui.scanStatus.clear()
 
     def setValue(self, val):
         # Setting value for plaintext
         self.ui.scanStatus.appendPlainText(val)
 
     def stopThread(self):
-        self.thread.terminate()
+        self.thread.stop()
         self.ui.scanStatus.clear()
         self.ui.scanStatus.setPlainText("Scan stopped!")
+        os.system("taskkill /f /im clamscan.exe")
 
 
 
