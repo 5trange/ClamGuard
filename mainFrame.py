@@ -5,7 +5,7 @@
 # Name:        mainFrame.py
 # Product:     ClamGuard
 #
-# Author:      Adith, Bilal, Vinayak
+# Authors:      Adith, Bilal, Vinayak
 #
 # Created:     2021/Feb/09
 # Copyright:

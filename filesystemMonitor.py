@@ -5,7 +5,7 @@
 # Name:        filesystemMonitor.py
 # Product:     ClamGuard
 #
-# Author:      Adith, Bilal, Vinayak
+# Authors:      Adith, Bilal, Vinayak
 #
 # Created:     2021/Feb/09
 # Copyright:
@@ -25,7 +25,7 @@
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 # File System Monitor for realtime protection using WatchDog
 # Uses Multiprocessing module to split the core count of the CPU into half to watch the folders.
-# Maybe use string splicing to correct the string? Then we can use watchdog instead. 
+# Maybe use string splicing to correct the string? Then we can use watchdog instead.
 
 import watchdog.events
 import os

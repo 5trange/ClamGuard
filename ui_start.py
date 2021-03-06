@@ -1,3 +1,31 @@
+# -----------------------------------------------------------------------------
+# ui_start.py [Starts UI]
+
+# -----------------------------------------------------------------------------
+# Name:        ui_start.py
+# Product:     ClamGuard
+#
+# Authors:      Adith, Bilal, Vinayak
+#
+# Created:     2021/Mar/05
+# Copyright:
+# Licence:
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+##IMPORTS
+
 import sys
 import platform
 import sys
@@ -24,7 +52,7 @@ class WorkerThread(QThread):
         for i in buffer:
             self.out_string.emit(i)
 
-    def stop(self):
+    def stop_thread(self):
         self.runobj.kill_command()
         self.terminate()
 
@@ -95,10 +123,13 @@ class MainWindow(QMainWindow):
         self.ui.scanStatus.appendPlainText(val)
 
     def stopThread(self):
-        self.thread.stop()
+        self.thread.stop_thread()
         self.ui.scanStatus.clear()
         self.ui.scanStatus.setPlainText("Scan stopped!")
-        os.system("taskkill /f /im clamscan.exe")
+        try:
+            os.system("taskkill /f /im clamscan.exe")
+        except:
+            print('Process is not alive!')
 
 
 
