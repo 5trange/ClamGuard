@@ -130,10 +130,10 @@ class MainWindow(QMainWindow):
         self.ui.scanStatus.appendPlainText(val)
 
     def stopThread(self):
-        self.thread.stop_thread()
-        self.ui.scanStatus.clear()
-        self.ui.scanStatus.setPlainText("Scan stopped!")
         try:
+            self.thread.stop_thread()
+            self.ui.scanStatus.clear()
+            self.ui.scanStatus.setPlainText("Scan stopped!")
             os.system("taskkill /f /im clamscan.exe")
         except:
             print('Process is not alive!')
