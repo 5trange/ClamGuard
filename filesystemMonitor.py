@@ -14,7 +14,7 @@
 #
 #
 #
-# Created:     2021/Feb/09
+# Created:     2021/Mar/05
 # Copyright:
 # Licence:
 #   This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,7 @@
 
 import watchdog.events
 import os
+import subprocess
 from subprocess import Popen, PIPE
 import watchdog.observers
 from multiprocessing import Process
@@ -58,7 +59,7 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
         buffer = event.src_path
         buffer = buffer.replace(":", ":\\")
         print(f"File was created at {buffer}")
-        process = Popen('clamdscan.exe', stdout=PIPE, shell=True, encoding='utf8')
+        process = Popen(['clamdscan.exe', buffer], stdout=PIPE, shell=True, encoding='utf8')
         while True:
             output = process.stdout.readline()
             #yield output
