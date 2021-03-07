@@ -55,7 +55,7 @@ class WorkerThread(QThread):
     runobj = RunProcess()
 
     def run(self):
-        buffer = self.runobj.run_command('clamscan.exe')
+        buffer = self.runobj.run_command('clamdscan.exe')
         for i in buffer:
             self.out_string.emit(i)
 
