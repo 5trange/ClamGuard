@@ -46,7 +46,12 @@ processes = []
 cpu_cont = int(os.cpu_count() / 2)
 sysDrive = os.environ['SYSTEMDRIVE']
 ignoreRec: str = sysDrive + r'$Recycle.Bin'
-print("Starting Service..")
+print("   ________                ______                     __")
+print("  / ____/ /___ _____ ___  / ____/_  ______ __________/ /")
+print(" / /   / / __ `/ __ `__ \/ / __/ / / / __ `/ ___/ __  /")
+print("/ /___/ / /_/ / / / / / / /_/ / /_/ / /_/ / /  / /_/ /")
+print("\____/_/\__,_/_/ /_/ /_/\____/\__,_/\__,_/_/   \__,_/")
+print("\n\nStarting Service..")
 watchableFiles = ['*.txt', '*.cmd', '*.exe', '*.msi', '*.dll', '*.zip', '*.7z', '*.bat', '*.rar', '*.sys', '*.bin']
 
 
