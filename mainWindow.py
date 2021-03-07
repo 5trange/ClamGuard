@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowKFKrUX.ui'
+## Form generated from reading UI file 'mainWindowIIfgDM.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -170,7 +170,7 @@ class Ui_mainWindow(object):
         self.scanFrame.setFrameShadow(QFrame.Raised)
         self.scanlabel = QLabel(self.scanFrame)
         self.scanlabel.setObjectName(u"scanlabel")
-        self.scanlabel.setGeometry(QRect(50, 70, 61, 21))
+        self.scanlabel.setGeometry(QRect(50, 100, 61, 21))
         font3 = QFont()
         font3.setFamily(u"SF Pro Text")
         font3.setPointSize(14)
@@ -187,6 +187,17 @@ class Ui_mainWindow(object):
 "\n"
 "	")
         self.scanlabel.setAlignment(Qt.AlignCenter)
+        self.scanImg = QLabel(self.scanFrame)
+        self.scanImg.setObjectName(u"scanImg")
+        self.scanImg.setGeometry(QRect(30, 10, 101, 101))
+        self.scanImg.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color: rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}\n"
+"")
+        self.scanImg.setPixmap(QPixmap(u"img/search_green.png"))
+        self.scanImg.setScaledContents(True)
 
         self.horizontalLayout_4.addWidget(self.scanFrame)
 
@@ -222,6 +233,9 @@ class Ui_mainWindow(object):
 "	border: 5px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
+        icon = QIcon()
+        icon.addFile(u"img/home_green.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.homeButton.setIcon(icon)
         self.homeButton.setIconSize(QSize(50, 50))
 
         self.verticalLayout_5.addWidget(self.frameHome)
@@ -342,19 +356,19 @@ class Ui_mainWindow(object):
         self.statusBar.setStyleSheet(u"background-color:none;")
         self.statusBar.setFrameShape(QFrame.NoFrame)
         self.statusBar.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.statusBar)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.databaseVer = QLabel(self.statusBar)
-        self.databaseVer.setObjectName(u"databaseVer")
+        self.horizontalLayout_6 = QHBoxLayout(self.statusBar)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.engineVer = QLabel(self.statusBar)
+        self.engineVer.setObjectName(u"engineVer")
         font6 = QFont()
         font6.setFamily(u"SF Pro Display")
         font6.setPointSize(8)
         font6.setBold(True)
         font6.setWeight(75)
-        self.databaseVer.setFont(font6)
-        self.databaseVer.setStyleSheet(u"color: rgb(0, 255, 38);")
+        self.engineVer.setFont(font6)
+        self.engineVer.setStyleSheet(u"color: rgb(0, 255, 38);")
 
-        self.verticalLayout_2.addWidget(self.databaseVer)
+        self.horizontalLayout_6.addWidget(self.engineVer)
 
 
         self.verticalLayout.addWidget(self.statusBar)
@@ -378,11 +392,12 @@ class Ui_mainWindow(object):
         self.minButton.setText("")
         self.closeButton.setText("")
         self.scanlabel.setText(QCoreApplication.translate("mainWindow", u"SCAN", None))
-        self.homeButton.setText(QCoreApplication.translate("mainWindow", u"Home", None))
+        self.scanImg.setText("")
+        self.homeButton.setText("")
         self.quickscanButton.setText(QCoreApplication.translate("mainWindow", u"Quick Scan", None))
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
         self.customscanButton.setText(QCoreApplication.translate("mainWindow", u"Custom Scan", None))
         self.cancelscanButton.setText(QCoreApplication.translate("mainWindow", u"Cancel Scan", None))
-        self.databaseVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
+        self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 
