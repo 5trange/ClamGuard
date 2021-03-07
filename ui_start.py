@@ -55,7 +55,7 @@ class WorkerThread(QThread):
     runobj = RunProcess()
 
     def run(self):
-        buffer = self.runobj.run_command('clamdscan.exe')
+        buffer = self.runobj.run_command('clamdscan.exe --infected')
         for i in buffer:
             self.out_string.emit(i)
 
@@ -90,7 +90,7 @@ class MainWindow(QMainWindow):
         ## To ScanPage
         self.ui.scanFrame.mousePressEvent = self.switch_scan
         ## To Homepage from Scanpage
-        self.ui.backButton.clicked.connect(self.switch_home)
+        self.ui.homeButton.clicked.connect(self.switch_home)
 
         #SCANBUTTONS
         self.ui.quickscanButton.clicked.connect(self.startThread)
@@ -120,10 +120,11 @@ class MainWindow(QMainWindow):
 
     def startThread(self):
         # Starting worker thread
+        self.ui.scanStatus.setPlainText("Scan started, please wait..")
         self.thread = WorkerThread()
         self.thread.out_string.connect(self.setValue)
         self.thread.start()
-        self.ui.scanStatus.clear()
+        ##self.ui.scanStatus.clear()
 
     def setValue(self, val):
         # Setting value for plaintext

@@ -259,7 +259,7 @@ QPushButton:hover
           <item>
            <widget class="QStackedWidget" name="stackedHome">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="pageHome">
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -334,7 +334,7 @@ QFrame:hover
                     <property name="font">
                      <font>
                       <family>SF Pro Text</family>
-                      <pointsize>15</pointsize>
+                      <pointsize>14</pointsize>
                       <weight>75</weight>
                       <italic>false</italic>
                       <bold>true</bold>
@@ -367,7 +367,62 @@ QFrame:hover
             <widget class="QWidget" name="pageScan">
              <layout class="QVBoxLayout" name="verticalLayout_5">
               <item>
-               <widget class="QFrame" name="frameScan">
+               <widget class="QFrame" name="frameHome">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QPushButton" name="homeButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>20</y>
+                   <width>182</width>
+                   <height>120</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>120</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SF Pro Display</family>
+                   <pointsize>14</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+	border: 2px solid rgb(0, 182, 24);
+	color: rgb(0,255,38);
+}
+QPushButton:hover
+{
+	border: 5px solid rgb(0, 255, 38);
+}
+	</string>
+                 </property>
+                 <property name="text">
+                  <string>Home</string>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>50</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frameScanButtons">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -376,81 +431,25 @@ QFrame:hover
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_5">
                  <item>
-                  <widget class="QPushButton" name="backButton">
-                   <property name="minimumSize">
-                    <size>
-                     <width>120</width>
-                     <height>120</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
-                     <height>120</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>SF Pro Display</family>
-                     <pointsize>11</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton
-{
-	border: 5px solid rgb(0, 182, 24);
-	border-radius: 60px;
-	color: rgb(0,255,38);
-}
-QPushButton:hover
-{
-	border: 5px solid rgb(0, 255, 38);
-}
-	</string>
-                   </property>
-                   <property name="text">
-                    <string>Home</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
                   <widget class="QPushButton" name="quickscanButton">
                    <property name="minimumSize">
                     <size>
-                     <width>120</width>
-                     <height>120</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
+                     <width>0</width>
                      <height>120</height>
                     </size>
                    </property>
                    <property name="font">
                     <font>
                      <family>SF Pro Display</family>
-                     <pointsize>11</pointsize>
+                     <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="autoFillBackground">
-                    <bool>false</bool>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 5px solid rgb(0, 182, 24);
-	border-radius: 60px;
+	border: 2px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
@@ -468,32 +467,22 @@ QPushButton:hover
                   <widget class="QPushButton" name="fullscanButton">
                    <property name="minimumSize">
                     <size>
-                     <width>120</width>
-                     <height>120</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
+                     <width>0</width>
                      <height>120</height>
                     </size>
                    </property>
                    <property name="font">
                     <font>
                      <family>SF Pro Display</family>
-                     <pointsize>11</pointsize>
+                     <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 5px solid rgb(0, 182, 24);
-	border-radius: 60px;
+	border: 2px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
@@ -511,32 +500,22 @@ QPushButton:hover
                   <widget class="QPushButton" name="customscanButton">
                    <property name="minimumSize">
                     <size>
-                     <width>120</width>
-                     <height>120</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
+                     <width>0</width>
                      <height>120</height>
                     </size>
                    </property>
                    <property name="font">
                     <font>
                      <family>SF Pro Display</family>
-                     <pointsize>11</pointsize>
+                     <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 5px solid rgb(0, 182, 24);
-	border-radius: 60px;
+	border: 2px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
@@ -554,32 +533,22 @@ QPushButton:hover
                   <widget class="QPushButton" name="cancelscanButton">
                    <property name="minimumSize">
                     <size>
-                     <width>120</width>
-                     <height>120</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
+                     <width>0</width>
                      <height>120</height>
                     </size>
                    </property>
                    <property name="font">
                     <font>
                      <family>SF Pro Display</family>
-                     <pointsize>11</pointsize>
+                     <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 5px solid rgb(0, 182, 24);
-	border-radius: 60px;
+	border: 2px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
@@ -598,28 +567,39 @@ QPushButton:hover
                </widget>
               </item>
               <item>
-               <widget class="QPlainTextEdit" name="scanStatus">
-                <property name="minimumSize">
-                 <size>
-                  <width>765</width>
-                  <height>300</height>
-                 </size>
-                </property>
+               <widget class="QFrame" name="frameScanStatus">
                 <property name="maximumSize">
                  <size>
-                  <width>765</width>
-                  <height>300</height>
+                  <width>16777215</width>
+                  <height>175</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">QPlainTextEdit
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <item>
+                  <widget class="QPlainTextEdit" name="scanStatus">
+                   <property name="font">
+                    <font>
+                     <family>Consolas</family>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPlainTextEdit
 {
 	 
 	background-color: rgb(33, 33, 33);
 	color: rgb(0,255,38);
 }
 	</string>
-                </property>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
@@ -661,7 +641,7 @@ QPushButton:hover
              <string notr="true">color: rgb(0, 255, 38);</string>
             </property>
             <property name="text">
-             <string>Database Version: </string>
+             <string>Engine Version: </string>
             </property>
            </widget>
           </item>

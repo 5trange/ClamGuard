@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowHAatTQ.ui'
+## Form generated from reading UI file 'mainWindowKFKrUX.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -173,7 +173,7 @@ class Ui_mainWindow(object):
         self.scanlabel.setGeometry(QRect(50, 70, 61, 21))
         font3 = QFont()
         font3.setFamily(u"SF Pro Text")
-        font3.setPointSize(15)
+        font3.setPointSize(14)
         font3.setBold(True)
         font3.setItalic(False)
         font3.setUnderline(False)
@@ -198,27 +198,23 @@ class Ui_mainWindow(object):
         self.pageScan.setObjectName(u"pageScan")
         self.verticalLayout_5 = QVBoxLayout(self.pageScan)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.frameScan = QFrame(self.pageScan)
-        self.frameScan.setObjectName(u"frameScan")
-        self.frameScan.setFrameShape(QFrame.StyledPanel)
-        self.frameScan.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_5 = QHBoxLayout(self.frameScan)
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.backButton = QPushButton(self.frameScan)
-        self.backButton.setObjectName(u"backButton")
-        self.backButton.setMinimumSize(QSize(120, 120))
-        self.backButton.setMaximumSize(QSize(120, 120))
+        self.frameHome = QFrame(self.pageScan)
+        self.frameHome.setObjectName(u"frameHome")
+        self.frameHome.setFrameShape(QFrame.StyledPanel)
+        self.frameHome.setFrameShadow(QFrame.Raised)
+        self.homeButton = QPushButton(self.frameHome)
+        self.homeButton.setObjectName(u"homeButton")
+        self.homeButton.setGeometry(QRect(9, 20, 182, 120))
+        self.homeButton.setMinimumSize(QSize(120, 120))
         font4 = QFont()
         font4.setFamily(u"SF Pro Display")
-        font4.setPointSize(11)
+        font4.setPointSize(14)
         font4.setBold(True)
         font4.setWeight(75)
-        self.backButton.setFont(font4)
-        self.backButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.backButton.setStyleSheet(u"QPushButton\n"
+        self.homeButton.setFont(font4)
+        self.homeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 5px solid rgb(0, 182, 24);\n"
-"	border-radius: 60px;\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
@@ -226,20 +222,23 @@ class Ui_mainWindow(object):
 "	border: 5px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
+        self.homeButton.setIconSize(QSize(50, 50))
 
-        self.horizontalLayout_5.addWidget(self.backButton)
+        self.verticalLayout_5.addWidget(self.frameHome)
 
-        self.quickscanButton = QPushButton(self.frameScan)
+        self.frameScanButtons = QFrame(self.pageScan)
+        self.frameScanButtons.setObjectName(u"frameScanButtons")
+        self.frameScanButtons.setFrameShape(QFrame.StyledPanel)
+        self.frameScanButtons.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_5 = QHBoxLayout(self.frameScanButtons)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.quickscanButton = QPushButton(self.frameScanButtons)
         self.quickscanButton.setObjectName(u"quickscanButton")
-        self.quickscanButton.setMinimumSize(QSize(120, 120))
-        self.quickscanButton.setMaximumSize(QSize(120, 120))
+        self.quickscanButton.setMinimumSize(QSize(0, 120))
         self.quickscanButton.setFont(font4)
-        self.quickscanButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.quickscanButton.setAutoFillBackground(False)
         self.quickscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 5px solid rgb(0, 182, 24);\n"
-"	border-radius: 60px;\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
@@ -250,16 +249,13 @@ class Ui_mainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.quickscanButton)
 
-        self.fullscanButton = QPushButton(self.frameScan)
+        self.fullscanButton = QPushButton(self.frameScanButtons)
         self.fullscanButton.setObjectName(u"fullscanButton")
-        self.fullscanButton.setMinimumSize(QSize(120, 120))
-        self.fullscanButton.setMaximumSize(QSize(120, 120))
+        self.fullscanButton.setMinimumSize(QSize(0, 120))
         self.fullscanButton.setFont(font4)
-        self.fullscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.fullscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 5px solid rgb(0, 182, 24);\n"
-"	border-radius: 60px;\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
@@ -270,16 +266,13 @@ class Ui_mainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.fullscanButton)
 
-        self.customscanButton = QPushButton(self.frameScan)
+        self.customscanButton = QPushButton(self.frameScanButtons)
         self.customscanButton.setObjectName(u"customscanButton")
-        self.customscanButton.setMinimumSize(QSize(120, 120))
-        self.customscanButton.setMaximumSize(QSize(120, 120))
+        self.customscanButton.setMinimumSize(QSize(0, 120))
         self.customscanButton.setFont(font4)
-        self.customscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.customscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 5px solid rgb(0, 182, 24);\n"
-"	border-radius: 60px;\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
@@ -290,16 +283,13 @@ class Ui_mainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.customscanButton)
 
-        self.cancelscanButton = QPushButton(self.frameScan)
+        self.cancelscanButton = QPushButton(self.frameScanButtons)
         self.cancelscanButton.setObjectName(u"cancelscanButton")
-        self.cancelscanButton.setMinimumSize(QSize(120, 120))
-        self.cancelscanButton.setMaximumSize(QSize(120, 120))
+        self.cancelscanButton.setMinimumSize(QSize(0, 120))
         self.cancelscanButton.setFont(font4)
-        self.cancelscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 5px solid rgb(0, 182, 24);\n"
-"	border-radius: 60px;\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
@@ -312,12 +302,20 @@ class Ui_mainWindow(object):
         self.horizontalLayout_5.addWidget(self.cancelscanButton)
 
 
-        self.verticalLayout_5.addWidget(self.frameScan)
+        self.verticalLayout_5.addWidget(self.frameScanButtons)
 
-        self.scanStatus = QPlainTextEdit(self.pageScan)
+        self.frameScanStatus = QFrame(self.pageScan)
+        self.frameScanStatus.setObjectName(u"frameScanStatus")
+        self.frameScanStatus.setMaximumSize(QSize(16777215, 175))
+        self.frameScanStatus.setFrameShape(QFrame.StyledPanel)
+        self.frameScanStatus.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_6 = QVBoxLayout(self.frameScanStatus)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.scanStatus = QPlainTextEdit(self.frameScanStatus)
         self.scanStatus.setObjectName(u"scanStatus")
-        self.scanStatus.setMinimumSize(QSize(765, 300))
-        self.scanStatus.setMaximumSize(QSize(765, 300))
+        font5 = QFont()
+        font5.setFamily(u"Consolas")
+        self.scanStatus.setFont(font5)
         self.scanStatus.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	 \n"
@@ -326,7 +324,10 @@ class Ui_mainWindow(object):
 "}\n"
 "	")
 
-        self.verticalLayout_5.addWidget(self.scanStatus)
+        self.verticalLayout_6.addWidget(self.scanStatus)
+
+
+        self.verticalLayout_5.addWidget(self.frameScanStatus)
 
         self.stackedHome.addWidget(self.pageScan)
 
@@ -345,12 +346,12 @@ class Ui_mainWindow(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.databaseVer = QLabel(self.statusBar)
         self.databaseVer.setObjectName(u"databaseVer")
-        font5 = QFont()
-        font5.setFamily(u"SF Pro Display")
-        font5.setPointSize(8)
-        font5.setBold(True)
-        font5.setWeight(75)
-        self.databaseVer.setFont(font5)
+        font6 = QFont()
+        font6.setFamily(u"SF Pro Display")
+        font6.setPointSize(8)
+        font6.setBold(True)
+        font6.setWeight(75)
+        self.databaseVer.setFont(font6)
         self.databaseVer.setStyleSheet(u"color: rgb(0, 255, 38);")
 
         self.verticalLayout_2.addWidget(self.databaseVer)
@@ -377,11 +378,11 @@ class Ui_mainWindow(object):
         self.minButton.setText("")
         self.closeButton.setText("")
         self.scanlabel.setText(QCoreApplication.translate("mainWindow", u"SCAN", None))
-        self.backButton.setText(QCoreApplication.translate("mainWindow", u"Home", None))
+        self.homeButton.setText(QCoreApplication.translate("mainWindow", u"Home", None))
         self.quickscanButton.setText(QCoreApplication.translate("mainWindow", u"Quick Scan", None))
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
         self.customscanButton.setText(QCoreApplication.translate("mainWindow", u"Custom Scan", None))
         self.cancelscanButton.setText(QCoreApplication.translate("mainWindow", u"Cancel Scan", None))
-        self.databaseVer.setText(QCoreApplication.translate("mainWindow", u"Database Version: ", None))
+        self.databaseVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 
