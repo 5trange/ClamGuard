@@ -753,6 +753,209 @@ QPushButton:hover
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="pageUpdate">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QFrame" name="frameGoHome">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>169</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QPushButton" name="updatehomeButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>20</y>
+                   <width>182</width>
+                   <height>120</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+	border: 2px solid rgb(0, 182, 24);
+	color: rgb(0,255,38);
+}
+QPushButton:hover
+{
+	border: 5px solid rgb(0, 255, 38);
+}
+	</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>img/home_green.png</normaloff>img/home_green.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>50</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frameUpdateButtons">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QPushButton" name="checkUpdate">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>9</y>
+                   <width>182</width>
+                   <height>120</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>182</width>
+                   <height>120</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>182</width>
+                   <height>120</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SF Pro Display</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+	border: 2px solid rgb(0, 182, 24);
+	color: rgb(0,255,38);
+}
+QPushButton:hover
+{
+	border: 5px solid rgb(0, 255, 38);
+}
+	</string>
+                 </property>
+                 <property name="text">
+                  <string>CHECK FOR UPDATES</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="cancelUpdate">
+                 <property name="geometry">
+                  <rect>
+                   <x>573</x>
+                   <y>9</y>
+                   <width>182</width>
+                   <height>120</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>182</width>
+                   <height>120</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>182</width>
+                   <height>120</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SF Pro Display</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+	border: 2px solid rgb(0, 182, 24);
+	color: rgb(0,255,38);
+}
+QPushButton:hover
+{
+	border: 5px solid rgb(255,0,4);
+	color: rgb(255,0,4);
+}
+	</string>
+                 </property>
+                 <property name="text">
+                  <string>CANCEL UPDATE</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frameUpdateStatus">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>250</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QPlainTextEdit" name="updateStatus">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>9</y>
+                   <width>746</width>
+                   <height>157</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>746</width>
+                   <height>157</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>746</width>
+                   <height>157</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPlainTextEdit
+{
+	 
+	background-color: rgb(33, 33, 33);
+	color: rgb(0,255,38);
+}
+	</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>

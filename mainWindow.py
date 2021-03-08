@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowmfkkrs.ui'
+## Form generated from reading UI file 'mainWindowiJyfbg.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -390,6 +390,94 @@ class Ui_mainWindow(object):
         self.verticalLayout_5.addWidget(self.frameScanStatus)
 
         self.stackedHome.addWidget(self.pageScan)
+        self.pageUpdate = QWidget()
+        self.pageUpdate.setObjectName(u"pageUpdate")
+        self.verticalLayout_2 = QVBoxLayout(self.pageUpdate)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.frameGoHome = QFrame(self.pageUpdate)
+        self.frameGoHome.setObjectName(u"frameGoHome")
+        self.frameGoHome.setMinimumSize(QSize(0, 169))
+        self.frameGoHome.setFrameShape(QFrame.StyledPanel)
+        self.frameGoHome.setFrameShadow(QFrame.Raised)
+        self.updatehomeButton = QPushButton(self.frameGoHome)
+        self.updatehomeButton.setObjectName(u"updatehomeButton")
+        self.updatehomeButton.setGeometry(QRect(9, 20, 182, 120))
+        self.updatehomeButton.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"	border: 5px solid rgb(0, 255, 38);\n"
+"}\n"
+"	")
+        self.updatehomeButton.setIcon(icon)
+        self.updatehomeButton.setIconSize(QSize(50, 50))
+
+        self.verticalLayout_2.addWidget(self.frameGoHome)
+
+        self.frameUpdateButtons = QFrame(self.pageUpdate)
+        self.frameUpdateButtons.setObjectName(u"frameUpdateButtons")
+        self.frameUpdateButtons.setFrameShape(QFrame.StyledPanel)
+        self.frameUpdateButtons.setFrameShadow(QFrame.Raised)
+        self.checkUpdate = QPushButton(self.frameUpdateButtons)
+        self.checkUpdate.setObjectName(u"checkUpdate")
+        self.checkUpdate.setGeometry(QRect(9, 9, 182, 120))
+        self.checkUpdate.setMinimumSize(QSize(182, 120))
+        self.checkUpdate.setMaximumSize(QSize(182, 120))
+        self.checkUpdate.setFont(font1)
+        self.checkUpdate.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"	border: 5px solid rgb(0, 255, 38);\n"
+"}\n"
+"	")
+        self.cancelUpdate = QPushButton(self.frameUpdateButtons)
+        self.cancelUpdate.setObjectName(u"cancelUpdate")
+        self.cancelUpdate.setGeometry(QRect(573, 9, 182, 120))
+        self.cancelUpdate.setMinimumSize(QSize(182, 120))
+        self.cancelUpdate.setMaximumSize(QSize(182, 120))
+        self.cancelUpdate.setFont(font1)
+        self.cancelUpdate.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"	border: 5px solid rgb(255,0,4);\n"
+"	color: rgb(255,0,4);\n"
+"}\n"
+"	")
+
+        self.verticalLayout_2.addWidget(self.frameUpdateButtons)
+
+        self.frameUpdateStatus = QFrame(self.pageUpdate)
+        self.frameUpdateStatus.setObjectName(u"frameUpdateStatus")
+        self.frameUpdateStatus.setMaximumSize(QSize(16777215, 250))
+        self.frameUpdateStatus.setFrameShape(QFrame.StyledPanel)
+        self.frameUpdateStatus.setFrameShadow(QFrame.Raised)
+        self.updateStatus = QPlainTextEdit(self.frameUpdateStatus)
+        self.updateStatus.setObjectName(u"updateStatus")
+        self.updateStatus.setGeometry(QRect(9, 9, 746, 157))
+        self.updateStatus.setMinimumSize(QSize(746, 157))
+        self.updateStatus.setMaximumSize(QSize(746, 157))
+        self.updateStatus.setStyleSheet(u"QPlainTextEdit\n"
+"{\n"
+"	 \n"
+"	background-color: rgb(33, 33, 33);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"	")
+
+        self.verticalLayout_2.addWidget(self.frameUpdateStatus)
+
+        self.stackedHome.addWidget(self.pageUpdate)
 
         self.verticalLayout_3.addWidget(self.stackedHome)
 
@@ -446,6 +534,9 @@ class Ui_mainWindow(object):
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
         self.customscanButton.setText(QCoreApplication.translate("mainWindow", u"Custom Scan", None))
         self.cancelscanButton.setText(QCoreApplication.translate("mainWindow", u"Cancel Scan", None))
+        self.updatehomeButton.setText("")
+        self.checkUpdate.setText(QCoreApplication.translate("mainWindow", u"CHECK FOR UPDATES", None))
+        self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"CANCEL UPDATE", None))
         self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 

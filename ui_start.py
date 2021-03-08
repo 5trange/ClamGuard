@@ -91,6 +91,10 @@ class MainWindow(QMainWindow):
         self.ui.scanFrame.mousePressEvent = self.switch_scan
         ## To Homepage from Scanpage
         self.ui.homeButton.clicked.connect(self.switch_home)
+        ## To UpdatePage from Homepage
+        self.ui.updateFrame.mousePressEvent = self.switch_update
+        ## To Homepage from updatepage
+        self.ui.updatehomeButton.clicked.connect(self.switch_home)
 
         #SCANBUTTONS
         self.ui.quickscanButton.clicked.connect(self.startThread)
@@ -113,6 +117,9 @@ class MainWindow(QMainWindow):
     def switch_scan(self, event):
         self.ui.stackedHome.setCurrentWidget(self.ui.pageScan)
 
+    def switch_update(self, event):
+        self.ui.stackedHome.setCurrentWidget(self.ui.pageUpdate)
+
     def switch_home(self):
         self.ui.stackedHome.setCurrentWidget(self.ui.pageHome)
 
@@ -120,13 +127,13 @@ class MainWindow(QMainWindow):
 
     def startThread(self):
         # Starting worker thread
-        self.ui.scanStatus.setPlainText("Scan started, please wait..")
         self.thread = WorkerThread()
-        self.thread.out_string.connect(self.setValue)
+        self.ui.scanStatus.setPlainText("Scan started, please wait..")
+        self.thread.out_string.connect(self.setscanValue)
         self.thread.start()
         ##self.ui.scanStatus.clear()
 
-    def setValue(self, val):
+    def setscanValue(self, val):
         # Setting value for plaintext
         self.ui.scanStatus.appendPlainText(val)
 
