@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowoDEruL.ui'
+## Form generated from reading UI file 'mainWindowwNcSAg.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -62,7 +62,7 @@ class Ui_mainWindow(object):
         self.title_label = QLabel(self.titleFrame)
         self.title_label.setObjectName(u"title_label")
         font1 = QFont()
-        font1.setFamily(u"SF Pro Display")
+        font1.setFamily(u"Ubuntu")
         font1.setPointSize(10)
         font1.setBold(True)
         font1.setWeight(75)
@@ -172,7 +172,7 @@ class Ui_mainWindow(object):
         self.scanlabel.setObjectName(u"scanlabel")
         self.scanlabel.setGeometry(QRect(50, 110, 61, 21))
         font3 = QFont()
-        font3.setFamily(u"SF Pro Text")
+        font3.setFamily(u"Ubuntu")
         font3.setPointSize(14)
         font3.setBold(True)
         font3.setItalic(False)
@@ -237,7 +237,7 @@ class Ui_mainWindow(object):
         self.updateLabel.setObjectName(u"updateLabel")
         self.updateLabel.setGeometry(QRect(45, 110, 71, 21))
         font4 = QFont()
-        font4.setFamily(u"SF Pro Display")
+        font4.setFamily(u"Ubuntu")
         font4.setPointSize(14)
         font4.setBold(True)
         font4.setWeight(75)
@@ -268,7 +268,12 @@ class Ui_mainWindow(object):
         self.homeButton.setObjectName(u"homeButton")
         self.homeButton.setGeometry(QRect(9, 20, 182, 120))
         self.homeButton.setMinimumSize(QSize(120, 120))
-        self.homeButton.setFont(font4)
+        font5 = QFont()
+        font5.setFamily(u"SF Pro Display")
+        font5.setPointSize(14)
+        font5.setBold(True)
+        font5.setWeight(75)
+        self.homeButton.setFont(font5)
         self.homeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
 "	border: 2px solid rgb(0, 182, 24);\n"
@@ -373,9 +378,9 @@ class Ui_mainWindow(object):
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.scanStatus = QPlainTextEdit(self.frameScanStatus)
         self.scanStatus.setObjectName(u"scanStatus")
-        font5 = QFont()
-        font5.setFamily(u"Consolas")
-        self.scanStatus.setFont(font5)
+        font6 = QFont()
+        font6.setFamily(u"Consolas")
+        self.scanStatus.setFont(font6)
         self.scanStatus.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	 \n"
@@ -396,7 +401,8 @@ class Ui_mainWindow(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.frameGoHome = QFrame(self.pageUpdate)
         self.frameGoHome.setObjectName(u"frameGoHome")
-        self.frameGoHome.setMinimumSize(QSize(0, 169))
+        self.frameGoHome.setMinimumSize(QSize(764, 159))
+        self.frameGoHome.setMaximumSize(QSize(764, 159))
         self.frameGoHome.setFrameShape(QFrame.StyledPanel)
         self.frameGoHome.setFrameShadow(QFrame.Raised)
         self.updatehomeButton = QPushButton(self.frameGoHome)
@@ -419,14 +425,16 @@ class Ui_mainWindow(object):
 
         self.frameUpdateButtons = QFrame(self.pageUpdate)
         self.frameUpdateButtons.setObjectName(u"frameUpdateButtons")
+        self.frameUpdateButtons.setMinimumSize(QSize(764, 158))
+        self.frameUpdateButtons.setMaximumSize(QSize(764, 158))
         self.frameUpdateButtons.setFrameShape(QFrame.StyledPanel)
         self.frameUpdateButtons.setFrameShadow(QFrame.Raised)
         self.checkUpdate = QPushButton(self.frameUpdateButtons)
         self.checkUpdate.setObjectName(u"checkUpdate")
-        self.checkUpdate.setGeometry(QRect(9, 9, 182, 120))
+        self.checkUpdate.setGeometry(QRect(9, 19, 182, 120))
         self.checkUpdate.setMinimumSize(QSize(182, 120))
         self.checkUpdate.setMaximumSize(QSize(182, 120))
-        self.checkUpdate.setFont(font1)
+        self.checkUpdate.setFont(font4)
         self.checkUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
 "	border: 2px solid rgb(0, 182, 24);\n"
@@ -439,10 +447,10 @@ class Ui_mainWindow(object):
 "	")
         self.cancelUpdate = QPushButton(self.frameUpdateButtons)
         self.cancelUpdate.setObjectName(u"cancelUpdate")
-        self.cancelUpdate.setGeometry(QRect(573, 9, 182, 120))
+        self.cancelUpdate.setGeometry(QRect(573, 19, 182, 120))
         self.cancelUpdate.setMinimumSize(QSize(182, 120))
         self.cancelUpdate.setMaximumSize(QSize(182, 120))
-        self.cancelUpdate.setFont(font1)
+        self.cancelUpdate.setFont(font4)
         self.cancelUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
 "	border: 2px solid rgb(0, 182, 24);\n"
@@ -459,7 +467,8 @@ class Ui_mainWindow(object):
 
         self.frameUpdateStatus = QFrame(self.pageUpdate)
         self.frameUpdateStatus.setObjectName(u"frameUpdateStatus")
-        self.frameUpdateStatus.setMaximumSize(QSize(16777215, 250))
+        self.frameUpdateStatus.setMinimumSize(QSize(764, 175))
+        self.frameUpdateStatus.setMaximumSize(QSize(764, 175))
         self.frameUpdateStatus.setFrameShape(QFrame.StyledPanel)
         self.frameUpdateStatus.setFrameShadow(QFrame.Raised)
         self.updateStatus = QPlainTextEdit(self.frameUpdateStatus)
@@ -467,6 +476,7 @@ class Ui_mainWindow(object):
         self.updateStatus.setGeometry(QRect(9, 9, 746, 157))
         self.updateStatus.setMinimumSize(QSize(746, 157))
         self.updateStatus.setMaximumSize(QSize(746, 157))
+        self.updateStatus.setFont(font6)
         self.updateStatus.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	 \n"
@@ -494,12 +504,12 @@ class Ui_mainWindow(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.engineVer = QLabel(self.statusBar)
         self.engineVer.setObjectName(u"engineVer")
-        font6 = QFont()
-        font6.setFamily(u"SF Pro Display")
-        font6.setPointSize(8)
-        font6.setBold(True)
-        font6.setWeight(75)
-        self.engineVer.setFont(font6)
+        font7 = QFont()
+        font7.setFamily(u"Ubuntu")
+        font7.setPointSize(7)
+        font7.setBold(True)
+        font7.setWeight(75)
+        self.engineVer.setFont(font7)
         self.engineVer.setStyleSheet(u"color: rgb(0, 255, 38);")
 
         self.horizontalLayout_6.addWidget(self.engineVer)

@@ -133,7 +133,7 @@ border-radius: 5px;</string>
               <widget class="QLabel" name="title_label">
                <property name="font">
                 <font>
-                 <family>SF Pro Display</family>
+                 <family>Ubuntu</family>
                  <pointsize>10</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
@@ -333,7 +333,7 @@ QFrame:hover
                     </property>
                     <property name="font">
                      <font>
-                      <family>SF Pro Text</family>
+                      <family>Ubuntu</family>
                       <pointsize>14</pointsize>
                       <weight>75</weight>
                       <italic>false</italic>
@@ -483,7 +483,7 @@ QFrame:hover
                     </property>
                     <property name="font">
                      <font>
-                      <family>SF Pro Display</family>
+                      <family>Ubuntu</family>
                       <pointsize>14</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
@@ -589,7 +589,7 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>SF Pro Display</family>
+                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
@@ -622,7 +622,7 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>SF Pro Display</family>
+                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
@@ -655,7 +655,7 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>SF Pro Display</family>
+                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
@@ -688,7 +688,7 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>SF Pro Display</family>
+                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
@@ -759,8 +759,14 @@ QPushButton:hover
                <widget class="QFrame" name="frameGoHome">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>169</height>
+                  <width>764</width>
+                  <height>159</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>764</width>
+                  <height>159</height>
                  </size>
                 </property>
                 <property name="frameShape">
@@ -808,6 +814,18 @@ QPushButton:hover
               </item>
               <item>
                <widget class="QFrame" name="frameUpdateButtons">
+                <property name="minimumSize">
+                 <size>
+                  <width>764</width>
+                  <height>158</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>764</width>
+                  <height>158</height>
+                 </size>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -818,7 +836,7 @@ QPushButton:hover
                  <property name="geometry">
                   <rect>
                    <x>9</x>
-                   <y>9</y>
+                   <y>19</y>
                    <width>182</width>
                    <height>120</height>
                   </rect>
@@ -837,8 +855,8 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>SF Pro Display</family>
-                   <pointsize>10</pointsize>
+                   <family>Ubuntu</family>
+                   <pointsize>14</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -863,7 +881,7 @@ QPushButton:hover
                  <property name="geometry">
                   <rect>
                    <x>573</x>
-                   <y>9</y>
+                   <y>19</y>
                    <width>182</width>
                    <height>120</height>
                   </rect>
@@ -882,8 +900,8 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>SF Pro Display</family>
-                   <pointsize>10</pointsize>
+                   <family>Ubuntu</family>
+                   <pointsize>14</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -909,10 +927,16 @@ QPushButton:hover
               </item>
               <item>
                <widget class="QFrame" name="frameUpdateStatus">
+                <property name="minimumSize">
+                 <size>
+                  <width>764</width>
+                  <height>175</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
-                  <height>250</height>
+                  <width>764</width>
+                  <height>175</height>
                  </size>
                 </property>
                 <property name="frameShape">
@@ -941,6 +965,11 @@ QPushButton:hover
                    <width>746</width>
                    <height>157</height>
                   </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Consolas</family>
+                  </font>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPlainTextEdit
@@ -983,8 +1012,8 @@ QPushButton:hover
            <widget class="QLabel" name="engineVer">
             <property name="font">
              <font>
-              <family>SF Pro Display</family>
-              <pointsize>8</pointsize>
+              <family>Ubuntu</family>
+              <pointsize>7</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
