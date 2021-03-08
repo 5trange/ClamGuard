@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowIIfgDM.ui'
+## Form generated from reading UI file 'mainWindowmfkkrs.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -170,7 +170,7 @@ class Ui_mainWindow(object):
         self.scanFrame.setFrameShadow(QFrame.Raised)
         self.scanlabel = QLabel(self.scanFrame)
         self.scanlabel.setObjectName(u"scanlabel")
-        self.scanlabel.setGeometry(QRect(50, 100, 61, 21))
+        self.scanlabel.setGeometry(QRect(50, 110, 61, 21))
         font3 = QFont()
         font3.setFamily(u"SF Pro Text")
         font3.setPointSize(14)
@@ -189,7 +189,9 @@ class Ui_mainWindow(object):
         self.scanlabel.setAlignment(Qt.AlignCenter)
         self.scanImg = QLabel(self.scanFrame)
         self.scanImg.setObjectName(u"scanImg")
-        self.scanImg.setGeometry(QRect(30, 10, 101, 101))
+        self.scanImg.setGeometry(QRect(30, 10, 100, 100))
+        self.scanImg.setMinimumSize(QSize(100, 100))
+        self.scanImg.setMaximumSize(QSize(100, 100))
         self.scanImg.setStyleSheet(u"QLabel\n"
 "{\n"
 "	color: rgb(0, 255, 38);\n"
@@ -200,6 +202,55 @@ class Ui_mainWindow(object):
         self.scanImg.setScaledContents(True)
 
         self.horizontalLayout_4.addWidget(self.scanFrame)
+
+        self.updateFrame = QFrame(self.frame_content_home)
+        self.updateFrame.setObjectName(u"updateFrame")
+        self.updateFrame.setMinimumSize(QSize(160, 160))
+        self.updateFrame.setMaximumSize(QSize(160, 160))
+        self.updateFrame.setCursor(QCursor(Qt.PointingHandCursor))
+        self.updateFrame.setStyleSheet(u"QFrame\n"
+"{\n"
+"	border: 5px solid rgb(0, 182, 24);\n"
+"	border-radius: 80px;\n"
+"}\n"
+"QFrame:hover\n"
+"{\n"
+"	border: 5px solid rgb(0, 255, 38);\n"
+"}\n"
+"	")
+        self.updateFrame.setFrameShape(QFrame.StyledPanel)
+        self.updateFrame.setFrameShadow(QFrame.Raised)
+        self.updateImg = QLabel(self.updateFrame)
+        self.updateImg.setObjectName(u"updateImg")
+        self.updateImg.setGeometry(QRect(30, 10, 100, 100))
+        self.updateImg.setMinimumSize(QSize(100, 100))
+        self.updateImg.setMaximumSize(QSize(100, 100))
+        self.updateImg.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color: rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}\n"
+"")
+        self.updateImg.setPixmap(QPixmap(u"img/update_green.png"))
+        self.updateImg.setScaledContents(True)
+        self.updateLabel = QLabel(self.updateFrame)
+        self.updateLabel.setObjectName(u"updateLabel")
+        self.updateLabel.setGeometry(QRect(45, 110, 71, 21))
+        font4 = QFont()
+        font4.setFamily(u"SF Pro Display")
+        font4.setPointSize(14)
+        font4.setBold(True)
+        font4.setWeight(75)
+        self.updateLabel.setFont(font4)
+        self.updateLabel.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color: rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}\n"
+"\n"
+"	")
+
+        self.horizontalLayout_4.addWidget(self.updateFrame)
 
 
         self.verticalLayout_4.addWidget(self.frame_content_home)
@@ -217,11 +268,6 @@ class Ui_mainWindow(object):
         self.homeButton.setObjectName(u"homeButton")
         self.homeButton.setGeometry(QRect(9, 20, 182, 120))
         self.homeButton.setMinimumSize(QSize(120, 120))
-        font4 = QFont()
-        font4.setFamily(u"SF Pro Display")
-        font4.setPointSize(14)
-        font4.setBold(True)
-        font4.setWeight(75)
         self.homeButton.setFont(font4)
         self.homeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -393,6 +439,8 @@ class Ui_mainWindow(object):
         self.closeButton.setText("")
         self.scanlabel.setText(QCoreApplication.translate("mainWindow", u"SCAN", None))
         self.scanImg.setText("")
+        self.updateImg.setText("")
+        self.updateLabel.setText(QCoreApplication.translate("mainWindow", u"UPDATE", None))
         self.homeButton.setText("")
         self.quickscanButton.setText(QCoreApplication.translate("mainWindow", u"Quick Scan", None))
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
