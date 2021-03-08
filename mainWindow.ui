@@ -856,7 +856,7 @@ QPushButton:hover
 	</string>
                  </property>
                  <property name="text">
-                  <string>CHECK FOR UPDATES</string>
+                  <string>Check for Updates</string>
                  </property>
                 </widget>
                 <widget class="QPushButton" name="cancelUpdate">
@@ -902,7 +902,7 @@ QPushButton:hover
 	</string>
                  </property>
                  <property name="text">
-                  <string>CANCEL UPDATE</string>
+                  <string>Cancel Update</string>
                  </property>
                 </widget>
                </widget>

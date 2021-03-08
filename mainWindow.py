@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowiJyfbg.ui'
+## Form generated from reading UI file 'mainWindowoDEruL.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -535,8 +535,8 @@ class Ui_mainWindow(object):
         self.customscanButton.setText(QCoreApplication.translate("mainWindow", u"Custom Scan", None))
         self.cancelscanButton.setText(QCoreApplication.translate("mainWindow", u"Cancel Scan", None))
         self.updatehomeButton.setText("")
-        self.checkUpdate.setText(QCoreApplication.translate("mainWindow", u"CHECK FOR UPDATES", None))
-        self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"CANCEL UPDATE", None))
+        self.checkUpdate.setText(QCoreApplication.translate("mainWindow", u"Check for Updates", None))
+        self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"Cancel Update", None))
         self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 
