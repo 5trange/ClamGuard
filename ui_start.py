@@ -31,41 +31,25 @@
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-##IMPORTS
-
+#IMPORTS
 import sys
 import platform
-import sys
 import time
 import os
+import threading
+import signal
 from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
+from PySide2.QtCore import *
+from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from PyQt5.QtCore import *
 from process import *
+from mainWindow import Ui_mainWindow #IMPORTING MAINWINDOW.PY
 
-#Importing UI File
-from mainWindow import Ui_mainWindow
-
-class WorkerThread(QThread):
-    # Create a worker thread
-    out_string = pyqtSignal(str)  # Using String type for emitter.
-    # finish_function = pyqtSignal(str)
-    runobj = RunProcess()
-
-    def run(self):
-        buffer = self.runobj.run_command('clamdscan.exe --infected')
-        for i in buffer:
-            self.out_string.emit(i)
-
-    def stop_thread(self):
-        self.runobj.kill_command()
-        self.terminate()
-
+#MAINWINDOW CLASS
 class MainWindow(QMainWindow):
     def __init__(self):
-        ## Setting Shadow and other UI definitions
+        #SETTING SHADOW AND OTHER WINDOW DEFINITIONS
         QMainWindow.__init__(self)
         self.ui=Ui_mainWindow()
         self.ui.setupUi(self)
@@ -75,36 +59,43 @@ class MainWindow(QMainWindow):
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 100))
         self.ui.dropshadowFrame.setGraphicsEffect(self.shadow)
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #SETTING FRAMELESS WINDOW
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground) #SETTING FRAMEBORDER TO TRANSLUCENT
 
-        ## scanStatus modifiers
+        #WINDOW CONTROL BUTTONS
+        self.ui.minButton.clicked.connect(lambda: self.showMinimized()) #MINIMIZE ON CLICK
+        self.ui.closeButton.clicked.connect(lambda: self.close()) #CLOSE ON CLICK
 
-        self.ui.scanStatus.setBackgroundVisible(True)
-        self.ui.scanStatus.setReadOnly(True)
-
-        ## Moving Window when dragged on Titlebar
+        #TITLEBAR DRAGGING
         self.ui.titleBar.mouseMoveEvent = self.moveWindow
 
-        ## Page Switching
-        ## To ScanPage
+        #SCANSTATUS AND UPDATESTATUS MODIFIERS
+        self.ui.scanStatus.setBackgroundVisible(True)
+        self.ui.scanStatus.setReadOnly(True)
+        self.ui.updateStatus.setBackgroundVisible(True)
+        self.ui.updateStatus.setReadOnly(True)
+
+        #ADDING PAGESWITCHING FUNCTIONS TO BUTTONS AND FRAMES
+        #TO SCANPAGE FROM HOMEPAGE
         self.ui.scanFrame.mousePressEvent = self.switch_scan
-        ## To Homepage from Scanpage
+        #TO HOMEPAGE FROM SCANPAGE
         self.ui.homeButton.clicked.connect(self.switch_home)
-        ## To UpdatePage from Homepage
+        #TO UPDATEPAGE FROM HOMEPAGE
         self.ui.updateFrame.mousePressEvent = self.switch_update
-        ## To Homepage from updatepage
+        #TO HOMEPAGE FROM UPDATEPAGE
         self.ui.updatehomeButton.clicked.connect(self.switch_home)
 
-        #SCANBUTTONS
-        self.ui.quickscanButton.clicked.connect(self.startThread)
-        self.ui.cancelscanButton.clicked.connect(self.stopThread)
+        #SCANPAGE FUNCTIONS
+        ##QUICKSCAN
+        self.ui.quickscanButton.clicked.connect(self.start_quickscan) #STARTS THREAD
+        ##FULLSCAN
+        self.ui.fullscanButton.clicked.connect(self.start_fullscan) #STARTS THREAD
+        #CANCELBUTTON
+        self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED UNTIL A SCAN FUNCTION IS STARTED
+        self.ui.cancelscanButton.clicked.connect(self.stopscan) #STOPS SUBPROCESS INTURN STOPPING THREAD?
 
-        ## Window Control Buttons
-        self.ui.minButton.clicked.connect(lambda: self.showMinimized())
-        self.ui.closeButton.clicked.connect(lambda: self.close())
 
-    ## Mouse Drag Event Handler Code
+    #MOUSE DRAG EVENT HANDLER
     def moveWindow(self, event):
         if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
@@ -114,6 +105,7 @@ class MainWindow(QMainWindow):
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
 
+    #STACKEDWIDGET PAGE SWITCHING FUNCTIONS
     def switch_scan(self, event):
         self.ui.stackedHome.setCurrentWidget(self.ui.pageScan)
 
@@ -123,30 +115,52 @@ class MainWindow(QMainWindow):
     def switch_home(self):
         self.ui.stackedHome.setCurrentWidget(self.ui.pageHome)
 
-    ## THREAD FUNCTIONS
+    #SCAN FUNCTIONS; TWO FUNCTIONS NEEDED TO START EACH SCAN TYPE?
+    ##QUICKSCAN
+    def start_quickscan(self):
+        self.SingleThread = threading.Thread(target = self.quickscan)
+        self.SingleThread.start()
 
-    def startThread(self):
-        # Starting worker thread
-        self.thread = WorkerThread()
-        self.ui.scanStatus.setPlainText("Scan started, please wait..")
-        self.thread.out_string.connect(self.setscanValue)
-        self.thread.start()
-        ##self.ui.scanStatus.clear()
+    def quickscan(self):
+        self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED
+        self.ui.scanStatus.setPlainText('Scan started, Please wait...')
+        self.process = Popen(['clamdscan.exe'], stdout = PIPE, encoding = 'utf-8')
+        while(True):
+            buffer = self.process.stdout.readline()
+            if buffer == '':
+                self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+                break
+            else:
+                self.ui.scanStatus.appendPlainText(buffer)
 
-    def setscanValue(self, val):
-        # Setting value for plaintext
-        self.ui.scanStatus.appendPlainText(val)
+    ##FULLSCAN
+    def start_fullscan(self):
+        self.SingleThread = threading.Thread(target = self.fullscan)
+        self.SingleThread.start()
 
-    def stopThread(self):
+    def fullscan(self):
+        self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED
+        self.ui.scanStatus.setPlainText('Full system scan started. Please note that this might take some time to complete. ')
+        self.process = Popen(['clamdscan.exe'], stdout = PIPE, encoding = 'utf-8')
+        while(True):
+            buffer = self.process.stdout.readline()
+            if buffer == '':
+                self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+                break
+            else:
+                self.ui.scanStatus.appendPlainText(buffer)
+
+    #GENERAL FUNCTION TO KILL POPEN PROCESS WITH SIGINT; THREAD SHOULD BE STOPPING BY NOW.
+    def stopscan(self):
         try:
-            self.thread.stop_thread()
+            os.kill(self.process.pid, signal.SIGINT)
             self.ui.scanStatus.clear()
-            self.ui.scanStatus.setPlainText("Scan stopped!")
-            os.system("taskkill /f /im clamscan.exe")
-        except:
-            print('Process is not alive!')
-
-
+            self.ui.scanStatus.appendPlainText('Scan stopped.')
+            print('Thread stopped.')
+            self.ui.cancelscanButton.setEnabled(False)
+        except Exception as e:
+            print(f'Something went wrong. Error code: {e}')
+            self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO DISABLED TO TRY AGAIN
 
 if __name__=="__main__":
     app=QApplication(sys.argv)
