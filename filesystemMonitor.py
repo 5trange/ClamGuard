@@ -34,12 +34,10 @@
 ##IMPORTS
 
 import watchdog.events
+import threading
 import os
 import subprocess
-from subprocess import Popen, PIPE
 import watchdog.observers
-from multiprocessing import Process
-from typing import Optional
 from process import *
 
 processes = []
@@ -52,7 +50,7 @@ print(" / /   / / __ `/ __ `__ \/ / __/ / / / __ `/ ___/ __  /")
 print("/ /___/ / /_/ / / / / / / /_/ / /_/ / /_/ / /  / /_/ /")
 print("\____/_/\__,_/_/ /_/ /_/\____/\__,_/\__,_/_/   \__,_/")
 print("\n\nStarting Service..")
-watchableFiles = ['*.txt', '*.cmd', '*.exe', '*.msi', '*.dll', '*.zip', '*.7z', '*.bat', '*.rar', '*.sys', '*.bin']
+watchableFiles = ['*.cmd', '*.exe', '*.msi', '*.dll', '*.zip', '*.7z', '*.bat', '*.rar', '*.sys', '*.vbs']
 
 
 class SystemHandler(watchdog.events.PatternMatchingEventHandler):
@@ -63,8 +61,13 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
     def on_created(self, event):
         buffer = event.src_path
         buffer = buffer.replace(":", ":\\")
-        print(f"File was created at {buffer}")
-        process = Popen(['clamdscan.exe', buffer], stdout=PIPE, shell=True, encoding='utf8')
+        #print(f"File was created at {buffer}")
+        self.SingleThread = threading.Thread(target = self.scan , args=[buffer])
+        self.SingleThread.start()
+
+    def scan(self, path):
+        print(path)
+        process = Popen(['clamdscan.exe', path], stdout=PIPE, shell=True, encoding='utf8')
         while True:
             output = process.stdout.readline()
             #yield output
