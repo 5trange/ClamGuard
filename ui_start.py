@@ -167,10 +167,10 @@ class MainWindow(QMainWindow):
             else:
                 self.ui.scanStatus.appendPlainText(buffer)
 
-    #GENERAL FUNCTION TO KILL POPEN PROCESS WITH SIGINT; THREAD SHOULD BE STOPPING BY NOW.
+    #GENERAL FUNCTION TO KILL POPEN PROCESS WITH SIGTERM FOR A CLEAN EXIT; THREAD SHOULD STOP BY THEN
     def stopscan(self):
         try:
-            os.kill(self.process.pid, signal.SIGINT)
+            os.kill(self.process.pid, signal.SIGTERM)
             self.ui.scanStatus.clear()
             self.ui.scanStatus.appendPlainText('Scan stopped.')
             print('Thread stopped.')
