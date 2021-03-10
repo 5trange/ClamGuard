@@ -123,12 +123,21 @@ class MainWindow(QMainWindow):
 
     def quickscan(self):
         self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED
+        self.ui.quickscanButton.setEnabled(False) #SETS QUICKSCAN BUTTON TO DISABLED
+        self.ui.fullscanButton.setEnabled(False) #SETS FULLSCAN BUTTON TO DISABLED
+        self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
+        self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Scan started, Please wait...')
         self.process = Popen(['clamdscan.exe'], stdout = PIPE, encoding = 'utf-8')
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
                 self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+                self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+                self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
+                self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
+                self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
+                self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
                 break
             else:
                 self.ui.scanStatus.appendPlainText(buffer)
@@ -140,12 +149,20 @@ class MainWindow(QMainWindow):
 
     def fullscan(self):
         self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED
+        self.ui.quickscanButton.setEnabled(False) #SETS QUICKSCAN BUTTON TO DISABLED
+        self.ui.fullscanButton.setEnabled(False) #SETS FULLSCAN BUTTON TO DISABLED
+        self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
+        self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Full system scan started. Please note that this might take some time to complete. ')
         self.process = Popen(['clamdscan.exe'], stdout = PIPE, encoding = 'utf-8')
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
                 self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+                self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
+                self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
+                self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
+                self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
                 break
             else:
                 self.ui.scanStatus.appendPlainText(buffer)
@@ -157,10 +174,14 @@ class MainWindow(QMainWindow):
             self.ui.scanStatus.clear()
             self.ui.scanStatus.appendPlainText('Scan stopped.')
             print('Thread stopped.')
-            self.ui.cancelscanButton.setEnabled(False)
+            self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL SCAN BUTTON TO DISABLED AFTER SUCESSFUL TERMINATION OF THREAD
+            self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
+            self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
+            self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
+            self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
         except Exception as e:
             print(f'Something went wrong. Error code: {e}')
-            self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO DISABLED TO TRY AGAIN
+            self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED TO TRY AGAIN
 
 if __name__=="__main__":
     app=QApplication(sys.argv)
