@@ -10,7 +10,7 @@ from time import sleep
 class splashscreen():
     def __init__(self):
         self.app = QApplication(sys.argv)
-        self.img = QPixmap('resource/ss.jpg')
+        self.img = QPixmap('img/splash.jpg')
         self.ss = QSplashScreen(self.img)
         self.ss.show()
         sleep(2)
