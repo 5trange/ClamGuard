@@ -8,16 +8,12 @@ from time import sleep
 
 
 class splashscreen():
-
-
-
     def __init__(self):
         self.app = QApplication(sys.argv)
         self.img = QPixmap('resource/ss.jpg')
         self.ss = QSplashScreen(self.img)
         self.ss.show()
         sleep(2)
-
     def __del__(self):
         try:
             self.ss.flush()
