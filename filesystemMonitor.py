@@ -67,7 +67,7 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
 
     def scan(self, path):
         print(path)
-        process = Popen(['clamdscan.exe', path], stdout=PIPE, shell=True, encoding='utf8')
+        process = Popen(['clamdscan.exe','--multiscan',path], stdout=PIPE, shell=True, encoding='utf8') #Using --multiscan to use multiprocessing
         while True:
             output = process.stdout.readline()
             #yield output
