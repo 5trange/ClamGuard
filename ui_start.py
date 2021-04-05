@@ -128,7 +128,7 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Scan started, Please wait...')
-        self.process = Popen(['clamdscan.exe'], stdout = PIPE, encoding = 'utf-8')
+        self.process = Popen(['clamscan.exe','--memory'], stdout = PIPE, encoding = 'utf-8')
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
@@ -154,7 +154,7 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Full system scan started. Please note that this might take some time to complete. ')
-        self.process = Popen(['clamdscan.exe'], stdout = PIPE, encoding = 'utf-8')
+        self.process = Popen(['clamscan.exe'], stdout = PIPE, encoding = 'utf-8')
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
