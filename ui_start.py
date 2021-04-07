@@ -46,6 +46,12 @@ from PyQt5.QtCore import *
 from process import *
 from mainWindow import Ui_mainWindow #IMPORTING MAINWINDOW.PY
 
+#GLOBAL VARS
+appdata_dir = os.environ['APPDATA']
+win_dir = os.environ['SYSTEMROOT']
+root_drive = os.environ['SYSTEMDRIVE']
+driver_dir = win_dir+'\\System32\\Drivers\\'
+
 #MAINWINDOW CLASS
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -128,7 +134,7 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Scan started, Please wait...')
-        self.process = Popen(['clamdscan.exe','--multiscan'], stdout = PIPE, encoding = 'utf-8')
+        self.process = Popen(['clamdscan.exe',appdata_dir,'--multiscan','--infected'], stdout = PIPE, encoding = 'utf-8') #USING MULTISCAN USES 100% CPU ALL CORES!?
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
