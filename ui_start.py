@@ -51,6 +51,7 @@ appdata_dir = os.environ['APPDATA']
 win_dir = os.environ['SYSTEMROOT']
 root_drive = os.environ['SYSTEMDRIVE']
 driver_dir = win_dir+'\\System32\\Drivers\\'
+system32_dir = win_dir+'\\System32\\'
 
 #MAINWINDOW CLASS
 class MainWindow(QMainWindow):
@@ -134,7 +135,7 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Scan started, Please wait...')
-        self.process = Popen(['clamdscan.exe',appdata_dir,'--multiscan','--infected'], stdout = PIPE, encoding = 'utf-8') #USING MULTISCAN USES 100% CPU ALL CORES!?
+        self.process = Popen(['clamdscan.exe',appdata_dir,driver_dir,win_dir,'--multiscan','--infected'], stdout = PIPE, encoding = 'utf-8') #USING MULTISCAN USES 100% CPU ALL CORES!?
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
