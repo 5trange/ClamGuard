@@ -139,7 +139,6 @@ class MainWindow(QMainWindow):
             buffer = self.process.stdout.readline()
             if buffer == '':
                 self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
-                self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
                 self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
                 self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
                 self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
