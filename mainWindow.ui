@@ -1217,6 +1217,12 @@ the Free Software Foundation; either version 2 of the License, or
                    <height>41</height>
                   </rect>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
