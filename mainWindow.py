@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowwNcSAg.ui'
+## Form generated from reading UI file 'mainWindowdioBtx.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -149,10 +149,9 @@ class Ui_mainWindow(object):
         self.frame_content_home.setObjectName(u"frame_content_home")
         self.frame_content_home.setFrameShape(QFrame.StyledPanel)
         self.frame_content_home.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_4 = QHBoxLayout(self.frame_content_home)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.scanFrame = QFrame(self.frame_content_home)
         self.scanFrame.setObjectName(u"scanFrame")
+        self.scanFrame.setGeometry(QRect(155, 181, 160, 160))
         self.scanFrame.setMinimumSize(QSize(160, 160))
         self.scanFrame.setMaximumSize(QSize(160, 160))
         self.scanFrame.setCursor(QCursor(Qt.PointingHandCursor))
@@ -200,11 +199,9 @@ class Ui_mainWindow(object):
 "")
         self.scanImg.setPixmap(QPixmap(u"img/search_green.png"))
         self.scanImg.setScaledContents(True)
-
-        self.horizontalLayout_4.addWidget(self.scanFrame)
-
         self.updateFrame = QFrame(self.frame_content_home)
         self.updateFrame.setObjectName(u"updateFrame")
+        self.updateFrame.setGeometry(QRect(467, 181, 160, 160))
         self.updateFrame.setMinimumSize(QSize(160, 160))
         self.updateFrame.setMaximumSize(QSize(160, 160))
         self.updateFrame.setCursor(QCursor(Qt.PointingHandCursor))
@@ -249,9 +246,21 @@ class Ui_mainWindow(object):
 "}\n"
 "\n"
 "	")
-
-        self.horizontalLayout_4.addWidget(self.updateFrame)
-
+        self.aboutLabel = QLabel(self.frame_content_home)
+        self.aboutLabel.setObjectName(u"aboutLabel")
+        self.aboutLabel.setGeometry(QRect(716, 40, 41, 20))
+        self.aboutLabel.setFont(font1)
+        self.aboutLabel.setCursor(QCursor(Qt.PointingHandCursor))
+        self.aboutLabel.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color:rgb(0, 182, 24);\n"
+"	border:none;\n"
+"}\n"
+"QLabel:hover\n"
+"{\n"
+"	color:rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}")
 
         self.verticalLayout_4.addWidget(self.frame_content_home)
 
@@ -488,6 +497,86 @@ class Ui_mainWindow(object):
         self.verticalLayout_2.addWidget(self.frameUpdateStatus)
 
         self.stackedHome.addWidget(self.pageUpdate)
+        self.pageAbout = QWidget()
+        self.pageAbout.setObjectName(u"pageAbout")
+        self.verticalLayout_7 = QVBoxLayout(self.pageAbout)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.frameHomeAbout = QFrame(self.pageAbout)
+        self.frameHomeAbout.setObjectName(u"frameHomeAbout")
+        self.frameHomeAbout.setMinimumSize(QSize(764, 169))
+        self.frameHomeAbout.setMaximumSize(QSize(764, 169))
+        self.frameHomeAbout.setFrameShape(QFrame.StyledPanel)
+        self.frameHomeAbout.setFrameShadow(QFrame.Raised)
+        self.homeButtonAbout = QPushButton(self.frameHomeAbout)
+        self.homeButtonAbout.setObjectName(u"homeButtonAbout")
+        self.homeButtonAbout.setGeometry(QRect(9, 20, 182, 120))
+        self.homeButtonAbout.setMinimumSize(QSize(120, 120))
+        self.homeButtonAbout.setFont(font5)
+        self.homeButtonAbout.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"	border: 5px solid rgb(0, 255, 38);\n"
+"}\n"
+"	")
+        self.homeButtonAbout.setIcon(icon)
+        self.homeButtonAbout.setIconSize(QSize(50, 50))
+
+        self.verticalLayout_7.addWidget(self.frameHomeAbout)
+
+        self.frameAboutContent = QFrame(self.pageAbout)
+        self.frameAboutContent.setObjectName(u"frameAboutContent")
+        self.frameAboutContent.setFrameShape(QFrame.StyledPanel)
+        self.frameAboutContent.setFrameShadow(QFrame.Raised)
+        self.ProjectTitle = QLabel(self.frameAboutContent)
+        self.ProjectTitle.setObjectName(u"ProjectTitle")
+        self.ProjectTitle.setGeometry(QRect(10, 20, 171, 21))
+        self.ProjectTitle.setMinimumSize(QSize(0, 21))
+        self.ProjectTitle.setMaximumSize(QSize(16777215, 21))
+        self.ProjectTitle.setFont(font4)
+        self.ProjectTitle.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color: rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}\n"
+"\n"
+"	")
+        self.ProjectTitle.setAlignment(Qt.AlignCenter)
+        self.AboutGithub = QLabel(self.frameAboutContent)
+        self.AboutGithub.setObjectName(u"AboutGithub")
+        self.AboutGithub.setGeometry(QRect(10, 270, 101, 41))
+        self.AboutGithub.setCursor(QCursor(Qt.PointingHandCursor))
+        self.AboutGithub.setStyleSheet(u"")
+        self.AboutGithub.setPixmap(QPixmap(u"img/GitHub.png"))
+        self.AboutGithub.setScaledContents(True)
+        self.aboutLicense = QPlainTextEdit(self.frameAboutContent)
+        self.aboutLicense.setObjectName(u"aboutLicense")
+        self.aboutLicense.setGeometry(QRect(9, 50, 746, 200))
+        self.aboutLicense.setStyleSheet(u"QPlainTextEdit\n"
+"{\n"
+"	 \n"
+"	background-color: rgb(33, 33, 33);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"	")
+        self.aboutLicense.setUndoRedoEnabled(False)
+        self.aboutLicense.setReadOnly(True)
+        self.AboutGPL = QLabel(self.frameAboutContent)
+        self.AboutGPL.setObjectName(u"AboutGPL")
+        self.AboutGPL.setGeometry(QRect(140, 270, 91, 41))
+        self.AboutGPL.setPixmap(QPixmap(u"img/gpl.png"))
+        self.AboutGPL.setScaledContents(True)
+        self.aboutLicense.raise_()
+        self.ProjectTitle.raise_()
+        self.AboutGithub.raise_()
+        self.AboutGPL.raise_()
+
+        self.verticalLayout_7.addWidget(self.frameAboutContent)
+
+        self.stackedHome.addWidget(self.pageAbout)
 
         self.verticalLayout_3.addWidget(self.stackedHome)
 
@@ -539,6 +628,7 @@ class Ui_mainWindow(object):
         self.scanImg.setText("")
         self.updateImg.setText("")
         self.updateLabel.setText(QCoreApplication.translate("mainWindow", u"UPDATE", None))
+        self.aboutLabel.setText(QCoreApplication.translate("mainWindow", u"About", None))
         self.homeButton.setText("")
         self.quickscanButton.setText(QCoreApplication.translate("mainWindow", u"Quick Scan", None))
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
@@ -547,6 +637,10 @@ class Ui_mainWindow(object):
         self.updatehomeButton.setText("")
         self.checkUpdate.setText(QCoreApplication.translate("mainWindow", u"Check for Updates", None))
         self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"Cancel Update", None))
+        self.homeButtonAbout.setText("")
+        self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project", None))
+        self.AboutGithub.setText("")
+        self.AboutGPL.setText("")
         self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 

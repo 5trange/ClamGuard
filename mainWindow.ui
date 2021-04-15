@@ -286,26 +286,32 @@ QPushButton:hover
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_4">
-                 <item>
-                  <widget class="QFrame" name="scanFrame">
-                   <property name="minimumSize">
-                    <size>
-                     <width>160</width>
-                     <height>160</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>160</width>
-                     <height>160</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QFrame
+                <widget class="QFrame" name="scanFrame">
+                 <property name="geometry">
+                  <rect>
+                   <x>155</x>
+                   <y>181</y>
+                   <width>160</width>
+                   <height>160</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>160</width>
+                   <height>160</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>160</width>
+                   <height>160</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QFrame
 {
 	border: 5px solid rgb(0, 182, 24);
 	border-radius: 80px;
@@ -315,108 +321,114 @@ QFrame:hover
 	border: 5px solid rgb(0, 255, 38);
 }
 	</string>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <widget class="QLabel" name="scanlabel">
-                    <property name="geometry">
-                     <rect>
-                      <x>50</x>
-                      <y>110</y>
-                      <width>61</width>
-                      <height>21</height>
-                     </rect>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <family>Ubuntu</family>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <italic>false</italic>
-                      <bold>true</bold>
-                      <underline>false</underline>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QLabel
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <widget class="QLabel" name="scanlabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>50</x>
+                    <y>110</y>
+                    <width>61</width>
+                    <height>21</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Ubuntu</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <italic>false</italic>
+                    <bold>true</bold>
+                    <underline>false</underline>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel
 {
 	color: rgb(0, 255, 38);
 	border:none;
 }
 
 	</string>
-                    </property>
-                    <property name="text">
-                     <string>SCAN</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                   <widget class="QLabel" name="scanImg">
-                    <property name="geometry">
-                     <rect>
-                      <x>30</x>
-                      <y>10</y>
-                      <width>100</width>
-                      <height>100</height>
-                     </rect>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>100</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>100</width>
-                      <height>100</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QLabel
+                  </property>
+                  <property name="text">
+                   <string>SCAN</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="scanImg">
+                  <property name="geometry">
+                   <rect>
+                    <x>30</x>
+                    <y>10</y>
+                    <width>100</width>
+                    <height>100</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel
 {
 	color: rgb(0, 255, 38);
 	border:none;
 }
 </string>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="pixmap">
-                     <pixmap>img/search_green.png</pixmap>
-                    </property>
-                    <property name="scaledContents">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QFrame" name="updateFrame">
-                   <property name="minimumSize">
-                    <size>
-                     <width>160</width>
-                     <height>160</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>160</width>
-                     <height>160</height>
-                    </size>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QFrame
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap>img/search_green.png</pixmap>
+                  </property>
+                  <property name="scaledContents">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QFrame" name="updateFrame">
+                 <property name="geometry">
+                  <rect>
+                   <x>467</x>
+                   <y>181</y>
+                   <width>160</width>
+                   <height>160</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>160</width>
+                   <height>160</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>160</width>
+                   <height>160</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QFrame
 {
 	border: 5px solid rgb(0, 182, 24);
 	border-radius: 80px;
@@ -426,85 +438,119 @@ QFrame:hover
 	border: 5px solid rgb(0, 255, 38);
 }
 	</string>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <widget class="QLabel" name="updateImg">
-                    <property name="geometry">
-                     <rect>
-                      <x>30</x>
-                      <y>10</y>
-                      <width>100</width>
-                      <height>100</height>
-                     </rect>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>100</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>100</width>
-                      <height>100</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QLabel
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <widget class="QLabel" name="updateImg">
+                  <property name="geometry">
+                   <rect>
+                    <x>30</x>
+                    <y>10</y>
+                    <width>100</width>
+                    <height>100</height>
+                   </rect>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel
 {
 	color: rgb(0, 255, 38);
 	border:none;
 }
 </string>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="pixmap">
-                     <pixmap>img/update_green.png</pixmap>
-                    </property>
-                    <property name="scaledContents">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                   <widget class="QLabel" name="updateLabel">
-                    <property name="geometry">
-                     <rect>
-                      <x>45</x>
-                      <y>110</y>
-                      <width>71</width>
-                      <height>21</height>
-                     </rect>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <family>Ubuntu</family>
-                      <pointsize>14</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QLabel
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap>img/update_green.png</pixmap>
+                  </property>
+                  <property name="scaledContents">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="updateLabel">
+                  <property name="geometry">
+                   <rect>
+                    <x>45</x>
+                    <y>110</y>
+                    <width>71</width>
+                    <height>21</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Ubuntu</family>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel
 {
 	color: rgb(0, 255, 38);
 	border:none;
 }
 
 	</string>
-                    </property>
-                    <property name="text">
-                     <string>UPDATE</string>
-                    </property>
-                   </widget>
-                  </widget>
-                 </item>
-                </layout>
+                  </property>
+                  <property name="text">
+                   <string>UPDATE</string>
+                  </property>
+                 </widget>
+                </widget>
+                <widget class="QLabel" name="aboutLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>716</x>
+                   <y>40</y>
+                   <width>41</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Ubuntu</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+	color:rgb(0, 182, 24);
+	border:none;
+}
+QLabel:hover
+{
+	color:rgb(0, 255, 38);
+	border:none;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>About</string>
+                 </property>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -1066,10 +1112,10 @@ QPushButton:hover
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <widget class="QLabel" name="label">
+                <widget class="QLabel" name="ProjectTitle">
                  <property name="geometry">
                   <rect>
-                   <x>15</x>
+                   <x>10</x>
                    <y>20</y>
                    <width>171</width>
                    <height>21</height>
@@ -1107,112 +1153,15 @@ QPushButton:hover
                  <property name="text">
                   <string>ClamGuard Project</string>
                  </property>
-                </widget>
-                <widget class="QLabel" name="label_2">
-                 <property name="geometry">
-                  <rect>
-                   <x>15</x>
-                   <y>60</y>
-                   <width>361</width>
-                   <height>16</height>
-                  </rect>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>21</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Ubuntu</family>
-                   <pointsize>9</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QLabel
-{
-	color: rgb(0, 255, 38);
-	border:none;
-}
-
-	</string>
-                 </property>
-                 <property name="text">
-                  <string>Original Authors: Adith K. Murali, Bilal Jafar, Vinayak S. Bhat</string>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
-                <widget class="QLabel" name="label_3">
+                <widget class="QLabel" name="AboutGithub">
                  <property name="geometry">
                   <rect>
-                   <x>15</x>
-                   <y>90</y>
-                   <width>291</width>
-                   <height>16</height>
-                  </rect>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Ubuntu</family>
-                   <pointsize>9</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QLabel
-{
-	color: rgb(0, 255, 38);
-	border:none;
-}
-
-	</string>
-                 </property>
-                 <property name="text">
-                  <string>This software comes with absolutely no warranty.</string>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_4">
-                 <property name="geometry">
-                  <rect>
-                   <x>15</x>
-                   <y>110</y>
-                   <width>551</width>
-                   <height>81</height>
-                  </rect>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Ubuntu</family>
-                   <pointsize>8</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QLabel
-{
-	color: rgb(0, 255, 38);
-	border:none;
-}
-
-	</string>
-                 </property>
-                 <property name="text">
-                  <string>Licence:
-This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.</string>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_5">
-                 <property name="geometry">
-                  <rect>
-                   <x>15</x>
-                   <y>260</y>
+                   <x>10</x>
+                   <y>270</y>
                    <width>101</width>
                    <height>41</height>
                   </rect>
@@ -1233,6 +1182,54 @@ the Free Software Foundation; either version 2 of the License, or
                   <bool>true</bool>
                  </property>
                 </widget>
+                <widget class="QPlainTextEdit" name="aboutLicense">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>50</y>
+                   <width>746</width>
+                   <height>200</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPlainTextEdit
+{
+	 
+	background-color: rgb(33, 33, 33);
+	color: rgb(0,255,38);
+}
+	</string>
+                 </property>
+                 <property name="undoRedoEnabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="AboutGPL">
+                 <property name="geometry">
+                  <rect>
+                   <x>140</x>
+                   <y>270</y>
+                   <width>91</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/gpl.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+                <zorder>aboutLicense</zorder>
+                <zorder>ProjectTitle</zorder>
+                <zorder>AboutGithub</zorder>
+                <zorder>AboutGPL</zorder>
                </widget>
               </item>
              </layout>
