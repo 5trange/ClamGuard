@@ -90,6 +90,10 @@ class MainWindow(QMainWindow):
         self.ui.updateFrame.mousePressEvent = self.switch_update
         #TO HOMEPAGE FROM UPDATEPAGE
         self.ui.updatehomeButton.clicked.connect(self.switch_home)
+        #TO ABOUTPAGE FROM HOMEPAGE
+        self.ui.aboutLabel.mousePressEvent = self.switch_about
+        #TO HOMEPAGE FROM ABOUTPAGE
+        self.ui.homeButtonAbout.clicked.connect(self.switch_home)
 
         #SCANPAGE FUNCTIONS
         ##QUICKSCAN
@@ -120,6 +124,9 @@ class MainWindow(QMainWindow):
 
     def switch_home(self):
         self.ui.stackedHome.setCurrentWidget(self.ui.pageHome)
+
+    def switch_about(self, event):
+        self.ui.stackedHome.setCurrentWidget(self.ui.pageAbout)
 
     #SCAN FUNCTIONS; TWO FUNCTIONS NEEDED TO START EACH SCAN TYPE?
     ##QUICKSCAN
