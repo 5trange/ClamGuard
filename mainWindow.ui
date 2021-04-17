@@ -518,7 +518,7 @@ QFrame:hover
                 <widget class="QLabel" name="aboutLabel">
                  <property name="geometry">
                   <rect>
-                   <x>716</x>
+                   <x>710</x>
                    <y>40</y>
                    <width>41</width>
                    <height>20</height>
@@ -549,6 +549,42 @@ QLabel:hover
                  </property>
                  <property name="text">
                   <string>About</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="quarantineLabel">
+                 <property name="geometry">
+                  <rect>
+                   <x>30</x>
+                   <y>40</y>
+                   <width>71</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Ubuntu</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+	color:rgb(0, 182, 24);
+	border:none;
+}
+QLabel:hover
+{
+	color:rgb(0, 255, 38);
+	border:none;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>Quarantine</string>
                  </property>
                 </widget>
                </widget>
@@ -1230,6 +1266,77 @@ QPushButton:hover
                 <zorder>ProjectTitle</zorder>
                 <zorder>AboutGithub</zorder>
                 <zorder>AboutGPL</zorder>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="pageQuarantine">
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="QFrame" name="frameQuarantineNav">
+                <property name="minimumSize">
+                 <size>
+                  <width>764</width>
+                  <height>169</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>764</width>
+                  <height>169</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <widget class="QPushButton" name="quarantineHomeButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>20</y>
+                   <width>182</width>
+                   <height>120</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
+{
+	border: 2px solid rgb(0, 182, 24);
+	color: rgb(0,255,38);
+}
+QPushButton:hover
+{
+	border: 5px solid rgb(0, 255, 38);
+}
+	</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>img/home_green.png</normaloff>img/home_green.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>50</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frameQuarantineContent">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
                </widget>
               </item>
              </layout>

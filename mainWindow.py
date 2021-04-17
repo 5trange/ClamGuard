@@ -1,24 +1,21 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowdioBtx.ui'
+## Form generated from reading UI file 'mainWindowQHmEkV.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.14.1
+## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient)
+from PySide2.QtCore import *
+from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
-        if mainWindow.objectName():
+        if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
         mainWindow.resize(800, 600)
         mainWindow.setMinimumSize(QSize(800, 600))
@@ -248,10 +245,25 @@ class Ui_mainWindow(object):
 "	")
         self.aboutLabel = QLabel(self.frame_content_home)
         self.aboutLabel.setObjectName(u"aboutLabel")
-        self.aboutLabel.setGeometry(QRect(716, 40, 41, 20))
+        self.aboutLabel.setGeometry(QRect(710, 40, 41, 20))
         self.aboutLabel.setFont(font1)
         self.aboutLabel.setCursor(QCursor(Qt.PointingHandCursor))
         self.aboutLabel.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color:rgb(0, 182, 24);\n"
+"	border:none;\n"
+"}\n"
+"QLabel:hover\n"
+"{\n"
+"	color:rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}")
+        self.quarantineLabel = QLabel(self.frame_content_home)
+        self.quarantineLabel.setObjectName(u"quarantineLabel")
+        self.quarantineLabel.setGeometry(QRect(30, 40, 71, 20))
+        self.quarantineLabel.setFont(font1)
+        self.quarantineLabel.setCursor(QCursor(Qt.PointingHandCursor))
+        self.quarantineLabel.setStyleSheet(u"QLabel\n"
 "{\n"
 "	color:rgb(0, 182, 24);\n"
 "	border:none;\n"
@@ -577,6 +589,42 @@ class Ui_mainWindow(object):
         self.verticalLayout_7.addWidget(self.frameAboutContent)
 
         self.stackedHome.addWidget(self.pageAbout)
+        self.pageQuarantine = QWidget()
+        self.pageQuarantine.setObjectName(u"pageQuarantine")
+        self.verticalLayout_8 = QVBoxLayout(self.pageQuarantine)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.frameQuarantineNav = QFrame(self.pageQuarantine)
+        self.frameQuarantineNav.setObjectName(u"frameQuarantineNav")
+        self.frameQuarantineNav.setMinimumSize(QSize(764, 169))
+        self.frameQuarantineNav.setMaximumSize(QSize(764, 169))
+        self.frameQuarantineNav.setFrameShape(QFrame.StyledPanel)
+        self.frameQuarantineNav.setFrameShadow(QFrame.Raised)
+        self.quarantineHomeButton = QPushButton(self.frameQuarantineNav)
+        self.quarantineHomeButton.setObjectName(u"quarantineHomeButton")
+        self.quarantineHomeButton.setGeometry(QRect(9, 20, 182, 120))
+        self.quarantineHomeButton.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	border: 2px solid rgb(0, 182, 24);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"	border: 5px solid rgb(0, 255, 38);\n"
+"}\n"
+"	")
+        self.quarantineHomeButton.setIcon(icon)
+        self.quarantineHomeButton.setIconSize(QSize(50, 50))
+
+        self.verticalLayout_8.addWidget(self.frameQuarantineNav)
+
+        self.frameQuarantineContent = QFrame(self.pageQuarantine)
+        self.frameQuarantineContent.setObjectName(u"frameQuarantineContent")
+        self.frameQuarantineContent.setFrameShape(QFrame.StyledPanel)
+        self.frameQuarantineContent.setFrameShadow(QFrame.Raised)
+
+        self.verticalLayout_8.addWidget(self.frameQuarantineContent)
+
+        self.stackedHome.addWidget(self.pageQuarantine)
 
         self.verticalLayout_3.addWidget(self.stackedHome)
 
@@ -629,6 +677,7 @@ class Ui_mainWindow(object):
         self.updateImg.setText("")
         self.updateLabel.setText(QCoreApplication.translate("mainWindow", u"UPDATE", None))
         self.aboutLabel.setText(QCoreApplication.translate("mainWindow", u"About", None))
+        self.quarantineLabel.setText(QCoreApplication.translate("mainWindow", u"Quarantine", None))
         self.homeButton.setText("")
         self.quickscanButton.setText(QCoreApplication.translate("mainWindow", u"Quick Scan", None))
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
@@ -641,6 +690,7 @@ class Ui_mainWindow(object):
         self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project", None))
         self.AboutGithub.setText("")
         self.AboutGPL.setText("")
+        self.quarantineHomeButton.setText("")
         self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 

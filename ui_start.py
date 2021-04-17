@@ -94,6 +94,11 @@ class MainWindow(QMainWindow):
         self.ui.aboutLabel.mousePressEvent = self.switch_about
         #TO HOMEPAGE FROM ABOUTPAGE
         self.ui.homeButtonAbout.clicked.connect(self.switch_home)
+        #TO QUARANTINE FROM HOMEPAGE
+        self.ui.quarantineLabel.mousePressEvent = self.switch_quarantine
+        #TO HOMEPAGE FROM QUARANTINE
+        self.ui.quarantineHomeButton.clicked.connect(self.switch_home)
+
 
         #SCANPAGE FUNCTIONS
         ##QUICKSCAN
@@ -127,6 +132,9 @@ class MainWindow(QMainWindow):
 
     def switch_about(self, event):
         self.ui.stackedHome.setCurrentWidget(self.ui.pageAbout)
+
+    def switch_quarantine(self, event):
+        self.ui.stackedHome.setCurrentWidget(self.ui.pageQuarantine)
 
     #SCAN FUNCTIONS; TWO FUNCTIONS NEEDED TO START EACH SCAN TYPE?
     ##QUICKSCAN
