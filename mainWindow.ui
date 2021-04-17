@@ -828,6 +828,9 @@ QPushButton:hover
 }
 	</string>
                    </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -1061,6 +1064,9 @@ QPushButton:hover
 	color: rgb(0,255,38);
 }
 	</string>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </widget>

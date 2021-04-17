@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowQHmEkV.ui'
+## Form generated from reading UI file 'mainWindowXPOSrA.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -409,6 +409,7 @@ class Ui_mainWindow(object):
 "	color: rgb(0,255,38);\n"
 "}\n"
 "	")
+        self.scanStatus.setReadOnly(True)
 
         self.verticalLayout_6.addWidget(self.scanStatus)
 
@@ -505,6 +506,7 @@ class Ui_mainWindow(object):
 "	color: rgb(0,255,38);\n"
 "}\n"
 "	")
+        self.updateStatus.setReadOnly(True)
 
         self.verticalLayout_2.addWidget(self.frameUpdateStatus)
 
