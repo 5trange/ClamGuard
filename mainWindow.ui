@@ -1001,7 +1001,7 @@ QPushButton:hover
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="toolTip">
-                  <string>Check for the latest updates</string>
+                  <string/>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton

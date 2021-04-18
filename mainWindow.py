@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowFBfpri.ui'
+## Form generated from reading UI file 'mainWindowIfGGtn.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -767,7 +767,7 @@ class Ui_mainWindow(object):
         self.cancelscanButton.setText(QCoreApplication.translate("mainWindow", u"Cancel Scan", None))
         self.updatehomeButton.setText("")
 #if QT_CONFIG(tooltip)
-        self.checkUpdate.setToolTip(QCoreApplication.translate("mainWindow", u"Check for the latest updates", None))
+        self.checkUpdate.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.checkUpdate.setText(QCoreApplication.translate("mainWindow", u"Check for Updates", None))
         self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"Cancel Update", None))
