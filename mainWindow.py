@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowXPOSrA.ui'
+## Form generated from reading UI file 'mainWindowXWJYZM.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -245,7 +245,7 @@ class Ui_mainWindow(object):
 "	")
         self.aboutLabel = QLabel(self.frame_content_home)
         self.aboutLabel.setObjectName(u"aboutLabel")
-        self.aboutLabel.setGeometry(QRect(710, 40, 41, 20))
+        self.aboutLabel.setGeometry(QRect(720, 40, 31, 31))
         self.aboutLabel.setFont(font1)
         self.aboutLabel.setCursor(QCursor(Qt.PointingHandCursor))
         self.aboutLabel.setStyleSheet(u"QLabel\n"
@@ -256,11 +256,13 @@ class Ui_mainWindow(object):
 "QLabel:hover\n"
 "{\n"
 "	color:rgb(0, 255, 38);\n"
-"	border:none;\n"
+"	border:1px solid rgb(255, 255, 255);\n"
 "}")
+        self.aboutLabel.setPixmap(QPixmap(u"img/info_green.png"))
+        self.aboutLabel.setScaledContents(True)
         self.quarantineLabel = QLabel(self.frame_content_home)
         self.quarantineLabel.setObjectName(u"quarantineLabel")
-        self.quarantineLabel.setGeometry(QRect(30, 40, 71, 20))
+        self.quarantineLabel.setGeometry(QRect(680, 40, 31, 31))
         self.quarantineLabel.setFont(font1)
         self.quarantineLabel.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineLabel.setStyleSheet(u"QLabel\n"
@@ -271,8 +273,10 @@ class Ui_mainWindow(object):
 "QLabel:hover\n"
 "{\n"
 "	color:rgb(0, 255, 38);\n"
-"	border:none;\n"
+"	border:1px solid rgb(255, 255, 255);\n"
 "}")
+        self.quarantineLabel.setPixmap(QPixmap(u"img/warning_green.png"))
+        self.quarantineLabel.setScaledContents(True)
 
         self.verticalLayout_4.addWidget(self.frame_content_home)
 
@@ -295,14 +299,15 @@ class Ui_mainWindow(object):
         font5.setBold(True)
         font5.setWeight(75)
         self.homeButton.setFont(font5)
+        self.homeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
         icon = QIcon()
@@ -322,14 +327,15 @@ class Ui_mainWindow(object):
         self.quickscanButton.setObjectName(u"quickscanButton")
         self.quickscanButton.setMinimumSize(QSize(0, 120))
         self.quickscanButton.setFont(font4)
+        self.quickscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.quickscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
 
@@ -339,14 +345,15 @@ class Ui_mainWindow(object):
         self.fullscanButton.setObjectName(u"fullscanButton")
         self.fullscanButton.setMinimumSize(QSize(0, 120))
         self.fullscanButton.setFont(font4)
+        self.fullscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.fullscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
 
@@ -356,14 +363,15 @@ class Ui_mainWindow(object):
         self.customscanButton.setObjectName(u"customscanButton")
         self.customscanButton.setMinimumSize(QSize(0, 120))
         self.customscanButton.setFont(font4)
+        self.customscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.customscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
 
@@ -373,14 +381,15 @@ class Ui_mainWindow(object):
         self.cancelscanButton.setObjectName(u"cancelscanButton")
         self.cancelscanButton.setMinimumSize(QSize(0, 120))
         self.cancelscanButton.setFont(font4)
+        self.cancelscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(255,0,4);\n"
+"	border: 1px solid rgb(255,0,4);\n"
 "	color: rgb(255,0,4);\n"
 "}\n"
 "	")
@@ -430,14 +439,15 @@ class Ui_mainWindow(object):
         self.updatehomeButton = QPushButton(self.frameGoHome)
         self.updatehomeButton.setObjectName(u"updatehomeButton")
         self.updatehomeButton.setGeometry(QRect(9, 20, 182, 120))
+        self.updatehomeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.updatehomeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
         self.updatehomeButton.setIcon(icon)
@@ -457,14 +467,15 @@ class Ui_mainWindow(object):
         self.checkUpdate.setMinimumSize(QSize(182, 120))
         self.checkUpdate.setMaximumSize(QSize(182, 120))
         self.checkUpdate.setFont(font4)
+        self.checkUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.checkUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
         self.cancelUpdate = QPushButton(self.frameUpdateButtons)
@@ -473,14 +484,15 @@ class Ui_mainWindow(object):
         self.cancelUpdate.setMinimumSize(QSize(182, 120))
         self.cancelUpdate.setMaximumSize(QSize(182, 120))
         self.cancelUpdate.setFont(font4)
+        self.cancelUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(255,0,4);\n"
+"	border: 1px solid rgb(255,0,4);\n"
 "	color: rgb(255,0,4);\n"
 "}\n"
 "	")
@@ -526,14 +538,15 @@ class Ui_mainWindow(object):
         self.homeButtonAbout.setGeometry(QRect(9, 20, 182, 120))
         self.homeButtonAbout.setMinimumSize(QSize(120, 120))
         self.homeButtonAbout.setFont(font5)
+        self.homeButtonAbout.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButtonAbout.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
         self.homeButtonAbout.setIcon(icon)
@@ -604,14 +617,15 @@ class Ui_mainWindow(object):
         self.quarantineHomeButton = QPushButton(self.frameQuarantineNav)
         self.quarantineHomeButton.setObjectName(u"quarantineHomeButton")
         self.quarantineHomeButton.setGeometry(QRect(9, 20, 182, 120))
+        self.quarantineHomeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineHomeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 2px solid rgb(0, 182, 24);\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
 "}\n"
 "	")
         self.quarantineHomeButton.setIcon(icon)
@@ -623,6 +637,43 @@ class Ui_mainWindow(object):
         self.frameQuarantineContent.setObjectName(u"frameQuarantineContent")
         self.frameQuarantineContent.setFrameShape(QFrame.StyledPanel)
         self.frameQuarantineContent.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_9 = QVBoxLayout(self.frameQuarantineContent)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.quarantineRefresh = QPushButton(self.frameQuarantineContent)
+        self.quarantineRefresh.setObjectName(u"quarantineRefresh")
+        self.quarantineRefresh.setMinimumSize(QSize(0, 30))
+        font7 = QFont()
+        font7.setFamily(u"Ubuntu")
+        font7.setPointSize(9)
+        font7.setBold(True)
+        font7.setWeight(75)
+        self.quarantineRefresh.setFont(font7)
+        self.quarantineRefresh.setCursor(QCursor(Qt.PointingHandCursor))
+        self.quarantineRefresh.setStyleSheet(u"QPushButton\n"
+"{\n"
+"	border: 0px solid rgb(0, 182, 24);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"QPushButton:hover\n"
+"{\n"
+"	border: 1px solid rgb(0, 255, 38);\n"
+"}\n"
+"	")
+
+        self.verticalLayout_9.addWidget(self.quarantineRefresh)
+
+        self.quarantineView = QTableWidget(self.frameQuarantineContent)
+        self.quarantineView.setObjectName(u"quarantineView")
+        self.quarantineView.setStyleSheet(u"QTableWidget\n"
+"{\n"
+"	 \n"
+"	background-color: rgb(33, 33, 33);\n"
+"	color: rgb(0,255,38);\n"
+"}\n"
+"	")
+
+        self.verticalLayout_9.addWidget(self.quarantineView)
+
 
         self.verticalLayout_8.addWidget(self.frameQuarantineContent)
 
@@ -643,12 +694,12 @@ class Ui_mainWindow(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.engineVer = QLabel(self.statusBar)
         self.engineVer.setObjectName(u"engineVer")
-        font7 = QFont()
-        font7.setFamily(u"Ubuntu")
-        font7.setPointSize(7)
-        font7.setBold(True)
-        font7.setWeight(75)
-        self.engineVer.setFont(font7)
+        font8 = QFont()
+        font8.setFamily(u"Ubuntu")
+        font8.setPointSize(7)
+        font8.setBold(True)
+        font8.setWeight(75)
+        self.engineVer.setFont(font8)
         self.engineVer.setStyleSheet(u"color: rgb(0, 255, 38);")
 
         self.horizontalLayout_6.addWidget(self.engineVer)
@@ -678,8 +729,8 @@ class Ui_mainWindow(object):
         self.scanImg.setText("")
         self.updateImg.setText("")
         self.updateLabel.setText(QCoreApplication.translate("mainWindow", u"UPDATE", None))
-        self.aboutLabel.setText(QCoreApplication.translate("mainWindow", u"About", None))
-        self.quarantineLabel.setText(QCoreApplication.translate("mainWindow", u"Quarantine", None))
+        self.aboutLabel.setText("")
+        self.quarantineLabel.setText("")
         self.homeButton.setText("")
         self.quickscanButton.setText(QCoreApplication.translate("mainWindow", u"Quick Scan", None))
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
@@ -693,6 +744,7 @@ class Ui_mainWindow(object):
         self.AboutGithub.setText("")
         self.AboutGPL.setText("")
         self.quarantineHomeButton.setText("")
+        self.quarantineRefresh.setText(QCoreApplication.translate("mainWindow", u"Refresh", None))
         self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 

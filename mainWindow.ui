@@ -518,10 +518,10 @@ QFrame:hover
                 <widget class="QLabel" name="aboutLabel">
                  <property name="geometry">
                   <rect>
-                   <x>710</x>
+                   <x>720</x>
                    <y>40</y>
-                   <width>41</width>
-                   <height>20</height>
+                   <width>31</width>
+                   <height>31</height>
                   </rect>
                  </property>
                  <property name="font">
@@ -544,20 +544,26 @@ QFrame:hover
 QLabel:hover
 {
 	color:rgb(0, 255, 38);
-	border:none;
+	border:1px solid rgb(255, 255, 255);
 }</string>
                  </property>
                  <property name="text">
-                  <string>About</string>
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/info_green.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
                  </property>
                 </widget>
                 <widget class="QLabel" name="quarantineLabel">
                  <property name="geometry">
                   <rect>
-                   <x>30</x>
+                   <x>680</x>
                    <y>40</y>
-                   <width>71</width>
-                   <height>20</height>
+                   <width>31</width>
+                   <height>31</height>
                   </rect>
                  </property>
                  <property name="font">
@@ -580,11 +586,17 @@ QLabel:hover
 QLabel:hover
 {
 	color:rgb(0, 255, 38);
-	border:none;
+	border:1px solid rgb(255, 255, 255);
 }</string>
                  </property>
                  <property name="text">
-                  <string>Quarantine</string>
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/warning_green.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </widget>
@@ -624,15 +636,18 @@ QLabel:hover
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                  </property>
@@ -677,15 +692,18 @@ QPushButton:hover
                      <bold>true</bold>
                     </font>
                    </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                    </property>
@@ -710,15 +728,18 @@ QPushButton:hover
                      <bold>true</bold>
                     </font>
                    </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                    </property>
@@ -743,15 +764,18 @@ QPushButton:hover
                      <bold>true</bold>
                     </font>
                    </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                    </property>
@@ -776,15 +800,18 @@ QPushButton:hover
                      <bold>true</bold>
                     </font>
                    </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(255,0,4);
+	border: 1px solid rgb(255,0,4);
 	color: rgb(255,0,4);
 }
 	</string>
@@ -869,15 +896,18 @@ QPushButton:hover
                    <height>120</height>
                   </rect>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                  </property>
@@ -946,15 +976,18 @@ QPushButton:hover
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                  </property>
@@ -991,15 +1024,18 @@ QPushButton:hover
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(255,0,4);
+	border: 1px solid rgb(255,0,4);
 	color: rgb(255,0,4);
 }
 	</string>
@@ -1118,15 +1154,18 @@ QPushButton:hover
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                  </property>
@@ -1307,15 +1346,18 @@ QPushButton:hover
                    <height>120</height>
                   </rect>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 2px solid rgb(0, 182, 24);
+	border: 0px solid rgb(0, 182, 24);
 	color: rgb(0,255,38);
 }
 QPushButton:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 1px solid rgb(0, 255, 38);
 }
 	</string>
                  </property>
@@ -1343,6 +1385,57 @@ QPushButton:hover
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QPushButton" name="quarantineRefresh">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Ubuntu</family>
+                     <pointsize>9</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton
+{
+	border: 0px solid rgb(0, 182, 24);
+	color: rgb(0,255,38);
+}
+QPushButton:hover
+{
+	border: 1px solid rgb(0, 255, 38);
+}
+	</string>
+                   </property>
+                   <property name="text">
+                    <string>Refresh</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QTableWidget" name="quarantineView">
+                   <property name="styleSheet">
+                    <string notr="true">QTableWidget
+{
+	 
+	background-color: rgb(33, 33, 33);
+	color: rgb(0,255,38);
+}
+	</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
