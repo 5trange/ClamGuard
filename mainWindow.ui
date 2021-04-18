@@ -1426,13 +1426,30 @@ QPushButton:hover
                   <widget class="QTableWidget" name="quarantineView">
                    <property name="styleSheet">
                     <string notr="true">QTableWidget
-{
-	 
+{ 
 	background-color: rgb(33, 33, 33);
 	color: rgb(0,255,38);
 }
 	</string>
                    </property>
+                   <attribute name="verticalHeaderVisible">
+                    <bool>false</bool>
+                   </attribute>
+                   <column>
+                    <property name="text">
+                     <string>Name</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Type</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Size</string>
+                    </property>
+                   </column>
                   </widget>
                  </item>
                 </layout>

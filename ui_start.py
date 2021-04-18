@@ -110,6 +110,10 @@ class MainWindow(QMainWindow):
         self.ui.cancelscanButton.clicked.connect(self.stopscan) #STOPS SUBPROCESS INTURN STOPPING THREAD?
 
 
+        #QUARANTINEPAGE FUNCTIONS
+        self.ui.quarantineRefresh.clicked.connect(self.start_quarantine)
+
+
     #MOUSE DRAG EVENT HANDLER
     def moveWindow(self, event):
         if event.buttons() == Qt.LeftButton:
@@ -202,6 +206,24 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print(f'Something went wrong. Error code: {e}')
             self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED TO TRY AGAIN
+
+    #FUNCTION TO START QUARANTINE POPULATION THREAD
+    def start_quarantine(self):
+        self.QuarantineThread = threading.Thread(target = self.populate_quarantine)
+        self.QuarantineThread.start()
+
+    def populate_quarantine(self):
+        WorkingDirectory = os.getcwd()
+        QuarantineDirectory = WorkingDirectory+"\\quarantine\\"
+        lines = os.listdir(QuarantineDirectory)
+        entries = 0
+        for line in lines:
+            if entries == 0:
+                self.ui.quarantineView.setRowCount(0)
+            self.ui.quarantineView.insertRow(entries)
+            self.ui.quarantineView.setItem(entries,0,QTableWidgetItem(line))
+            entries = entries+1
+
 
 if __name__=="__main__":
     app=QApplication(sys.argv)

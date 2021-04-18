@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowXWJYZM.ui'
+## Form generated from reading UI file 'mainWindowukPbQo.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -663,14 +663,22 @@ class Ui_mainWindow(object):
         self.verticalLayout_9.addWidget(self.quarantineRefresh)
 
         self.quarantineView = QTableWidget(self.frameQuarantineContent)
+        if (self.quarantineView.columnCount() < 3):
+            self.quarantineView.setColumnCount(3)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.quarantineView.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.quarantineView.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.quarantineView.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         self.quarantineView.setObjectName(u"quarantineView")
         self.quarantineView.setStyleSheet(u"QTableWidget\n"
-"{\n"
-"	 \n"
+"{ \n"
 "	background-color: rgb(33, 33, 33);\n"
 "	color: rgb(0,255,38);\n"
 "}\n"
 "	")
+        self.quarantineView.verticalHeader().setVisible(False)
 
         self.verticalLayout_9.addWidget(self.quarantineView)
 
@@ -745,6 +753,12 @@ class Ui_mainWindow(object):
         self.AboutGPL.setText("")
         self.quarantineHomeButton.setText("")
         self.quarantineRefresh.setText(QCoreApplication.translate("mainWindow", u"Refresh", None))
+        ___qtablewidgetitem = self.quarantineView.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("mainWindow", u"Name", None));
+        ___qtablewidgetitem1 = self.quarantineView.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWindow", u"Type", None));
+        ___qtablewidgetitem2 = self.quarantineView.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("mainWindow", u"Size", None));
         self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 
