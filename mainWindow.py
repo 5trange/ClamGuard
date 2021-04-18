@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowukPbQo.ui'
+## Form generated from reading UI file 'mainWindowFBfpri.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -733,18 +733,42 @@ class Ui_mainWindow(object):
         self.title_label.setText(QCoreApplication.translate("mainWindow", u"ClamGuard", None))
         self.minButton.setText("")
         self.closeButton.setText("")
+#if QT_CONFIG(tooltip)
+        self.scanFrame.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.scanlabel.setText(QCoreApplication.translate("mainWindow", u"SCAN", None))
         self.scanImg.setText("")
+#if QT_CONFIG(tooltip)
+        self.updateFrame.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.updateImg.setText("")
         self.updateLabel.setText(QCoreApplication.translate("mainWindow", u"UPDATE", None))
+#if QT_CONFIG(tooltip)
+        self.aboutLabel.setToolTip(QCoreApplication.translate("mainWindow", u"About ClamGuard Project", None))
+#endif // QT_CONFIG(tooltip)
         self.aboutLabel.setText("")
+#if QT_CONFIG(tooltip)
+        self.quarantineLabel.setToolTip(QCoreApplication.translate("mainWindow", u"View Quarantine", None))
+#endif // QT_CONFIG(tooltip)
         self.quarantineLabel.setText("")
         self.homeButton.setText("")
+#if QT_CONFIG(tooltip)
+        self.quickscanButton.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.quickscanButton.setText(QCoreApplication.translate("mainWindow", u"Quick Scan", None))
+#if QT_CONFIG(tooltip)
+        self.fullscanButton.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.fullscanButton.setText(QCoreApplication.translate("mainWindow", u"Full Scan", None))
+#if QT_CONFIG(tooltip)
+        self.customscanButton.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.customscanButton.setText(QCoreApplication.translate("mainWindow", u"Custom Scan", None))
         self.cancelscanButton.setText(QCoreApplication.translate("mainWindow", u"Cancel Scan", None))
         self.updatehomeButton.setText("")
+#if QT_CONFIG(tooltip)
+        self.checkUpdate.setToolTip(QCoreApplication.translate("mainWindow", u"Check for the latest updates", None))
+#endif // QT_CONFIG(tooltip)
         self.checkUpdate.setText(QCoreApplication.translate("mainWindow", u"Check for Updates", None))
         self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"Cancel Update", None))
         self.homeButtonAbout.setText("")

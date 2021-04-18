@@ -310,6 +310,9 @@ QPushButton:hover
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QFrame
 {
@@ -427,6 +430,9 @@ QFrame:hover
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QFrame
 {
@@ -535,6 +541,9 @@ QFrame:hover
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
+                 <property name="toolTip">
+                  <string>About ClamGuard Project</string>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
@@ -576,6 +585,9 @@ QLabel:hover
                  </property>
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="toolTip">
+                  <string>View Quarantine</string>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QLabel
@@ -695,6 +707,9 @@ QPushButton:hover
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="toolTip">
+                    <string/>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
@@ -731,6 +746,9 @@ QPushButton:hover
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
                    </property>
+                   <property name="toolTip">
+                    <string/>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
@@ -766,6 +784,9 @@ QPushButton:hover
                    </property>
                    <property name="cursor">
                     <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
+                   <property name="toolTip">
+                    <string/>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton
@@ -978,6 +999,9 @@ QPushButton:hover
                  </property>
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="toolTip">
+                  <string>Check for the latest updates</string>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
