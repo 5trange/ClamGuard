@@ -250,7 +250,7 @@ class MainWindow(QMainWindow):
                 else:
                     self.ui.updateStatus.appendPlainText(buffer)
         except Exception as e:
-            print('Something happened. Error code: {e}')
+            print(f'Something happened. Error code: {e}')
 
     def stop_update(self):
         try:
@@ -263,7 +263,7 @@ class MainWindow(QMainWindow):
             self.ui.updatehomeButton.setEnabled(True)
 
         except Exception as e:
-            print('Something happened. Error code: {e}')
+            print(f'Something happened. Error code: {e}')
             self.ui.cancelUpdate.setEnabled(True) #SETS CANCEL UPDATE BUTTON TO ENABLED TO TRY AGAIN
 
 
