@@ -109,6 +109,11 @@ class MainWindow(QMainWindow):
         self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED UNTIL A SCAN FUNCTION IS STARTED
         self.ui.cancelscanButton.clicked.connect(self.stopscan) #STOPS SUBPROCESS INTURN STOPPING THREAD?
 
+        #UPDATEPAGE FUNCTIONS
+        self.ui.checkUpdate.clicked.connect(self.start_update)
+        self.ui.cancelUpdate.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED UNTIL UPDATE IS STARTED
+        self.ui.cancelUpdate.clicked.connect(self.stop_update)
+
 
         #QUARANTINEPAGE FUNCTIONS
         self.ui.quarantineRefresh.clicked.connect(self.start_quarantine)
@@ -223,6 +228,43 @@ class MainWindow(QMainWindow):
             self.ui.quarantineView.insertRow(entries)
             self.ui.quarantineView.setItem(entries,0,QTableWidgetItem(line))
             entries = entries+1
+
+    def start_update(self):
+        self.updateThread = threading.Thread(target = self.update_thread)
+        self.updateThread.start()
+
+    def update_thread(self):
+        self.ui.cancelUpdate.setEnabled(True)
+        self.ui.updatehomeButton.setEnabled(False)
+        self.ui.checkUpdate.setEnabled(False)
+        try:
+            self.ui.updateStatus.setPlainText('Checking for updates...')
+            self.process = Popen(['freshclam.exe'], stdout = PIPE, encoding = 'utf-8')
+            while(True):
+                buffer = self.process.stdout.readline()
+                if buffer == '':
+                    self.ui.cancelUpdate.setEnabled(False)
+                    self.ui.checkUpdate.setEnabled(True)
+                    self.ui.updatehomeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
+                    break
+                else:
+                    self.ui.updateStatus.appendPlainText(buffer)
+        except Exception as e:
+            print('Something happened. Error code: {e}')
+
+    def stop_update(self):
+        try:
+            os.kill(self.process.pid, signal.SIGTERM)
+            self.ui.updateStatus.clear()
+            self.ui.updateStatus.appendPlainText('Update cancelled.')
+            print('Update thread stopped.')
+            self.ui.cancelUpdate.setEnabled(False)
+            self.ui.checkUpdate.setEnabled(True)
+            self.ui.updatehomeButton.setEnabled(True)
+
+        except Exception as e:
+            print('Something happened. Error code: {e}')
+            self.ui.cancelUpdate.setEnabled(True) #SETS CANCEL UPDATE BUTTON TO ENABLED TO TRY AGAIN
 
 
 if __name__=="__main__":
