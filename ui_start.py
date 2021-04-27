@@ -199,8 +199,34 @@ class MainWindow(QMainWindow):
                 self.ui.scanStatus.appendPlainText(buffer)
 
     def start_customscan(self):
-        scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
-        print(scan_dir)
+        self.scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
+        self.scan_dir = self.scan_dir.replace("/","\\") #WINDOWS LIKES TO USE BACKSLASHES HHHH
+        print(self.scan_dir)
+        if self.scan_dir != '':
+            self.SingleThread = threading.Thread(target = self.custom_scan_thread)
+            self.SingleThread.start()
+        else:
+            print("\nNo directory returned.")
+
+    def custom_scan_thread(self):
+        self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED
+        self.ui.quickscanButton.setEnabled(False) #SETS QUICKSCAN BUTTON TO DISABLED
+        self.ui.fullscanButton.setEnabled(False) #SETS FULLSCAN BUTTON TO DISABLED
+        self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
+        self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
+        self.ui.scanStatus.setPlainText(f'Scanning {self.scan_dir}')
+        self.process = Popen(['clamdscan.exe',self.scan_dir,'--multiscan','--infected'], stdout = PIPE, encoding = 'utf-8')
+        while(True):
+            buffer = self.process.stdout.readline()
+            if buffer == '':
+                self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+                self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
+                self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
+                self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
+                self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
+                break
+            else:
+                self.ui.scanStatus.appendPlainText(buffer)
 
     #GENERAL FUNCTION TO KILL POPEN PROCESS WITH SIGTERM FOR A CLEAN EXIT; THREAD SHOULD STOP BY THEN
     def stopscan(self):
