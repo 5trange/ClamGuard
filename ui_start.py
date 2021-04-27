@@ -105,6 +105,8 @@ class MainWindow(QMainWindow):
         self.ui.quickscanButton.clicked.connect(self.start_quickscan) #STARTS THREAD
         ##FULLSCAN
         self.ui.fullscanButton.clicked.connect(self.start_fullscan) #STARTS THREAD
+        #CUSTOMSCAN
+        self.ui.customscanButton.clicked.connect(self.start_customscan) #STARTS THREAD
         #CANCELBUTTON
         self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED UNTIL A SCAN FUNCTION IS STARTED
         self.ui.cancelscanButton.clicked.connect(self.stopscan) #STOPS SUBPROCESS INTURN STOPPING THREAD?
@@ -195,6 +197,10 @@ class MainWindow(QMainWindow):
                 break
             else:
                 self.ui.scanStatus.appendPlainText(buffer)
+
+    def start_customscan(self):
+        scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
+        print(scan_dir)
 
     #GENERAL FUNCTION TO KILL POPEN PROCESS WITH SIGTERM FOR A CLEAN EXIT; THREAD SHOULD STOP BY THEN
     def stopscan(self):
