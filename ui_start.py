@@ -38,11 +38,12 @@ import time
 import os
 import threading
 import signal
+import webbrowser
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
-from process import *
+from subprocess import *
 from mainWindow import Ui_mainWindow #IMPORTING MAINWINDOW.PY
 
 #GLOBAL VARS
@@ -74,6 +75,9 @@ class MainWindow(QMainWindow):
 
         #TITLEBAR DRAGGING
         self.ui.titleBar.mouseMoveEvent = self.moveWindow
+
+        #ABOUTPAGE NAV
+        self.ui.AboutGithub.mousePressEvent = self.openGithub
 
         #SCANSTATUS AND UPDATESTATUS MODIFIERS
         self.ui.scanStatus.setBackgroundVisible(True)
@@ -297,6 +301,9 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print(f'Something happened. Error code: {e}')
             self.ui.cancelUpdate.setEnabled(True) #SETS CANCEL UPDATE BUTTON TO ENABLED TO TRY AGAIN
+
+    def openGithub(self, event):
+        webbrowser.open("https://github.com/5trange/ClamGuard")
 
 
 if __name__=="__main__":
