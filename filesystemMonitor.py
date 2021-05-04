@@ -38,7 +38,7 @@ import threading
 import os
 import subprocess
 import watchdog.observers
-from process import *
+from subprocess import *
 
 processes = []
 cpu_cont = int(os.cpu_count() / 2)
