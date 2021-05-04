@@ -45,6 +45,7 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from subprocess import *
 from mainWindow import Ui_mainWindow #IMPORTING MAINWINDOW.PY
+from SplashScreen import Ui_SplashScreen #IMPORTING SPLASHSCREEN.PY
 
 #GLOBAL VARS
 appdata_dir = os.environ['APPDATA']
@@ -52,6 +53,58 @@ win_dir = os.environ['SYSTEMROOT']
 root_drive = os.environ['SYSTEMDRIVE']
 driver_dir = win_dir+'\\System32\\Drivers\\'
 system32_dir = win_dir+'\\System32\\'
+
+#SPLASHSCREEN CLASS
+class SplashScreen(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_SplashScreen()
+        self.ui.setupUi(self)
+        self.counter = 0
+
+        #REMOVE TITLE BAR
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
+        #DROPSHADOW
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(20)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 60))
+        self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
+
+        #DUMMY SPLASHSCREEN
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.progress)
+        # TIMER IN MILLISECONDS
+        self.timer.start(35)
+        self.center() #CENTERING
+        self.show()
+
+    def progress(self):
+        #START CLAMD PROCESS HERE, AND PING IT
+        #CHANGE PROGRESSBAR VALUE ACCORDING TO IT
+
+        #DUMMY VALUE
+        self.ui.progressBar.setValue(self.counter)
+
+        #END SPLASH THEN START CLAMGUARD
+        if self.counter > 100:
+            # STOP TIMER
+            self.timer.stop()
+            self.close()
+            self.main_window=MainWindow()
+            self.main_window.show()
+
+        # INCREASE COUNTER
+        self.counter += 1
+
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 #MAINWINDOW CLASS
 class MainWindow(QMainWindow):
@@ -307,7 +360,6 @@ class MainWindow(QMainWindow):
 
 
 if __name__=="__main__":
-    app=QApplication(sys.argv)
-    window=MainWindow()
-    window.show()
+    app = QApplication(sys.argv)
+    window = SplashScreen()
     sys.exit(app.exec_())
