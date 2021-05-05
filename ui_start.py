@@ -217,7 +217,7 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Scan started, Please wait...')
-        self.process = Popen(['clamdscan.exe',appdata_dir,driver_dir,'--multiscan','--infected'], stdout = PIPE, encoding = 'utf-8') #USING MULTISCAN USES 100% CPU ALL CORES!?
+        self.process = Popen(['clamdscan.exe',appdata_dir,driver_dir,'--multiscan','--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8') #USING MULTISCAN USES 100% CPU ALL CORES!?
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
@@ -242,7 +242,7 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText('Full system scan started. Please note that this might take some time to complete. ')
-        self.process = Popen(['clamdscan.exe',root_drive,'--multiscan','--infected'], stdout = PIPE, encoding = 'utf-8')
+        self.process = Popen(['clamdscan.exe',root_drive,'--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
@@ -272,7 +272,7 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText(f'Scanning {self.scan_dir}')
-        self.process = Popen(['clamdscan.exe',self.scan_dir,'--multiscan','--infected'], stdout = PIPE, encoding = 'utf-8')
+        self.process = Popen(['clamdscan.exe',self.scan_dir,'--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
         while(True):
             buffer = self.process.stdout.readline()
             if buffer == '':
