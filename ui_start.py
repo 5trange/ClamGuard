@@ -216,19 +216,24 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False) #SETS FULLSCAN BUTTON TO DISABLED
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
+        self.cursor = QTextCursor(self.ui.scanStatus.document())
+        self.ui.scanStatus.setTextCursor(self.cursor)
         self.ui.scanStatus.setPlainText('Scan started, Please wait...')
-        self.process = Popen(['clamdscan.exe',appdata_dir,driver_dir,'--multiscan','--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8') #USING MULTISCAN USES 100% CPU ALL CORES!?
-        while(True):
-            buffer = self.process.stdout.readline()
-            if buffer == '':
-                self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
-                self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
-                self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
-                self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
-                self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
-                break
-            else:
-                self.ui.scanStatus.appendPlainText(buffer)
+        try:
+            self.process = Popen(['clamdscan.exe',appdata_dir,driver_dir,'--multiscan','--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
+            self.scanbuffer = self.process.stdout.readline()
+            while(self.scanbuffer != ''):
+                self.scanbuffer = self.process.stdout.readline()
+                self.ui.scanStatus.appendPlainText(self.scanbuffer)
+                self.ui.scanStatus.setTextCursor(self.cursor)
+                self.ui.scanStatus.ensureCursorVisible()
+            self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+            self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
+            self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
+            self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
+            self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
+        except Exception as f:
+            print(f)
 
     ##FULLSCAN
     def start_fullscan(self):
@@ -241,19 +246,24 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False) #SETS FULLSCAN BUTTON TO DISABLED
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
+        self.cursor = QTextCursor(self.ui.scanStatus.document())
+        self.ui.scanStatus.setTextCursor(self.cursor)
         self.ui.scanStatus.setPlainText('Full system scan started. Please note that this might take some time to complete. ')
-        self.process = Popen(['clamdscan.exe',root_drive,'--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
-        while(True):
-            buffer = self.process.stdout.readline()
-            if buffer == '':
-                self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
-                self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
-                self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
-                self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
-                self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
-                break
-            else:
-                self.ui.scanStatus.appendPlainText(buffer)
+        try:
+            self.process = Popen(['clamdscan.exe',root_drive,'--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
+            self.scanbuffer = self.process.stdout.readline()
+            while(self.scanbuffer != ''):
+                self.scanbuffer = self.process.stdout.readline()
+                self.ui.scanStatus.appendPlainText(self.scanbuffer)
+                self.ui.scanStatus.setTextCursor(self.cursor)
+                self.ui.scanStatus.ensureCursorVisible()
+            self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
+            self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
+            self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
+            self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
+            self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
+        except Exception as f:
+            print(f)
 
     def start_customscan(self):
         self.scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
