@@ -326,6 +326,27 @@ class MainWindow(QMainWindow):
         self.ui.cancelUpdate.setEnabled(True)
         self.ui.updatehomeButton.setEnabled(False)
         self.ui.checkUpdate.setEnabled(False)
+        self.cursor = QTextCursor(self.ui.updateStatus.document())
+        self.ui.updateStatus.setTextCursor(self.cursor)
+        self.ui.updateStatus.setPlainText('Checking for updates..')
+        try:
+            self.process =  Popen(['freshclam.exe'], stdout = PIPE, encoding = 'utf-8')
+            self.updatebuffer = self.process.stdout.readline()
+            while(self.updatebuffer != ''):
+                self.updatebuffer = self.process.stdout.readline()
+                self.ui.updateStatus.appendPlainText(self.updatebuffer)
+                self.ui.updateStatus.setTextCursor(self.cursor)
+                self.ui.updateStatus.ensureCursorVisible()
+            self.ui.cancelUpdate.setEnabled(False)
+            self.ui.checkUpdate.setEnabled(True)
+            self.ui.updatehomeButton.setEnabled(True)
+        except Exception as f:
+            print(f)
+
+        """
+        self.ui.cancelUpdate.setEnabled(True)
+        self.ui.updatehomeButton.setEnabled(False)
+        self.ui.checkUpdate.setEnabled(False)
         try:
             self.ui.updateStatus.setPlainText('Checking for updates...')
             self.process = Popen(['freshclam.exe'], stdout = PIPE, encoding = 'utf-8')
@@ -340,6 +361,7 @@ class MainWindow(QMainWindow):
                     self.ui.updateStatus.appendPlainText(buffer)
         except Exception as e:
             print(f'Something happened. Error code: {e}')
+        """
 
     def stop_update(self):
         try:
