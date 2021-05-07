@@ -277,9 +277,10 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False) #SETS FULLSCAN BUTTON TO DISABLED
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
-        self.ui.scanStatus.setPlainText(f'Scanning {self.scan_dir}')
+        self.ui.scanStatus.setPlainText(f'Scanning {self.scan_dir}\nThe scan may take a while to complete.\n\n'
+                                        f'Please wait...')
         self.cursor = QTextCursor(self.ui.scanStatus.document())
-        self.process = Popen(['clamdscan.exe',self.scan_dir,'--infected','--quiet','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
+        self.process = Popen(['clamdscan.exe',self.scan_dir,'--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
         while(True):
             buffer = self.process.stdout.readline()
             if self.process.poll() is None:
@@ -302,8 +303,8 @@ class MainWindow(QMainWindow):
         try:
             os.kill(self.process.pid, signal.SIGTERM)
             self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL SCAN BUTTON TO DISABLED AFTER SUCESSFUL TERMINATION OF THREAD
-            self.ui.scanStatus.clear()
-            self.ui.scanStatus.appendPlainText('Scan stopped.')
+            #self.ui.scanStatus.clear()
+            self.ui.scanStatus.appendPlainText('\n\n\nScan stopped.')
             print('Thread stopped.')
             self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
             self.ui.fullscanButton.setEnabled(True) #SETS FULLSCAN BUTTON TO ENABLED
@@ -342,19 +343,16 @@ class MainWindow(QMainWindow):
         self.cursor = QTextCursor(self.ui.updateStatus.document())
         self.ui.updateStatus.setTextCursor(self.cursor)
         self.ui.updateStatus.setPlainText('Downloading updates may take a while depending on your network speed. '
-                                          '\nPlease be patient..\n\nRefreshing database..')
+                                          '\nPlease be patient...\n\nRefreshing database...')
         try:
             self.process =  Popen(['freshclam.exe', '--quiet'], stdout = PIPE, encoding = 'utf-8')
             self.updatebuffer = self.process.stdout.readline()
-            self.updateloop = 1
             while self.process.poll() is None:
                 self.updatebuffer = self.process.stdout.readline()
                 self.ui.updateStatus.appendPlainText(self.updatebuffer)
                 self.ui.updateStatus.setTextCursor(self.cursor)
                 self.ui.updateStatus.ensureCursorVisible()
-                self.updateloop = self.updateloop + 1
             self.ui.updateStatus.appendPlainText('Database refreshed.')
-            print(self.updateloop)
             self.ui.cancelUpdate.setEnabled(False)
             self.ui.updateStatus.ensureCursorVisible()
             time.sleep(3)
@@ -367,9 +365,8 @@ class MainWindow(QMainWindow):
         try:
             os.kill(self.process.pid, signal.SIGTERM)
             time.sleep(5)
-            self.ui.updateStatus.clear()
-            self.ui.updateStatus.appendPlainText('Update cancelled.')
             print('Update thread stopped.')
+            self.ui.updateStatus.appendPlainText('Update cancelled.')
             self.ui.cancelUpdate.setEnabled(False)
             self.ui.checkUpdate.setEnabled(True)
             self.ui.updatehomeButton.setEnabled(True)
