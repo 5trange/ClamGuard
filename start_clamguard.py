@@ -10,8 +10,8 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from subprocess import *
-from mainWindow import Ui_mainWindow #IMPORTING MAINWINDOW.PY
-from SplashScreen import Ui_SplashScreen #IMPORTING SPLASHSCREEN.PY
+from mainWindow import Ui_mainWindow # Importing mainWindow.py
+from SplashScreen import Ui_SplashScreen # Importing SplashScreen.py
 
 # Splashscreen class
 class SplashScreen(QMainWindow):
@@ -36,7 +36,7 @@ class SplashScreen(QMainWindow):
         # Dummy splashscreen
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        # TIMER IN MILLISECONDS
+        # Timer in milliseconds
         self.timer.start(35)
         self.center() #CENTERING
         self.show()
@@ -50,7 +50,7 @@ class SplashScreen(QMainWindow):
 
         # End splash and start ClamGuard
         if self.counter > 100:
-            # STOP TIMER
+            # Stop timer
             self.timer.stop()
             self.close()
             self.main_window=MainWindow()
@@ -78,12 +78,12 @@ class MainWindow(QMainWindow):
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 100))
         self.ui.dropshadowFrame.setGraphicsEffect(self.shadow)
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint) #SETTING FRAMELESS WINDOW
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground) #SETTING FRAMEBORDER TO TRANSLUCENT
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint) # Setting frameless window
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground) # Setting frame border
 
         # Window control buttons
-        self.ui.minButton.clicked.connect(lambda: self.showMinimized()) #MINIMIZE ON CLICK
-        self.ui.closeButton.clicked.connect(lambda: self.close()) #CLOSE ON CLICK
+        self.ui.minButton.clicked.connect(lambda: self.showMinimized()) # Minimize on click
+        self.ui.closeButton.clicked.connect(lambda: self.close()) # Close on click
 
         # Titlebar dragging
         self.ui.titleBar.mouseMoveEvent = self.moveWindow
@@ -98,21 +98,21 @@ class MainWindow(QMainWindow):
         self.ui.updateStatus.setReadOnly(True)
 
         # Page swap functions
-        #TO SCANPAGE FROM HOMEPAGE
+        # To scanpage from homepage
         self.ui.scanFrame.mousePressEvent = self.switch_scan
-        #TO HOMEPAGE FROM SCANPAGE
+        # To homepage from scanpage
         self.ui.homeButton.clicked.connect(self.switch_home)
-        #TO UPDATEPAGE FROM HOMEPAGE
+        # To updatepage from homepage
         self.ui.updateFrame.mousePressEvent = self.switch_update
-        #TO HOMEPAGE FROM UPDATEPAGE
+        # To homepage from updatepage
         self.ui.updatehomeButton.clicked.connect(self.switch_home)
-        #TO ABOUTPAGE FROM HOMEPAGE
+        # To aboutpage from homepage
         self.ui.aboutLabel.mousePressEvent = self.switch_about
-        #TO HOMEPAGE FROM ABOUTPAGE
+        # To homepage from aboutpage
         self.ui.homeButtonAbout.clicked.connect(self.switch_home)
-        #TO QUARANTINE FROM HOMEPAGE
+        # To quarantine from homepage
         self.ui.quarantineLabel.mousePressEvent = self.switch_quarantine
-        #TO HOMEPAGE FROM QUARANTINE
+        # To homepage from quarantine
         self.ui.quarantineHomeButton.clicked.connect(self.switch_home)
 
 
@@ -167,7 +167,7 @@ class MainWindow(QMainWindow):
         self.ui.updateStatus.clear()
         self.ui.updateStatus.appendPlainText("Refreshing database...\n\n")
         self.thread = Updater()
-        self.thread.ref.connect(self.set_update_value)
+        self.thread.ret.connect(self.set_update_value)
         self.thread.start()
         self.thread.finished.connect(lambda: self.ui.cancelUpdate.setEnabled(False))
         self.thread.finished.connect(lambda: self.ui.checkUpdate.setEnabled(True))
@@ -209,7 +209,7 @@ class MainWindow(QMainWindow):
         webbrowser.open("https://github.com/5trange/ClamGuard")
 
 class Updater(QThread):
-    ref = Signal(str)
+    ret = Signal(str)
     abort = False
 
     def printing(self):
@@ -229,12 +229,14 @@ class Updater(QThread):
                     self.updatebuffer = str(self.process.stdout.readline())
                     self.updatebuffer = os.linesep.join([s for s in self.updatebuffer.splitlines() if s])
                     if self.updatebuffer != '':
-                        self.ref.emit(self.updatebuffer)
+                        self.ret.emit(self.updatebuffer)
 
             if(self.abort == False):
-                self.ref.emit("\n\nDatabase refreshed.")
+                self.ret.emit("\n\nDatabase refreshed.")
         except Exception as f:
             print(f)
+
+class QuickScan(QThread):
 
 
 if __name__=="__main__":
