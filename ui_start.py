@@ -272,21 +272,24 @@ class MainWindow(QMainWindow):
             print("\nNo directory returned.")
 
     def custom_scan_thread(self):
+        self.ui.scanStatus.clear()
         self.ui.cancelscanButton.setEnabled(True) #SETS CANCEL BUTTON TO ENABLED
         self.ui.quickscanButton.setEnabled(False) #SETS QUICKSCAN BUTTON TO DISABLED
         self.ui.fullscanButton.setEnabled(False) #SETS FULLSCAN BUTTON TO DISABLED
         self.ui.customscanButton.setEnabled(False) #SETS CUSTOMSCAN BUTTON TO DISABLED
         self.ui.homeButton.setEnabled(False) #SETS HOME BUTTON TO DISABLED
         self.ui.scanStatus.setPlainText(f'Scanning {self.scan_dir}\nThe scan may take a while to complete.\n\n'
-                                        f'Please wait...')
-        self.cursor = QTextCursor(self.ui.scanStatus.document())
-        self.process = Popen(['clamdscan.exe',self.scan_dir,'--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
+                                        f'Please wait...\n\n')
+        self.process = Popen(['clamdscan.exe',self.scan_dir,'--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8') #encoding = 'utf-8'
         while(True):
             buffer = self.process.stdout.readline()
+            buffer = str(buffer)
+            buffer = os.linesep.join([s for s in buffer.splitlines() if s])
             if self.process.poll() is None:
-                self.ui.scanStatus.appendPlainText(buffer)
-                self.ui.scanStatus.setTextCursor(self.cursor)
-                self.ui.scanStatus.ensureCursorVisible()
+                if buffer != '':
+                    self.ui.scanStatus.appendPlainText(buffer)
+                    self.ui.scanStatus.verticalScrollBar().rangeChanged.connect(self.change_scroll)
+
             else:
                 self.ui.cancelscanButton.setEnabled(False) #SETS CANCEL BUTTON TO DISABLED AFTER ENDING THE FUNCTION
                 self.ui.quickscanButton.setEnabled(True) #SETS QUICKSCAN BUTTON TO ENABLED
@@ -294,6 +297,11 @@ class MainWindow(QMainWindow):
                 self.ui.customscanButton.setEnabled(True) #SETS CUSTOMSCAN BUTTON TO ENABLED
                 self.ui.homeButton.setEnabled(True) #SETS HOME BUTTON TO ENABLED
                 break
+
+    @Slot(int, int)
+    def change_scroll(self, min, max):
+        print("cambio", min, max)
+        self.ui.scanStatus.verticalScrollBar().setSliderPosition(max)
 
     def stopscan(self):
         self.ThreadStopper = threading.Thread(target = self.stop_scan_thread)
