@@ -126,7 +126,7 @@ class MainWindow(QMainWindow):
         # Update page functions
         self.ui.checkUpdate.clicked.connect(self.launch_update)
         self.ui.cancelUpdate.setEnabled(False)
-        #self.ui.cancelUpdate.clicked.connect(self.stop_update)
+        self.ui.cancelUpdate.clicked.connect(self.stop_update)
 
 
         # Quarantine functions
@@ -176,6 +176,11 @@ class MainWindow(QMainWindow):
     def set_update_value(self, updatestring):
         self.ui.updateStatus.appendPlainText(updatestring)
 
+    def stop_update(self):
+        self.thread.abort = True
+        self.ui.updateStatus.clear()
+        self.ui.updateStatus.appendPlainText("\nUpdate cancelled.")
+
     # Quarantine file population threads.
     def start_quarantine(self):
         self.QuarantineThread = threading.Thread(target = self.populate_quarantine)
@@ -199,6 +204,7 @@ class MainWindow(QMainWindow):
 
 class Updater(QThread):
     ref = Signal(str)
+    abort = False
 
     def printing(self):
         print("Hello, I'm a worker class!")
@@ -207,11 +213,20 @@ class Updater(QThread):
         try:
             self.process =  Popen(['freshclam.exe'], stdout = PIPE, encoding = 'utf-8')
             while self.process.poll() is None:
-                self.updatebuffer = str(self.process.stdout.readline())
-                self.updatebuffer = os.linesep.join([s for s in self.updatebuffer.splitlines() if s])
-                if self.updatebuffer != '':
-                    self.ref.emit(self.updatebuffer)
-            self.ref.emit("\n\nDatabase refreshed.")
+                if(self.abort == True):
+                    try:
+                        os.kill(self.process.pid, signal.SIGTERM)
+                        self.wait(3)
+                    except Exception as e:
+                        print(f"Something happened. Error code {e}")
+                else:
+                    self.updatebuffer = str(self.process.stdout.readline())
+                    self.updatebuffer = os.linesep.join([s for s in self.updatebuffer.splitlines() if s])
+                    if self.updatebuffer != '':
+                        self.ref.emit(self.updatebuffer)
+
+            if(self.abort == False):
+                self.ref.emit("\n\nDatabase refreshed.")
         except Exception as f:
             print(f)
 
