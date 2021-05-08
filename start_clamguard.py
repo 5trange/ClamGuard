@@ -13,6 +13,15 @@ from subprocess import *
 from mainWindow import Ui_mainWindow # Importing mainWindow.py
 from SplashScreen import Ui_SplashScreen # Importing SplashScreen.py
 
+
+# Globals vars + env path
+appdata_dir = os.environ['APPDATA']
+win_dir = os.environ['SYSTEMROOT']
+root_drive = os.environ['SYSTEMDRIVE']
+drivers_dir = win_dir+'\\System32\\Drivers\\'
+system32_dir = win_dir+'\\System32\\'
+
+
 # Splashscreen class
 class SplashScreen(QMainWindow):
     def __init__(self):
@@ -117,11 +126,11 @@ class MainWindow(QMainWindow):
 
 
         # Scan page functions
-        #self.ui.quickscanButton.clicked.connect(self.start_quickscan)
+        self.ui.quickscanButton.clicked.connect(self.launch_quickscan)
         #self.ui.fullscanButton.clicked.connect(self.start_fullscan)
         #self.ui.customscanButton.clicked.connect(self.start_customscan)
         self.ui.cancelscanButton.setEnabled(False)
-        #self.ui.cancelscanButton.clicked.connect(self.stopscan)
+        self.ui.cancelscanButton.clicked.connect(self.stop_scan)
 
         # Update page functions
         self.ui.checkUpdate.clicked.connect(self.launch_update)
@@ -159,6 +168,38 @@ class MainWindow(QMainWindow):
     def switch_quarantine(self, event):
         self.ui.stackedHome.setCurrentWidget(self.ui.pageQuarantine)
 
+    # Quickscan threads and slots
+    def launch_quickscan(self):
+        self.ui.cancelscanButton.setEnabled(True)
+        self.ui.quickscanButton.setEnabled(False)
+        self.ui.fullscanButton.setEnabled(False)
+        self.ui.customscanButton.setEnabled(False)
+        self.ui.homeButton.setEnabled(False)
+        self.ui.scanStatus.clear()
+        self.ui.scanStatus.appendPlainText("Quick scan started. Please wait...\n\
+        NOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.")
+        self.sthread = QuickScan()
+        self.sthread.ret.connect(self.set_scan_value)
+        self.sthread.start()
+        self.sthread.finished.connect(lambda: self.ui.cancelscanButton.setEnabled(False))
+        self.sthread.finished.connect(lambda: self.ui.quickscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
+
+    def set_scan_value(self, scanstring):
+        self.ui.scanStatus.appendPlainText(scanstring)
+
+    def stop_scan(self):
+        self.SingleThread = threading.Thread(target = self.stop_scan_thread)
+
+    def stop_scan_thread(self):
+        self.sthread.abort = True
+        self.ui.cancelscanButton.setEnabled(False)
+        time.sleep(5)
+        self.ui.scanStatus.clear()
+        self.ui.scanStatus.appendPlainText("\nScan cancelled.")
+
     # Update threads and slots
     def launch_update(self):
         self.ui.cancelUpdate.setEnabled(True)
@@ -185,7 +226,7 @@ class MainWindow(QMainWindow):
         self.ui.cancelUpdate.setEnabled(False)
         time.sleep(5)
         self.ui.updateStatus.clear()
-        self.ui.updateStatus.appendPlainText("\nUpdate cancelled.")
+        self.ui.updateStatus.appendPlainText("\nUpdate cancelled.") # Possibly a thread unsafe approach
 
     # Quarantine file population threads.
     def start_quarantine(self):
@@ -224,7 +265,7 @@ class Updater(QThread):
                         os.kill(self.process.pid, signal.SIGTERM)
                         break
                     except Exception as e:
-                        print(f"Something happened. Error code {e}")
+                        print(f"Something happened. Error code: {e}")
                 else:
                     self.updatebuffer = str(self.process.stdout.readline())
                     self.updatebuffer = os.linesep.join([s for s in self.updatebuffer.splitlines() if s])
@@ -234,9 +275,31 @@ class Updater(QThread):
             if(self.abort == False):
                 self.ret.emit("\n\nDatabase refreshed.")
         except Exception as f:
-            print(f)
+            print(f"Something happened. Error code: {e}")
 
 class QuickScan(QThread):
+    ret = Signal(str)
+    abort = False
+
+    def run(self):
+        try:
+            self.process = Popen(['clamdscan.exe',appdata_dir,drivers_dir,'--multiscan','--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
+            while self.process.poll() is None:
+                if(self.abort == True):
+                    try:
+                        os.kill(self.process.pid, signal.SIGTERM)
+                        break
+                    except Exception as e:
+                        print(f"Something happened. Error code: {e}")
+                else:
+                    self.scanbuffer = self.process.stdout.readline()
+                    self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
+                    if self.scanbuffer != '':
+                        self.ret.emit(self.scanbuffer)
+            if(self.abort == False):
+                self.ret.emit("\n\nQuick scan complete.")
+        except Exception as f:
+            print(f"Something happened. Error code: {e}")
 
 
 if __name__=="__main__":
