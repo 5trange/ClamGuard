@@ -161,10 +161,17 @@ class MainWindow(QMainWindow):
 
     # Update threads and slots
     def launch_update(self):
+        self.ui.cancelUpdate.setEnabled(True)
+        self.ui.updatehomeButton.setEnabled(False)
+        self.ui.checkUpdate.setEnabled(False)
         self.ui.updateStatus.clear()
+        self.ui.updateStatus.appendPlainText("Refreshing database...\n\n")
         self.thread = Updater()
         self.thread.ref.connect(self.set_update_value)
         self.thread.start()
+        self.thread.finished.connect(lambda: self.ui.cancelUpdate.setEnabled(False))
+        self.thread.finished.connect(lambda: self.ui.checkUpdate.setEnabled(True))
+        self.thread.finished.connect(lambda: self.ui.updatehomeButton.setEnabled(True))
 
     def set_update_value(self, updatestring):
         self.ui.updateStatus.appendPlainText(updatestring)
@@ -198,12 +205,13 @@ class Updater(QThread):
 
     def run(self):
         try:
-            self.process =  Popen(['freshclam.exe', '--quiet'], stdout = PIPE, encoding = 'utf-8')
+            self.process =  Popen(['freshclam.exe'], stdout = PIPE, encoding = 'utf-8')
             while self.process.poll() is None:
                 self.updatebuffer = str(self.process.stdout.readline())
                 self.updatebuffer = os.linesep.join([s for s in self.updatebuffer.splitlines() if s])
                 if self.updatebuffer != '':
                     self.ref.emit(self.updatebuffer)
+            self.ref.emit("\n\nDatabase refreshed.")
         except Exception as f:
             print(f)
 
