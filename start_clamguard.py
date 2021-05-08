@@ -150,7 +150,7 @@ class MainWindow(QMainWindow):
 
         # Scan page functions
         self.ui.quickscanButton.clicked.connect(self.launch_quickscan)
-        # self.ui.fullscanButton.clicked.connect(self.start_fullscan)
+        self.ui.fullscanButton.clicked.connect(self.launch_fullscan)
         # self.ui.customscanButton.clicked.connect(self.start_customscan)
         self.ui.cancelscanButton.setEnabled(False)
         self.ui.cancelscanButton.clicked.connect(self.stop_scan)
@@ -200,6 +200,25 @@ class MainWindow(QMainWindow):
         self.ui.scanStatus.appendPlainText(
             "Quick scan started. Please wait...\n\nNOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.")
         self.sthread = QuickScan()
+        self.sthread.ret.connect(self.set_scan_value)
+        self.sthread.start()
+        self.sthread.finished.connect(lambda: self.ui.cancelscanButton.setEnabled(False))
+        self.sthread.finished.connect(lambda: self.ui.quickscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
+
+    # Fullscan threads and slots
+    def launch_fullscan(self):
+        self.ui.cancelscanButton.setEnabled(True)
+        self.ui.quickscanButton.setEnabled(False)
+        self.ui.fullscanButton.setEnabled(False)
+        self.ui.customscanButton.setEnabled(False)
+        self.ui.homeButton.setEnabled(False)
+        self.ui.scanStatus.clear()
+        self.ui.scanStatus.appendPlainText(
+            f"Full scan started.\n\nScanning {root_drive}.\n\nPlease note that full scan might take a long time to complete.\n\nIt is recommended to close all programs before scanning.")
+        self.sthread = FullScan()
         self.sthread.ret.connect(self.set_scan_value)
         self.sthread.start()
         self.sthread.finished.connect(lambda: self.ui.cancelscanButton.setEnabled(False))
@@ -327,6 +346,35 @@ class QuickScan(QThread):
                 self.ret.emit("\n\nQuick scan complete.")
             elif (self.abort == True):
                 self.ret.emit("\n\nScan cancelled.")
+        except Exception as e:
+            print(f"Something happened. Error code: {e}")
+
+class FullScan(QThread):
+    ret = Signal(str)
+    abort = False
+
+    def run(self):
+        try:
+            self.process = Popen(
+                ['clamdscan.exe', root_drive, '--infected', '--move=quarantine'],
+                stdout=PIPE, encoding='utf-8')
+            while self.process.poll() is None:
+                if (self.abort == True):
+                    try:
+                        self.ret.emit("\n\nStopping scan...")
+                        break
+                    except Exception as e:
+                        print(f"Something happened. Error code: {e}")
+                else:
+                    self.scanbuffer = self.process.stdout.readline()
+                    self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
+                    if self.scanbuffer != '':
+                        self.ret.emit(self.scanbuffer)
+
+            if (self.abort == False):
+                self.ret.emit("\n\nFull scan complete.")
+            elif (self.abort == True):
+                self.ret.emit("\n\nFull scan cancelled.")
         except Exception as e:
             print(f"Something happened. Error code: {e}")
 
