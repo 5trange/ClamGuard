@@ -151,7 +151,7 @@ class MainWindow(QMainWindow):
         # Scan page functions
         self.ui.quickscanButton.clicked.connect(self.launch_quickscan)
         self.ui.fullscanButton.clicked.connect(self.launch_fullscan)
-        # self.ui.customscanButton.clicked.connect(self.start_customscan)
+        self.ui.customscanButton.clicked.connect(self.launch_customscan)
         self.ui.cancelscanButton.setEnabled(False)
         self.ui.cancelscanButton.clicked.connect(self.stop_scan)
 
@@ -227,6 +227,26 @@ class MainWindow(QMainWindow):
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
 
+    # Customscan threads and slots
+    def launch_customscan(self):
+        self.ui.cancelscanButton.setEnabled(True)
+        self.ui.quickscanButton.setEnabled(False)
+        self.ui.fullscanButton.setEnabled(False)
+        self.ui.customscanButton.setEnabled(False)
+        self.ui.homeButton.setEnabled(False)
+        self.ui.scanStatus.clear()
+        self.scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
+        self.scan_dir = self.scan_dir.replace("/","\\") # Shindows likes to use backslashes hhhh
+        print("Debug: "+self.scan_dir)
+        self.sthread = CustomScan(self.scan_dir)
+        self.sthread.ret.connect(self.set_scan_value)
+        self.sthread.start()
+        self.sthread.finished.connect(lambda: self.ui.cancelscanButton.setEnabled(False))
+        self.sthread.finished.connect(lambda: self.ui.quickscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
+
     def set_scan_value(self, scanstring):
         self.ui.scanStatus.appendPlainText(scanstring)
 
@@ -294,7 +314,7 @@ class Updater(QThread):
     abort = False
 
     def printing(self):
-        print("Hello, I'm a worker class!")
+        print("Debug: Hello, I'm a worker class!")
 
     def run(self):
         try:
@@ -305,7 +325,7 @@ class Updater(QThread):
                         self.ret.emit("\n\nStopping update...")
                         break
                     except Exception as e:
-                        print(f"Something happened. Error code: {e}")
+                        print(f"Debug: Error!:{e}")
                 else:
                     self.updatebuffer = str(self.process.stdout.readline())
                     self.updatebuffer = os.linesep.join([s for s in self.updatebuffer.splitlines() if s])
@@ -316,8 +336,8 @@ class Updater(QThread):
                 self.ret.emit("\n\nDatabase refreshed.")
             elif (self.abort == True):
                 self.ret.emit("\n\nDatabase update cancelled.")
-        except Exception as f:
-            print(f"Something happened. Error code: {e}")
+        except Exception as e:
+            print(f"Debug: Error!:{e}")
 
 
 class QuickScan(QThread):
@@ -335,7 +355,7 @@ class QuickScan(QThread):
                         self.ret.emit("\n\nStopping scan...")
                         break
                     except Exception as e:
-                        print(f"Something happened. Error code: {e}")
+                        print(f"Debug: Error!:{e}")
                 else:
                     self.scanbuffer = self.process.stdout.readline()
                     self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
@@ -347,7 +367,7 @@ class QuickScan(QThread):
             elif (self.abort == True):
                 self.ret.emit("\n\nScan cancelled.")
         except Exception as e:
-            print(f"Something happened. Error code: {e}")
+            print(f"Debug: Error!:{e}")
 
 class FullScan(QThread):
     ret = Signal(str)
@@ -364,7 +384,7 @@ class FullScan(QThread):
                         self.ret.emit("\n\nStopping scan...")
                         break
                     except Exception as e:
-                        print(f"Something happened. Error code: {e}")
+                        print(f"Debug: Error!:{e}")
                 else:
                     self.scanbuffer = self.process.stdout.readline()
                     self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
@@ -376,7 +396,28 @@ class FullScan(QThread):
             elif (self.abort == True):
                 self.ret.emit("\n\nFull scan cancelled.")
         except Exception as e:
-            print(f"Something happened. Error code: {e}")
+            print(f"Debug: Error!:{e}")
+
+class CustomScan(QThread):
+    ret = Signal(str)
+    abort = False
+    scan_dir = ''
+
+    # Constructor modification to pass scan_dir
+    def __init__(self, scan_dir, parent=None):
+        QThread.__init__(self, parent)
+        self.scan_dir = scan_dir
+
+    def run(self):
+        if self.scan_dir == '':
+            self.abort = True
+            print("Debug: Scan directory empty!")
+            self.ret.emit("No directory selected. Scan cancelled.")
+        else:
+            print("Debug: "+self.scan_dir)
+            self.ret.emit(f"Directory selected: {self.scan_dir}")
+            self.ret.emit(f"Scanning {self.scan_dir}\n\n")
+
 
 
 if __name__ == "__main__":
