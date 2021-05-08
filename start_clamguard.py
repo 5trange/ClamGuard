@@ -177,7 +177,13 @@ class MainWindow(QMainWindow):
         self.ui.updateStatus.appendPlainText(updatestring)
 
     def stop_update(self):
+        self.SingleThread = threading.Thread(target = self.stop_update_thread)
+        self.SingleThread.start()
+
+    def stop_update_thread(self):
         self.thread.abort = True
+        self.ui.cancelUpdate.setEnabled(False)
+        time.sleep(5)
         self.ui.updateStatus.clear()
         self.ui.updateStatus.appendPlainText("\nUpdate cancelled.")
 
@@ -216,7 +222,7 @@ class Updater(QThread):
                 if(self.abort == True):
                     try:
                         os.kill(self.process.pid, signal.SIGTERM)
-                        self.wait(3)
+                        break
                     except Exception as e:
                         print(f"Something happened. Error code {e}")
                 else:
