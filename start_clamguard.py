@@ -192,13 +192,13 @@ class MainWindow(QMainWindow):
 
     def stop_scan(self):
         self.SingleThread = threading.Thread(target = self.stop_scan_thread)
+        self.SingleThread.start()
 
     def stop_scan_thread(self):
         self.sthread.abort = True
+        os.kill(self.sthread.process.pid, signal.SIGTERM)
         self.ui.cancelscanButton.setEnabled(False)
         time.sleep(5)
-        self.ui.scanStatus.clear()
-        self.ui.scanStatus.appendPlainText("\nScan cancelled.")
 
     # Update threads and slots
     def launch_update(self):
@@ -223,10 +223,9 @@ class MainWindow(QMainWindow):
 
     def stop_update_thread(self):
         self.thread.abort = True
+        os.kill(self.thread.process.pid, signal.SIGTERM)
         self.ui.cancelUpdate.setEnabled(False)
         time.sleep(5)
-        self.ui.updateStatus.clear()
-        self.ui.updateStatus.appendPlainText("\nUpdate cancelled.") # Possibly a thread unsafe approach
 
     # Quarantine file population threads.
     def start_quarantine(self):
@@ -262,7 +261,7 @@ class Updater(QThread):
             while self.process.poll() is None:
                 if(self.abort == True):
                     try:
-                        os.kill(self.process.pid, signal.SIGTERM)
+                        self.ret.emit("\n\nStopping update...")
                         break
                     except Exception as e:
                         print(f"Something happened. Error code: {e}")
@@ -274,6 +273,8 @@ class Updater(QThread):
 
             if(self.abort == False):
                 self.ret.emit("\n\nDatabase refreshed.")
+            elif(self.abort == True):
+                self.ret.emit("\n\nDatabase update cancelled.")
         except Exception as f:
             print(f"Something happened. Error code: {e}")
 
@@ -283,11 +284,11 @@ class QuickScan(QThread):
 
     def run(self):
         try:
-            self.process = Popen(['clamdscan.exe',appdata_dir,drivers_dir,'--multiscan','--infected','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
+            self.process = Popen(['clamdscan.exe',appdata_dir,drivers_dir,'--infected','--multiscan','--move=quarantine'], stdout = PIPE, encoding = 'utf-8')
             while self.process.poll() is None:
                 if(self.abort == True):
                     try:
-                        os.kill(self.process.pid, signal.SIGTERM)
+                        self.ret.emit("\n\nStopping scan...")
                         break
                     except Exception as e:
                         print(f"Something happened. Error code: {e}")
@@ -296,8 +297,11 @@ class QuickScan(QThread):
                     self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
                     if self.scanbuffer != '':
                         self.ret.emit(self.scanbuffer)
+
             if(self.abort == False):
                 self.ret.emit("\n\nQuick scan complete.")
+            elif(self.abort == True):
+                self.ret.emit("\n\nScan cancelled.")
         except Exception as f:
             print(f"Something happened. Error code: {e}")
 
