@@ -198,7 +198,7 @@ class MainWindow(QMainWindow):
         self.ui.homeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
-            "Quick scan started. Please wait...\n\nNOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.")
+            "Quick scan started. Please wait...\n\nNOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.\n\n")
         self.sthread = QuickScan()
         self.sthread.ret.connect(self.set_scan_value)
         self.sthread.start()
@@ -217,7 +217,7 @@ class MainWindow(QMainWindow):
         self.ui.homeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
-            f"Full scan started.\n\nScanning {root_drive}.\n\nPlease note that full scan might take a long time to complete.\n\nIt is recommended to close all programs before scanning.")
+            f"Full scan started.\n\nScanning {root_drive}.\n\nPlease note that full scan might take a long time to complete.\n\nIt is recommended to close all programs before scanning.\n\n")
         self.sthread = FullScan()
         self.sthread.ret.connect(self.set_scan_value)
         self.sthread.start()
@@ -417,7 +417,30 @@ class CustomScan(QThread):
             print("Debug: "+self.scan_dir)
             self.ret.emit(f"Directory selected: {self.scan_dir}")
             self.ret.emit(f"Scanning {self.scan_dir}\n\n")
+            try:
+                self.process = Popen(
+                    ['clamdscan.exe', root_drive, '--infected', '--move=quarantine'],
+                    stdout=PIPE, encoding='utf-8')
+                while self.process.poll() is None:
+                    if (self.abort == True):
+                        try:
+                            self.ret.emit("\n\nStopping scan...")
+                            break
+                        except Exception as e:
+                            print(f"Debug: Error!:{e}")
+                    else:
+                        self.scanbuffer = self.process.stdout.readline()
+                        self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
+                        if self.scanbuffer != '':
+                            self.ret.emit(self.scanbuffer)
 
+                if (self.abort == False):
+                    self.ret.emit("\n\nCustom scan complete.")
+                elif (self.abort == True):
+                    self.ret.emit("\n\nCustom scan cancelled.")
+
+            except Exception as e:
+                print(f"Debug: Error!:{e}")
 
 
 if __name__ == "__main__":
