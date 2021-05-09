@@ -318,7 +318,7 @@ class Updater(QThread):
 
     def run(self):
         try:
-            self.process = Popen(['freshclam.exe'], stdout=PIPE, encoding='utf-8')
+            self.process = Popen(['freshclam.exe'], stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
             while self.process.poll() is None:
                 if (self.abort == True):
                     try:
@@ -348,7 +348,7 @@ class QuickScan(QThread):
         try:
             self.process = Popen(
                 ['clamdscan.exe', appdata_dir, drivers_dir, '--infected', '--multiscan', '--move=quarantine'],
-                stdout=PIPE, encoding='utf-8')
+                stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
             while self.process.poll() is None:
                 if (self.abort == True):
                     try:
@@ -377,7 +377,7 @@ class FullScan(QThread):
         try:
             self.process = Popen(
                 ['clamdscan.exe', root_drive, '--infected', '--move=quarantine'],
-                stdout=PIPE, encoding='utf-8')
+                stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
             while self.process.poll() is None:
                 if (self.abort == True):
                     try:
@@ -420,7 +420,7 @@ class CustomScan(QThread):
             try:
                 self.process = Popen(
                     ['clamdscan.exe', root_drive, '--infected', '--move=quarantine'],
-                    stdout=PIPE, encoding='utf-8')
+                    stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
                 while self.process.poll() is None:
                     if (self.abort == True):
                         try:
