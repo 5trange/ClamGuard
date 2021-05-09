@@ -419,7 +419,7 @@ class CustomScan(QThread):
             self.ret.emit(f"Scanning {self.scan_dir}\n\n")
             try:
                 self.process = Popen(
-                    ['clamdscan.exe', root_drive, '--infected', '--move=quarantine'],
+                    ['clamdscan.exe', self.scan_dir, '--infected', '--move=quarantine'],
                     stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
                 while self.process.poll() is None:
                     if (self.abort == True):
