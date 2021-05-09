@@ -29,7 +29,7 @@ import os
 import threading
 import signal
 import webbrowser
-from PySide2 import *
+from PySide2 import QtCore, QtGui, QtWidgets # Importing all causing py2exe builds to crash
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
