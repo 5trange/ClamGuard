@@ -29,7 +29,7 @@ import os
 import threading
 import signal
 import webbrowser
-from PySide6 import QtCore, QtGui, QtWidgets # Importing all causing py2exe builds to crash
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
@@ -325,7 +325,7 @@ class Updater(QThread):
                         self.ret.emit(self.updatebuffer)
 
             if (self.abort == False):
-                self.ret.emit("\n\nDatabase refreshed.")
+                self.ret.emit("\nDatabase refreshed.")
             elif (self.abort == True):
                 self.ret.emit("\n\nDatabase update cancelled.")
         except Exception as e:
@@ -355,7 +355,7 @@ class QuickScan(QThread):
                         self.ret.emit(self.scanbuffer)
 
             if (self.abort == False):
-                self.ret.emit("\n\nQuick scan complete.")
+                self.ret.emit("\nQuick scan complete.")
             elif (self.abort == True):
                 self.ret.emit("\n\nScan cancelled.")
         except Exception as e:
@@ -384,7 +384,7 @@ class FullScan(QThread):
                         self.ret.emit(self.scanbuffer)
 
             if (self.abort == False):
-                self.ret.emit("\n\nFull scan complete.")
+                self.ret.emit("\nFull scan complete.")
             elif (self.abort == True):
                 self.ret.emit("\n\nFull scan cancelled.")
         except Exception as e:
@@ -427,7 +427,7 @@ class CustomScan(QThread):
                             self.ret.emit(self.scanbuffer)
 
                 if (self.abort == False):
-                    self.ret.emit("\n\nCustom scan complete.")
+                    self.ret.emit("\nCustom scan complete.")
                 elif (self.abort == True):
                     self.ret.emit("\n\nCustom scan cancelled.")
 
