@@ -29,10 +29,10 @@ import os
 import threading
 import signal
 import webbrowser
-from PySide2 import QtCore, QtGui, QtWidgets # Importing all causing py2exe builds to crash
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide6 import QtCore, QtGui, QtWidgets # Importing all causing py2exe builds to crash
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 from subprocess import *
 from mainWindow import Ui_mainWindow  # Importing mainWindow.py
 from SplashScreen import Ui_SplashScreen  # Importing SplashScreen.py
@@ -70,7 +70,6 @@ class SplashScreen(QMainWindow):
         self.timer.timeout.connect(self.progress)
         # Timer in milliseconds
         self.timer.start(35)
-        self.center()  # CENTERING
         self.show()
 
     def progress(self):
@@ -90,13 +89,6 @@ class SplashScreen(QMainWindow):
 
         # Increase counter
         self.counter += 1
-
-    def center(self):
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
-
 
 # MainWindow class
 class MainWindow(QMainWindow):

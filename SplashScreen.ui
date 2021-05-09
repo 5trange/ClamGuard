@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Starting ClamGuard</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -55,8 +55,9 @@
        </property>
        <property name="font">
         <font>
-         <family>Segoe UI</family>
+         <family>Ubuntu</family>
          <pointsize>40</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
@@ -87,7 +88,7 @@
 	text-align: center;
 }
 QProgressBar::chunk{
-	background-color: qlineargradient(spread:pad, x1:0, y1:0.511364, x2:1, y2:0.523, stop:0 rgba(0, 182, 24), stop:1 rgba(0, 182, 24));
+	background-color: qlineargradient(spread:pad, x1:0, y1:0.511364, x2:1, y2:0.523, stop:0 rgb(0, 182, 24), stop:1 rgb(0, 182, 24));
 }</string>
        </property>
        <property name="value">

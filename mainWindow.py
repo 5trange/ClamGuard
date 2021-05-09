@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowIfGGtn.ui'
+## Form generated from reading UI file 'mainWindowYOyaqc.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.0.4
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 
 
 class Ui_mainWindow(object):
@@ -62,7 +62,6 @@ class Ui_mainWindow(object):
         font1.setFamily(u"Ubuntu")
         font1.setPointSize(10)
         font1.setBold(True)
-        font1.setWeight(75)
         self.title_label.setFont(font1)
         self.title_label.setStyleSheet(u"color: rgb(0, 255, 38);")
 
@@ -173,7 +172,6 @@ class Ui_mainWindow(object):
         font3.setBold(True)
         font3.setItalic(False)
         font3.setUnderline(False)
-        font3.setWeight(75)
         self.scanlabel.setFont(font3)
         self.scanlabel.setStyleSheet(u"QLabel\n"
 "{\n"
@@ -234,7 +232,6 @@ class Ui_mainWindow(object):
         font4.setFamily(u"Ubuntu")
         font4.setPointSize(14)
         font4.setBold(True)
-        font4.setWeight(75)
         self.updateLabel.setFont(font4)
         self.updateLabel.setStyleSheet(u"QLabel\n"
 "{\n"
@@ -297,7 +294,6 @@ class Ui_mainWindow(object):
         font5.setFamily(u"SF Pro Display")
         font5.setPointSize(14)
         font5.setBold(True)
-        font5.setWeight(75)
         self.homeButton.setFont(font5)
         self.homeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButton.setStyleSheet(u"QPushButton\n"
@@ -646,7 +642,6 @@ class Ui_mainWindow(object):
         font7.setFamily(u"Ubuntu")
         font7.setPointSize(9)
         font7.setBold(True)
-        font7.setWeight(75)
         self.quarantineRefresh.setFont(font7)
         self.quarantineRefresh.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineRefresh.setStyleSheet(u"QPushButton\n"
@@ -706,7 +701,6 @@ class Ui_mainWindow(object):
         font8.setFamily(u"Ubuntu")
         font8.setPointSize(7)
         font8.setBold(True)
-        font8.setWeight(75)
         self.engineVer.setFont(font8)
         self.engineVer.setStyleSheet(u"color: rgb(0, 255, 38);")
 

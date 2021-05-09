@@ -135,7 +135,6 @@ border-radius: 5px;</string>
                 <font>
                  <family>Ubuntu</family>
                  <pointsize>10</pointsize>
-                 <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
@@ -344,7 +343,6 @@ QFrame:hover
                    <font>
                     <family>Ubuntu</family>
                     <pointsize>14</pointsize>
-                    <weight>75</weight>
                     <italic>false</italic>
                     <bold>true</bold>
                     <underline>false</underline>
@@ -503,7 +501,6 @@ QFrame:hover
                    <font>
                     <family>Ubuntu</family>
                     <pointsize>14</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -534,7 +531,6 @@ QFrame:hover
                   <font>
                    <family>Ubuntu</family>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -579,7 +575,6 @@ QLabel:hover
                   <font>
                    <family>Ubuntu</family>
                    <pointsize>10</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -644,7 +639,6 @@ QLabel:hover
                   <font>
                    <family>SF Pro Display</family>
                    <pointsize>14</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -700,7 +694,6 @@ QPushButton:hover
                     <font>
                      <family>Ubuntu</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -739,7 +732,6 @@ QPushButton:hover
                     <font>
                      <family>Ubuntu</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -778,7 +770,6 @@ QPushButton:hover
                     <font>
                      <family>Ubuntu</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -817,7 +808,6 @@ QPushButton:hover
                     <font>
                      <family>Ubuntu</family>
                      <pointsize>14</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -993,7 +983,6 @@ QPushButton:hover
                   <font>
                    <family>Ubuntu</family>
                    <pointsize>14</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1044,7 +1033,6 @@ QPushButton:hover
                   <font>
                    <family>Ubuntu</family>
                    <pointsize>14</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1174,7 +1162,6 @@ QPushButton:hover
                   <font>
                    <family>SF Pro Display</family>
                    <pointsize>14</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1242,7 +1229,6 @@ QPushButton:hover
                   <font>
                    <family>Ubuntu</family>
                    <pointsize>14</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1422,7 +1408,6 @@ QPushButton:hover
                     <font>
                      <family>Ubuntu</family>
                      <pointsize>9</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -1510,7 +1495,6 @@ QPushButton:hover
              <font>
               <family>Ubuntu</family>
               <pointsize>7</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>

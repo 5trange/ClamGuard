@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'SplashScreenEjZAho.ui'
+## Form generated from reading UI file 'SplashScreenAbgzNs.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 6.0.4
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 
 
 class Ui_SplashScreen(object):
@@ -36,8 +36,9 @@ class Ui_SplashScreen(object):
         self.label_title.setObjectName(u"label_title")
         self.label_title.setGeometry(QRect(0, 130, 661, 81))
         font = QFont()
-        font.setFamily(u"Segoe UI")
+        font.setFamily(u"Ubuntu")
         font.setPointSize(40)
+        font.setBold(True)
         self.label_title.setFont(font)
         self.label_title.setStyleSheet(u"color: rgb(0, 182, 24);")
         self.label_title.setAlignment(Qt.AlignCenter)
@@ -52,7 +53,7 @@ class Ui_SplashScreen(object):
 "	text-align: center;\n"
 "}\n"
 "QProgressBar::chunk{\n"
-"	background-color: qlineargradient(spread:pad, x1:0, y1:0.511364, x2:1, y2:0.523, stop:0 rgba(0, 182, 24), stop:1 rgba(0, 182, 24));\n"
+"	background-color: qlineargradient(spread:pad, x1:0, y1:0.511364, x2:1, y2:0.523, stop:0 rgb(0, 182, 24), stop:1 rgb(0, 182, 24));\n"
 "}")
         self.progressBar.setValue(24)
         self.label_loading = QLabel(self.dropShadowFrame)
@@ -75,7 +76,7 @@ class Ui_SplashScreen(object):
     # setupUi
 
     def retranslateUi(self, SplashScreen):
-        SplashScreen.setWindowTitle(QCoreApplication.translate("SplashScreen", u"MainWindow", None))
+        SplashScreen.setWindowTitle(QCoreApplication.translate("SplashScreen", u"Starting ClamGuard", None))
         self.label_title.setText(QCoreApplication.translate("SplashScreen", u"<html><head/><body><p align=\"center\">CLAMGUARD</p></body></html>", None))
         self.label_loading.setText(QCoreApplication.translate("SplashScreen", u"Starting modules..", None))
     # retranslateUi
