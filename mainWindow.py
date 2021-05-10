@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowYOyaqc.ui'
+## Form generated from reading UI file 'mainWindowchMMWR.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.0.4
 ##
@@ -658,14 +658,12 @@ class Ui_mainWindow(object):
         self.verticalLayout_9.addWidget(self.quarantineRefresh)
 
         self.quarantineView = QTableWidget(self.frameQuarantineContent)
-        if (self.quarantineView.columnCount() < 3):
-            self.quarantineView.setColumnCount(3)
+        if (self.quarantineView.columnCount() < 2):
+            self.quarantineView.setColumnCount(2)
         __qtablewidgetitem = QTableWidgetItem()
         self.quarantineView.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
         self.quarantineView.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.quarantineView.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         self.quarantineView.setObjectName(u"quarantineView")
         self.quarantineView.setStyleSheet(u"QTableWidget\n"
 "{ \n"
@@ -673,6 +671,9 @@ class Ui_mainWindow(object):
 "	color: rgb(0,255,38);\n"
 "}\n"
 "	")
+        self.quarantineView.horizontalHeader().setMinimumSectionSize(50)
+        self.quarantineView.horizontalHeader().setDefaultSectionSize(200)
+        self.quarantineView.horizontalHeader().setStretchLastSection(True)
         self.quarantineView.verticalHeader().setVisible(False)
 
         self.verticalLayout_9.addWidget(self.quarantineView)
@@ -774,9 +775,7 @@ class Ui_mainWindow(object):
         ___qtablewidgetitem = self.quarantineView.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("mainWindow", u"Name", None));
         ___qtablewidgetitem1 = self.quarantineView.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWindow", u"Type", None));
-        ___qtablewidgetitem2 = self.quarantineView.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("mainWindow", u"Size", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWindow", u"Size", None));
         self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
     # retranslateUi
 
