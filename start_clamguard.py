@@ -65,30 +65,21 @@ class SplashScreen(QMainWindow):
         self.shadow.setColor(QColor(0, 0, 0, 60))
         self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
 
-        # Dummy splashscreen
-        self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.progress)
-        # Timer in milliseconds
-        self.timer.start(35)
-        self.show()
+        # Start Clamd
+        try:
+            self.ui.label_loading.setText("Starting ClamAV Daemon...")
+            self.process = Popen(['clamd.exe'], creationflags=CREATE_NO_WINDOW)
+        except Exception as e:
+            print("Couldn't start ClamAV Daemon!")
+            raise
 
-    def progress(self):
-        # Start clamd then ping it
-        # Change progress according to that
-
-        # Dummy value
-        self.ui.progressBar.setValue(self.counter)
-
-        # End splash and start ClamGuard
-        if self.counter > 100:
-            # Stop timer
-            self.timer.stop()
-            self.close()
-            self.main_window = MainWindow()
-            self.main_window.show()
-
-        # Increase counter
-        self.counter += 1
+        self.ui.progressBar.setValue(50)
+        self.ui.label_loading.setText("Starting ClamGuard WatchDog...")
+        self.ui.progressBar.setValue(100)
+        time.sleep(3)
+        self.close()
+        self.main_window = MainWindow()
+        self.main_window.show()
 
 # MainWindow class
 class MainWindow(QMainWindow):
