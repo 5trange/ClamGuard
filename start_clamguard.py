@@ -281,10 +281,12 @@ class MainWindow(QMainWindow):
         lines = os.listdir(QuarantineDirectory)
         entries = 0
         for line in lines:
+            size = os.path.getsize(str(QuarantineDirectory+line))
             if entries == 0:
                 self.ui.quarantineView.setRowCount(0)
             self.ui.quarantineView.insertRow(entries)
             self.ui.quarantineView.setItem(entries, 0, QTableWidgetItem(line))
+            self.ui.quarantineView.setItem(entries, 1, QTableWidgetItem(f'{size} Bytes'))
             entries = entries + 1
 
     # Opening github repo page.
