@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowchMMWR.ui'
+## Form generated from reading UI file 'mainWindowUAcrPX.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.0.4
+## Created by: Qt User Interface Compiler version 6.1.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -49,7 +49,6 @@ class Ui_mainWindow(object):
         self.titleFrame = QFrame(self.titleBar)
         self.titleFrame.setObjectName(u"titleFrame")
         font = QFont()
-        font.setFamily(u"SF Pro Display")
         self.titleFrame.setFont(font)
         self.titleFrame.setFrameShape(QFrame.StyledPanel)
         self.titleFrame.setFrameShadow(QFrame.Raised)
@@ -59,7 +58,6 @@ class Ui_mainWindow(object):
         self.title_label = QLabel(self.titleFrame)
         self.title_label.setObjectName(u"title_label")
         font1 = QFont()
-        font1.setFamily(u"Ubuntu")
         font1.setPointSize(10)
         font1.setBold(True)
         self.title_label.setFont(font1)
@@ -125,9 +123,7 @@ class Ui_mainWindow(object):
 
         self.mainInterface = QFrame(self.dropshadowFrame)
         self.mainInterface.setObjectName(u"mainInterface")
-        font2 = QFont()
-        font2.setFamily(u"SF Pro Text")
-        self.mainInterface.setFont(font2)
+        self.mainInterface.setFont(font)
         self.mainInterface.setStyleSheet(u"background-color:none;")
         self.mainInterface.setFrameShape(QFrame.NoFrame)
         self.mainInterface.setFrameShadow(QFrame.Raised)
@@ -166,13 +162,12 @@ class Ui_mainWindow(object):
         self.scanlabel = QLabel(self.scanFrame)
         self.scanlabel.setObjectName(u"scanlabel")
         self.scanlabel.setGeometry(QRect(50, 110, 61, 21))
-        font3 = QFont()
-        font3.setFamily(u"Ubuntu")
-        font3.setPointSize(14)
-        font3.setBold(True)
-        font3.setItalic(False)
-        font3.setUnderline(False)
-        self.scanlabel.setFont(font3)
+        font2 = QFont()
+        font2.setPointSize(14)
+        font2.setBold(True)
+        font2.setItalic(False)
+        font2.setUnderline(False)
+        self.scanlabel.setFont(font2)
         self.scanlabel.setStyleSheet(u"QLabel\n"
 "{\n"
 "	color: rgb(0, 255, 38);\n"
@@ -228,11 +223,10 @@ class Ui_mainWindow(object):
         self.updateLabel = QLabel(self.updateFrame)
         self.updateLabel.setObjectName(u"updateLabel")
         self.updateLabel.setGeometry(QRect(45, 110, 71, 21))
-        font4 = QFont()
-        font4.setFamily(u"Ubuntu")
-        font4.setPointSize(14)
-        font4.setBold(True)
-        self.updateLabel.setFont(font4)
+        font3 = QFont()
+        font3.setPointSize(14)
+        font3.setBold(True)
+        self.updateLabel.setFont(font3)
         self.updateLabel.setStyleSheet(u"QLabel\n"
 "{\n"
 "	color: rgb(0, 255, 38);\n"
@@ -290,11 +284,7 @@ class Ui_mainWindow(object):
         self.homeButton.setObjectName(u"homeButton")
         self.homeButton.setGeometry(QRect(9, 20, 182, 120))
         self.homeButton.setMinimumSize(QSize(120, 120))
-        font5 = QFont()
-        font5.setFamily(u"SF Pro Display")
-        font5.setPointSize(14)
-        font5.setBold(True)
-        self.homeButton.setFont(font5)
+        self.homeButton.setFont(font3)
         self.homeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -322,7 +312,7 @@ class Ui_mainWindow(object):
         self.quickscanButton = QPushButton(self.frameScanButtons)
         self.quickscanButton.setObjectName(u"quickscanButton")
         self.quickscanButton.setMinimumSize(QSize(0, 120))
-        self.quickscanButton.setFont(font4)
+        self.quickscanButton.setFont(font3)
         self.quickscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.quickscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -340,7 +330,7 @@ class Ui_mainWindow(object):
         self.fullscanButton = QPushButton(self.frameScanButtons)
         self.fullscanButton.setObjectName(u"fullscanButton")
         self.fullscanButton.setMinimumSize(QSize(0, 120))
-        self.fullscanButton.setFont(font4)
+        self.fullscanButton.setFont(font3)
         self.fullscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.fullscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -358,7 +348,7 @@ class Ui_mainWindow(object):
         self.customscanButton = QPushButton(self.frameScanButtons)
         self.customscanButton.setObjectName(u"customscanButton")
         self.customscanButton.setMinimumSize(QSize(0, 120))
-        self.customscanButton.setFont(font4)
+        self.customscanButton.setFont(font3)
         self.customscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.customscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -376,7 +366,7 @@ class Ui_mainWindow(object):
         self.cancelscanButton = QPushButton(self.frameScanButtons)
         self.cancelscanButton.setObjectName(u"cancelscanButton")
         self.cancelscanButton.setMinimumSize(QSize(0, 120))
-        self.cancelscanButton.setFont(font4)
+        self.cancelscanButton.setFont(font3)
         self.cancelscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -404,9 +394,7 @@ class Ui_mainWindow(object):
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.scanStatus = QPlainTextEdit(self.frameScanStatus)
         self.scanStatus.setObjectName(u"scanStatus")
-        font6 = QFont()
-        font6.setFamily(u"Consolas")
-        self.scanStatus.setFont(font6)
+        self.scanStatus.setFont(font)
         self.scanStatus.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	 \n"
@@ -462,7 +450,7 @@ class Ui_mainWindow(object):
         self.checkUpdate.setGeometry(QRect(9, 19, 182, 120))
         self.checkUpdate.setMinimumSize(QSize(182, 120))
         self.checkUpdate.setMaximumSize(QSize(182, 120))
-        self.checkUpdate.setFont(font4)
+        self.checkUpdate.setFont(font3)
         self.checkUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.checkUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -479,7 +467,7 @@ class Ui_mainWindow(object):
         self.cancelUpdate.setGeometry(QRect(573, 19, 182, 120))
         self.cancelUpdate.setMinimumSize(QSize(182, 120))
         self.cancelUpdate.setMaximumSize(QSize(182, 120))
-        self.cancelUpdate.setFont(font4)
+        self.cancelUpdate.setFont(font3)
         self.cancelUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -506,7 +494,7 @@ class Ui_mainWindow(object):
         self.updateStatus.setGeometry(QRect(9, 9, 746, 157))
         self.updateStatus.setMinimumSize(QSize(746, 157))
         self.updateStatus.setMaximumSize(QSize(746, 157))
-        self.updateStatus.setFont(font6)
+        self.updateStatus.setFont(font)
         self.updateStatus.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	 \n"
@@ -533,7 +521,7 @@ class Ui_mainWindow(object):
         self.homeButtonAbout.setObjectName(u"homeButtonAbout")
         self.homeButtonAbout.setGeometry(QRect(9, 20, 182, 120))
         self.homeButtonAbout.setMinimumSize(QSize(120, 120))
-        self.homeButtonAbout.setFont(font5)
+        self.homeButtonAbout.setFont(font3)
         self.homeButtonAbout.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButtonAbout.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -559,7 +547,7 @@ class Ui_mainWindow(object):
         self.ProjectTitle.setGeometry(QRect(10, 20, 171, 21))
         self.ProjectTitle.setMinimumSize(QSize(0, 21))
         self.ProjectTitle.setMaximumSize(QSize(16777215, 21))
-        self.ProjectTitle.setFont(font4)
+        self.ProjectTitle.setFont(font3)
         self.ProjectTitle.setStyleSheet(u"QLabel\n"
 "{\n"
 "	color: rgb(0, 255, 38);\n"
@@ -575,27 +563,48 @@ class Ui_mainWindow(object):
         self.AboutGithub.setStyleSheet(u"")
         self.AboutGithub.setPixmap(QPixmap(u"img/GitHub.png"))
         self.AboutGithub.setScaledContents(True)
-        self.aboutLicense = QPlainTextEdit(self.frameAboutContent)
-        self.aboutLicense.setObjectName(u"aboutLicense")
-        self.aboutLicense.setGeometry(QRect(9, 50, 746, 200))
-        self.aboutLicense.setStyleSheet(u"QPlainTextEdit\n"
-"{\n"
-"	 \n"
-"	background-color: rgb(33, 33, 33);\n"
-"	color: rgb(0,255,38);\n"
-"}\n"
-"	")
-        self.aboutLicense.setUndoRedoEnabled(False)
-        self.aboutLicense.setReadOnly(True)
         self.AboutGPL = QLabel(self.frameAboutContent)
         self.AboutGPL.setObjectName(u"AboutGPL")
         self.AboutGPL.setGeometry(QRect(140, 270, 91, 41))
         self.AboutGPL.setPixmap(QPixmap(u"img/gpl.png"))
         self.AboutGPL.setScaledContents(True)
-        self.aboutLicense.raise_()
-        self.ProjectTitle.raise_()
-        self.AboutGithub.raise_()
-        self.AboutGPL.raise_()
+        self.label = QLabel(self.frameAboutContent)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(10, 50, 381, 16))
+        font4 = QFont()
+        font4.setFamilies([u"Ubuntu"])
+        font4.setPointSize(11)
+        font4.setBold(True)
+        self.label.setFont(font4)
+        self.label.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color: rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}\n"
+"")
+        self.label_2 = QLabel(self.frameAboutContent)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(10, 130, 741, 41))
+        font5 = QFont()
+        font5.setFamilies([u"Ubuntu"])
+        font5.setBold(True)
+        self.label_2.setFont(font5)
+        self.label_2.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color: rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}\n"
+"")
+        self.label_3 = QLabel(self.frameAboutContent)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(10, 180, 571, 16))
+        self.label_3.setFont(font5)
+        self.label_3.setStyleSheet(u"QLabel\n"
+"{\n"
+"	color: rgb(0, 255, 38);\n"
+"	border:none;\n"
+"}\n"
+"")
 
         self.verticalLayout_7.addWidget(self.frameAboutContent)
 
@@ -638,11 +647,10 @@ class Ui_mainWindow(object):
         self.quarantineRefresh = QPushButton(self.frameQuarantineContent)
         self.quarantineRefresh.setObjectName(u"quarantineRefresh")
         self.quarantineRefresh.setMinimumSize(QSize(0, 30))
-        font7 = QFont()
-        font7.setFamily(u"Ubuntu")
-        font7.setPointSize(9)
-        font7.setBold(True)
-        self.quarantineRefresh.setFont(font7)
+        font6 = QFont()
+        font6.setPointSize(9)
+        font6.setBold(True)
+        self.quarantineRefresh.setFont(font6)
         self.quarantineRefresh.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineRefresh.setStyleSheet(u"QPushButton\n"
 "{\n"
@@ -698,11 +706,10 @@ class Ui_mainWindow(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.engineVer = QLabel(self.statusBar)
         self.engineVer.setObjectName(u"engineVer")
-        font8 = QFont()
-        font8.setFamily(u"Ubuntu")
-        font8.setPointSize(7)
-        font8.setBold(True)
-        self.engineVer.setFont(font8)
+        font7 = QFont()
+        font7.setPointSize(7)
+        font7.setBold(True)
+        self.engineVer.setFont(font7)
         self.engineVer.setStyleSheet(u"color: rgb(0, 255, 38);")
 
         self.horizontalLayout_6.addWidget(self.engineVer)
@@ -770,12 +777,16 @@ class Ui_mainWindow(object):
         self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project", None))
         self.AboutGithub.setText("")
         self.AboutGPL.setText("")
+        self.label.setText(QCoreApplication.translate("mainWindow", u"An opensource antivirus software based on ClamAV.", None))
+        self.label_2.setText(QCoreApplication.translate("mainWindow", u"This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2\n"
+"or later.", None))
+        self.label_3.setText(QCoreApplication.translate("mainWindow", u"Developed using PySide6 and Python3. The full source code is available in our GitHub repository.", None))
         self.quarantineHomeButton.setText("")
         self.quarantineRefresh.setText(QCoreApplication.translate("mainWindow", u"Refresh", None))
         ___qtablewidgetitem = self.quarantineView.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("mainWindow", u"Name", None));
         ___qtablewidgetitem1 = self.quarantineView.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWindow", u"Size", None));
-        self.engineVer.setText(QCoreApplication.translate("mainWindow", u"Engine Version: ", None))
+        self.engineVer.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Version: 0.21.5-rc", None))
     # retranslateUi
 

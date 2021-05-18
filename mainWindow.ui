@@ -106,9 +106,7 @@ border-radius: 5px;</string>
           <item>
            <widget class="QFrame" name="titleFrame">
             <property name="font">
-             <font>
-              <family>SF Pro Display</family>
-             </font>
+             <font/>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -133,7 +131,6 @@ border-radius: 5px;</string>
               <widget class="QLabel" name="title_label">
                <property name="font">
                 <font>
-                 <family>Ubuntu</family>
                  <pointsize>10</pointsize>
                  <bold>true</bold>
                 </font>
@@ -241,9 +238,7 @@ QPushButton:hover
        <item>
         <widget class="QFrame" name="mainInterface">
          <property name="font">
-          <font>
-           <family>SF Pro Text</family>
-          </font>
+          <font/>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color:none;</string>
@@ -341,7 +336,6 @@ QFrame:hover
                   </property>
                   <property name="font">
                    <font>
-                    <family>Ubuntu</family>
                     <pointsize>14</pointsize>
                     <italic>false</italic>
                     <bold>true</bold>
@@ -499,7 +493,6 @@ QFrame:hover
                   </property>
                   <property name="font">
                    <font>
-                    <family>Ubuntu</family>
                     <pointsize>14</pointsize>
                     <bold>true</bold>
                    </font>
@@ -529,7 +522,6 @@ QFrame:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                    <bold>true</bold>
                   </font>
@@ -573,7 +565,6 @@ QLabel:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                    <bold>true</bold>
                   </font>
@@ -637,7 +628,6 @@ QLabel:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>SF Pro Display</family>
                    <pointsize>14</pointsize>
                    <bold>true</bold>
                   </font>
@@ -692,7 +682,6 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <bold>true</bold>
                     </font>
@@ -730,7 +719,6 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <bold>true</bold>
                     </font>
@@ -768,7 +756,6 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <bold>true</bold>
                     </font>
@@ -806,7 +793,6 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>Ubuntu</family>
                      <pointsize>14</pointsize>
                      <bold>true</bold>
                     </font>
@@ -853,9 +839,7 @@ QPushButton:hover
                  <item>
                   <widget class="QPlainTextEdit" name="scanStatus">
                    <property name="font">
-                    <font>
-                     <family>Consolas</family>
-                    </font>
+                    <font/>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QPlainTextEdit
@@ -981,7 +965,6 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <pointsize>14</pointsize>
                    <bold>true</bold>
                   </font>
@@ -1031,7 +1014,6 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <pointsize>14</pointsize>
                    <bold>true</bold>
                   </font>
@@ -1100,9 +1082,7 @@ QPushButton:hover
                   </size>
                  </property>
                  <property name="font">
-                  <font>
-                   <family>Consolas</family>
-                  </font>
+                  <font/>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPlainTextEdit
@@ -1160,7 +1140,6 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>SF Pro Display</family>
                    <pointsize>14</pointsize>
                    <bold>true</bold>
                   </font>
@@ -1227,7 +1206,6 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <pointsize>14</pointsize>
                    <bold>true</bold>
                   </font>
@@ -1273,31 +1251,6 @@ QPushButton:hover
                   <bool>true</bool>
                  </property>
                 </widget>
-                <widget class="QPlainTextEdit" name="aboutLicense">
-                 <property name="geometry">
-                  <rect>
-                   <x>9</x>
-                   <y>50</y>
-                   <width>746</width>
-                   <height>200</height>
-                  </rect>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPlainTextEdit
-{
-	 
-	background-color: rgb(33, 33, 33);
-	color: rgb(0,255,38);
-}
-	</string>
-                 </property>
-                 <property name="undoRedoEnabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
                 <widget class="QLabel" name="AboutGPL">
                  <property name="geometry">
                   <rect>
@@ -1317,10 +1270,89 @@ QPushButton:hover
                   <bool>true</bool>
                  </property>
                 </widget>
-                <zorder>aboutLicense</zorder>
-                <zorder>ProjectTitle</zorder>
-                <zorder>AboutGithub</zorder>
-                <zorder>AboutGPL</zorder>
+                <widget class="QLabel" name="label">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>50</y>
+                   <width>381</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Ubuntu</family>
+                   <pointsize>11</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+	color: rgb(0, 255, 38);
+	border:none;
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>An opensource antivirus software based on ClamAV.</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>130</y>
+                   <width>741</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Ubuntu</family>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+	color: rgb(0, 255, 38);
+	border:none;
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2
+or later.</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>180</y>
+                   <width>571</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Ubuntu</family>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel
+{
+	color: rgb(0, 255, 38);
+	border:none;
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>Developed using PySide6 and Python3. The full source code is available in our GitHub repository.</string>
+                 </property>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -1406,7 +1438,6 @@ QPushButton:hover
                    </property>
                    <property name="font">
                     <font>
-                     <family>Ubuntu</family>
                      <pointsize>9</pointsize>
                      <bold>true</bold>
                     </font>
@@ -1497,7 +1528,6 @@ QPushButton:hover
            <widget class="QLabel" name="engineVer">
             <property name="font">
              <font>
-              <family>Ubuntu</family>
               <pointsize>7</pointsize>
               <bold>true</bold>
              </font>
@@ -1506,7 +1536,7 @@ QPushButton:hover
              <string notr="true">color: rgb(0, 255, 38);</string>
             </property>
             <property name="text">
-             <string>Engine Version: </string>
+             <string>ClamGuard Version: 0.21.5-rc</string>
             </property>
            </widget>
           </item>
