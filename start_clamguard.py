@@ -3,7 +3,6 @@
 # Product       :   ClamGuard
 # Authors       :   Adith, Bilal, Vinayak
 # Created       :   May-08-2021
-# Last updated  :   May-10-2021
 # -----------------------------------------------------------------------------
 # Licence:
 #   This program is free software; you can redistribute it and/or modify
