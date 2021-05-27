@@ -29,6 +29,7 @@ import os
 import threading
 import signal
 import webbrowser
+import socket
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import *
 from PySide6.QtGui import *
@@ -50,8 +51,8 @@ class SplashScreen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_SplashScreen()
+        self.main_window = MainWindow()
         self.ui.setupUi(self)
-        self.counter = 0
 
         # Remove titlebar
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -64,22 +65,18 @@ class SplashScreen(QMainWindow):
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 60))
         self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
+        self.show()
+        self.init_thread = clamd_init()
+        self.init_thread.start()
+        self.init_thread.finished.connect(lambda: self.ui.progressBar.setValue(75))
+        self.init_thread.finished.connect(lambda: self.start_watchdog())
+        self.init_thread.finished.connect(lambda: self.close())
+        self.init_thread.finished.connect(lambda: self.main_window.show())
 
-        # Start Clamd
-        try:
-            self.ui.label_loading.setText("Starting ClamAV Daemon...")
-            self.process = Popen(['clamd.exe'], creationflags=CREATE_NO_WINDOW)
-        except Exception as e:
-            print("Couldn't start ClamAV Daemon!")
-            raise
-
-        self.ui.progressBar.setValue(50)
-        self.ui.label_loading.setText("Starting ClamGuard WatchDog...")
-        self.ui.progressBar.setValue(100)
-        time.sleep(3)
-        self.close()
-        self.main_window = MainWindow()
-        self.main_window.show()
+    def start_watchdog(self):
+        # dummy
+        time.sleep(5)
+        self.ui.progressBar.setValue(95)
 
 # MainWindow class
 class MainWindow(QMainWindow):
@@ -427,6 +424,25 @@ class CustomScan(QThread):
             except Exception as e:
                 print(f"Debug: Error!:{e}")
 
+class clamd_init(QThread):
+    def run(self):
+        self.host = '127.0.0.1'
+        self.port = 3310
+        self.timeout = None
+        self.counter = 1
+        self.max_retries = 10
+        self.clamd_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        while (self.counter <= self.max_retries):
+            try:
+                self.result = self.clamd_socket.connect_ex((self.host, self.port))
+                if self.result == 0:
+                    print('ClamAV Daemon is online')
+                    self.clamd_socket.close()
+                    break
+            except socket.error:
+                raise
+            print(f'Connection failed. Retrying... Retries left: {self.max_retries - self.counter}')
+            self.counter = self.counter+1
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
