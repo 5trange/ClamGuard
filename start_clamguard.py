@@ -74,9 +74,10 @@ class SplashScreen(QMainWindow):
         self.init_thread.finished.connect(lambda: self.main_window.show())
 
     def start_watchdog(self):
-        # dummy
-        time.sleep(5)
-        self.ui.progressBar.setValue(95)
+        self.event_handler = SystemHandler()
+        self.observer = watchdog.observers.Observer()
+        self.observer.schedule(self.event_handler, root_drive, recursive=True)
+        print("Debug: ClamGuard WatchDog Started.")
 
 # MainWindow class
 class MainWindow(QMainWindow):
@@ -443,6 +444,9 @@ class clamd_init(QThread):
                 raise
             print(f'Connection failed. Retrying... Retries left: {self.max_retries - self.counter}')
             self.counter = self.counter+1
+        if (self.result != 0):
+            print("Couldn't connect to ClamAV Daemon!")
+            sys.exit(1) # Prolly not very safe
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

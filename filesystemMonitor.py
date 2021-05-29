@@ -32,15 +32,7 @@ processes = []
 cpu_cont = int(os.cpu_count() / 2)
 sysDrive = os.environ['SYSTEMDRIVE']
 ignoreRec: str = sysDrive + r'$Recycle.Bin'
-print("   ________                ______                     __")
-print("  / ____/ /___ _____ ___  / ____/_  ______ __________/ /")
-print(" / /   / / __ `/ __ `__ \/ / __/ / / / __ `/ ___/ __  /")
-print("/ /___/ / /_/ / / / / / / /_/ / /_/ / /_/ / /  / /_/ /")
-print("\____/_/\__,_/_/ /_/ /_/\____/\__,_/\__,_/_/   \__,_/")
-print("\nClamGuard WatchDog\n\n")
-print("\n\nStarting Service..")
 watchableFiles = ['*.cmd', '*.exe', '*.msi', '*.dll', '*.zip', '*.7z', '*.bat', '*.rar', '*.sys', '*.vbs']
-
 
 class SystemHandler(watchdog.events.PatternMatchingEventHandler):
     def __init__(self):
@@ -62,10 +54,3 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
                 break
             else:
                 print(self.ret)
-
-event_handler = SystemHandler()
-observer = watchdog.observers.Observer()
-observer.schedule(event_handler, sysDrive, recursive=True)
-observer.start()
-print("Service Started.")
-observer.join()
