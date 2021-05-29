@@ -1,21 +1,9 @@
 # -----------------------------------------------------------------------------
-# filesystemMonitor [Resident Shield]
-
+# Name          :   filesystemMonitor.py
+# Product       :   ClamGuard
+# Authors       :   Adith, Bilal, Vinayak
+# Created       :   Mar-05-2021
 # -----------------------------------------------------------------------------
-# Name:        filesystemMonitor.py
-# Product:     ClamGuard
-#
-# Authors:      Adith, Bilal, Vinayak
-#   ________                ______                     __
-#  / ____/ /___ _____ ___  / ____/_  ______ __________/ /
-# / /   / / __ `/ __ `__ \/ / __/ / / / __ `/ ___/ __  /
-#/ /___/ / /_/ / / / / / / /_/ / /_/ / /_/ / /  / /_/ /
-#\____/_/\__,_/_/ /_/ /_/\____/\__,_/\__,_/_/   \__,_/
-#
-#
-#
-# Created:     2021/Mar/05
-# Copyright:
 # Licence:
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -30,9 +18,9 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+# -----------------------------------------------------------------------------
 
-##IMPORTS
-
+# Imports
 import watchdog.events
 import threading
 import os
@@ -62,22 +50,18 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
     def on_created(self, event):
         buffer = event.src_path
         buffer = buffer.replace(":", ":\\")
-        #print(f"File was created at {buffer}")
-        self.SingleThread = threading.Thread(target = self.scan , args=[buffer])
-        self.SingleThread.start()
+        self.watchdog_thread = threading.Thread(target = self.scan , args=[buffer])
+        self.watchdog_thread.start()
 
     def scan(self, path):
         print(path)
-        process = Popen(['clamdscan.exe','--multiscan',path], stdout=PIPE, shell=True, encoding='utf8') #Using --multiscan to use multiprocessing
-        while True:
-            output = process.stdout.readline()
-            #yield output
-            if output == '':
+        self.process = Popen(['clamdscan.exe','--multiscan','--move=quarantine',path], stdout=PIPE, encoding='utf8')
+        while self.process.poll() is None:
+            self.ret = self.process.stdout.readline()
+            if self.ret == '':
                 break
             else:
-                print(output)
-
-
+                print(self.ret)
 
 event_handler = SystemHandler()
 observer = watchdog.observers.Observer()

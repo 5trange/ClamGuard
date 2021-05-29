@@ -36,6 +36,7 @@ from PySide6.QtWidgets import *
 from subprocess import *
 from mainWindow import Ui_mainWindow  # Importing mainWindow.py
 from SplashScreen import Ui_SplashScreen  # Importing SplashScreen.py
+from filesystemMonitor import * # Importing filesystemMonitor.py
 
 # Globals vars + env path
 appdata_dir = os.environ['APPDATA']
