@@ -74,7 +74,7 @@ class SplashScreen(QMainWindow):
             print(f"Debug: Error:{e}")
             raise
 
-
+        self.init_thread = clamd_init()
         self.init_thread.start()
         self.init_thread.finished.connect(lambda: self.ui.progressBar.setValue(75))
         self.init_thread.finished.connect(lambda: self.start_watchdog())
