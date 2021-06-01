@@ -66,7 +66,15 @@ class SplashScreen(QMainWindow):
         self.shadow.setColor(QColor(0, 0, 0, 60))
         self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
         self.show()
-        self.init_thread = clamd_init()
+
+        # Start clamd
+        try:
+            self.clamd_process = Popen(['clamd.exe'], creationflags = CREATE_NO_WINDOW)
+        except Exception as e:
+            print(f"Debug: Error:{e}")
+            raise
+
+
         self.init_thread.start()
         self.init_thread.finished.connect(lambda: self.ui.progressBar.setValue(75))
         self.init_thread.finished.connect(lambda: self.start_watchdog())
