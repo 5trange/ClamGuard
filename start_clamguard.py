@@ -45,6 +45,12 @@ root_drive = os.environ['SYSTEMDRIVE']
 drivers_dir = win_dir + '\\System32\\Drivers\\'
 system32_dir = win_dir + '\\System32\\'
 
+# Start clamd
+try:
+    clamd_process = Popen(['clamd.exe'], creationflags = CREATE_NO_WINDOW)
+except Exception as e:
+    print(f"Debug: Error:{e}")
+    raise
 
 # Splashscreen class
 class SplashScreen(QMainWindow):
@@ -66,13 +72,6 @@ class SplashScreen(QMainWindow):
         self.shadow.setColor(QColor(0, 0, 0, 60))
         self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
         self.show()
-
-        # Start clamd
-        try:
-            self.clamd_process = Popen(['clamd.exe'], creationflags = CREATE_NO_WINDOW)
-        except Exception as e:
-            print(f"Debug: Error:{e}")
-            raise
 
         self.init_thread = clamd_init()
         self.init_thread.start()
@@ -105,6 +104,7 @@ class MainWindow(QMainWindow):
 
         # Window control buttons
         self.ui.minButton.clicked.connect(lambda: self.showMinimized())  # Minimize on click
+        self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid))
         self.ui.closeButton.clicked.connect(lambda: self.close())  # Close on click
 
         # Titlebar dragging
@@ -185,6 +185,7 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False)
         self.ui.customscanButton.setEnabled(False)
         self.ui.homeButton.setEnabled(False)
+        self.ui.closeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
             "Quick scan started. Please wait...\n\nNOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.\n\n")
@@ -196,6 +197,7 @@ class MainWindow(QMainWindow):
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     # Fullscan threads and slots
     def launch_fullscan(self):
@@ -204,6 +206,7 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False)
         self.ui.customscanButton.setEnabled(False)
         self.ui.homeButton.setEnabled(False)
+        self.ui.closeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
             f"Full scan started.\n\nScanning {root_drive}.\n\nPlease note that full scan might take a long time to complete.\n\nIt is recommended to close all programs before scanning.\n\n")
@@ -215,6 +218,7 @@ class MainWindow(QMainWindow):
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     # Customscan threads and slots
     def launch_customscan(self):
@@ -223,6 +227,7 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False)
         self.ui.customscanButton.setEnabled(False)
         self.ui.homeButton.setEnabled(False)
+        self.ui.closeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
         self.scan_dir = self.scan_dir.replace("/","\\") # Shindows likes to use backslashes hhhh
@@ -235,6 +240,7 @@ class MainWindow(QMainWindow):
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     def set_scan_value(self, scanstring):
         self.ui.scanStatus.appendPlainText(scanstring)
@@ -254,6 +260,7 @@ class MainWindow(QMainWindow):
         self.ui.cancelUpdate.setEnabled(True)
         self.ui.updatehomeButton.setEnabled(False)
         self.ui.checkUpdate.setEnabled(False)
+        self.ui.closeButton.setEnabled(False)
         self.ui.updateStatus.clear()
         self.ui.updateStatus.appendPlainText("Refreshing database...\n\n")
         self.thread = Updater()
@@ -262,6 +269,7 @@ class MainWindow(QMainWindow):
         self.thread.finished.connect(lambda: self.ui.cancelUpdate.setEnabled(False))
         self.thread.finished.connect(lambda: self.ui.checkUpdate.setEnabled(True))
         self.thread.finished.connect(lambda: self.ui.updatehomeButton.setEnabled(True))
+        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     def set_update_value(self, updatestring):
         self.ui.updateStatus.appendPlainText(updatestring)
@@ -303,10 +311,7 @@ class MainWindow(QMainWindow):
 class Updater(QThread):
     ret = Signal(str)
     abort = False
-
-    def printing(self):
-        print("Debug: Hello, I'm a worker class!")
-
+    
     def run(self):
         try:
             self.process = Popen(['freshclam.exe'], stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
@@ -454,6 +459,7 @@ class clamd_init(QThread):
             self.counter = self.counter+1
         if (self.result != 0):
             print("Couldn't connect to ClamAV Daemon!")
+            os.kill(clamd_process.pid)
             sys.exit(1) # Prolly not very safe
 
 if __name__ == "__main__":
