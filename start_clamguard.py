@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
 
         # Window control buttons
         self.ui.minButton.clicked.connect(lambda: self.showMinimized())  # Minimize on click
-        self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid))
+        self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM)) # stop clamd 
         self.ui.closeButton.clicked.connect(lambda: self.close())  # Close on click
 
         # Titlebar dragging
@@ -311,7 +311,7 @@ class MainWindow(QMainWindow):
 class Updater(QThread):
     ret = Signal(str)
     abort = False
-    
+
     def run(self):
         try:
             self.process = Popen(['freshclam.exe'], stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
@@ -459,7 +459,7 @@ class clamd_init(QThread):
             self.counter = self.counter+1
         if (self.result != 0):
             print("Couldn't connect to ClamAV Daemon!")
-            os.kill(clamd_process.pid)
+            os.kill(clamd_process.pid, signal.SIGTERM)
             sys.exit(1) # Prolly not very safe
 
 if __name__ == "__main__":
