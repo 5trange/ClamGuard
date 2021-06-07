@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
 
         # Window control buttons
         self.ui.minButton.clicked.connect(lambda: self.showMinimized())  # Minimize on click
-        self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM)) # stop clamd 
+        self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM)) # stop clamd
         self.ui.closeButton.clicked.connect(lambda: self.close())  # Close on click
 
         # Titlebar dragging
@@ -444,7 +444,7 @@ class clamd_init(QThread):
         self.port = 3310
         self.timeout = None
         self.counter = 1
-        self.max_retries = 10
+        self.max_retries = 50
         self.clamd_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         while (self.counter <= self.max_retries):
             try:
