@@ -44,6 +44,7 @@ win_dir = os.environ['SYSTEMROOT']
 root_drive = os.environ['SYSTEMDRIVE']
 drivers_dir = win_dir + '\\System32\\Drivers\\'
 system32_dir = win_dir + '\\System32\\'
+mon_drive = os.environ['SYSTEMDRIVE']+"\\"
 
 # Start clamd
 try:
@@ -75,16 +76,9 @@ class SplashScreen(QMainWindow):
 
         self.init_thread = clamd_init()
         self.init_thread.start()
-        self.init_thread.finished.connect(lambda: self.ui.progressBar.setValue(75))
-        self.init_thread.finished.connect(lambda: self.start_watchdog())
+        self.init_thread.finished.connect(lambda: self.ui.progressBar.setValue(100))
         self.init_thread.finished.connect(lambda: self.close())
         self.init_thread.finished.connect(lambda: self.main_window.show())
-
-    def start_watchdog(self):
-        self.event_handler = SystemHandler()
-        self.observer = watchdog.observers.Observer()
-        self.observer.schedule(self.event_handler, root_drive, recursive=True)
-        print("Debug: ClamGuard WatchDog Started.")
 
 # MainWindow class
 class MainWindow(QMainWindow):
@@ -269,7 +263,7 @@ class MainWindow(QMainWindow):
         self.thread.finished.connect(lambda: self.ui.cancelUpdate.setEnabled(False))
         self.thread.finished.connect(lambda: self.ui.checkUpdate.setEnabled(True))
         self.thread.finished.connect(lambda: self.ui.updatehomeButton.setEnabled(True))
-        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
+        self.thread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     def set_update_value(self, updatestring):
         self.ui.updateStatus.appendPlainText(updatestring)

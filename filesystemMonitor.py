@@ -28,11 +28,12 @@ import subprocess
 import watchdog.observers
 from subprocess import *
 
-processes = []
-cpu_cont = int(os.cpu_count() / 2)
-sysDrive = os.environ['SYSTEMDRIVE']
+sysDrive = os.environ['SYSTEMDRIVE']+"\\"
 ignoreRec: str = sysDrive + r'$Recycle.Bin'
+print("ClamGuard WatchDog")
+print("Starting Service..")
 watchableFiles = ['*.cmd', '*.exe', '*.msi', '*.dll', '*.zip', '*.7z', '*.bat', '*.rar', '*.sys', '*.vbs']
+
 
 class SystemHandler(watchdog.events.PatternMatchingEventHandler):
     def __init__(self):
@@ -54,3 +55,10 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
                 break
             else:
                 print(self.ret)
+
+
+event_handler = SystemHandler()
+observer = watchdog.observers.Observer()
+observer.schedule(event_handler, sysDrive, recursive=True)
+observer.start()
+print("Service Started.")
