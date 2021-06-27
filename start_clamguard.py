@@ -44,7 +44,6 @@ win_dir = os.environ['SYSTEMROOT']
 root_drive = os.environ['SYSTEMDRIVE']
 drivers_dir = win_dir + '\\System32\\Drivers\\'
 system32_dir = win_dir + '\\System32\\'
-mon_drive = os.environ['SYSTEMDRIVE']+"\\"
 
 # Start clamd
 try:
