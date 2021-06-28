@@ -30,8 +30,7 @@ from subprocess import *
 
 sysDrive = os.environ['SYSTEMDRIVE']+"\\"
 ignoreRec: str = sysDrive + r'$Recycle.Bin'
-print("ClamGuard WatchDog")
-print("Starting Service..")
+print("Starting ClamGuard WatchDog Service..")
 watchableFiles = ['*.cmd', '*.exe', '*.msi', '*.dll', '*.zip', '*.7z', '*.bat', '*.rar', '*.sys', '*.vbs']
 
 
@@ -61,4 +60,4 @@ event_handler = SystemHandler()
 observer = watchdog.observers.Observer()
 observer.schedule(event_handler, sysDrive, recursive=True)
 observer.start()
-print("Service Started.")
+print("WatchDog Service Started.")
