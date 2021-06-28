@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowUAcrPX.ui'
+## Form generated from reading UI file 'mainWindowdNBWsz.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.1.0
+## Created by: Qt User Interface Compiler version 6.1.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtCore import *  # type: ignore
+from PySide6.QtGui import *  # type: ignore
+from PySide6.QtWidgets import *  # type: ignore
 
 
 class Ui_mainWindow(object):
@@ -572,7 +572,6 @@ class Ui_mainWindow(object):
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(10, 50, 381, 16))
         font4 = QFont()
-        font4.setFamilies([u"Ubuntu"])
         font4.setPointSize(11)
         font4.setBold(True)
         self.label.setFont(font4)
@@ -586,7 +585,6 @@ class Ui_mainWindow(object):
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(10, 130, 741, 41))
         font5 = QFont()
-        font5.setFamilies([u"Ubuntu"])
         font5.setBold(True)
         self.label_2.setFont(font5)
         self.label_2.setStyleSheet(u"QLabel\n"
@@ -787,6 +785,6 @@ class Ui_mainWindow(object):
         ___qtablewidgetitem.setText(QCoreApplication.translate("mainWindow", u"Name", None));
         ___qtablewidgetitem1 = self.quarantineView.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWindow", u"Size", None));
-        self.engineVer.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Version: 0.21.5-rc", None))
+        self.engineVer.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Version: 0.6.28-rc", None))
     # retranslateUi
 

@@ -1281,7 +1281,6 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <pointsize>11</pointsize>
                    <bold>true</bold>
                   </font>
@@ -1309,7 +1308,6 @@ QPushButton:hover
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1337,7 +1335,6 @@ or later.</string>
                  </property>
                  <property name="font">
                   <font>
-                   <family>Ubuntu</family>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1536,7 +1533,7 @@ QPushButton:hover
              <string notr="true">color: rgb(0, 255, 38);</string>
             </property>
             <property name="text">
-             <string>ClamGuard Version: 0.21.5-rc</string>
+             <string>ClamGuard Version: 0.6.28-rc</string>
             </property>
            </widget>
           </item>
