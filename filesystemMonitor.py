@@ -47,7 +47,7 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
 
     def scan(self, path):
         print(path)
-        self.process = Popen(['clamdscan.exe','--multiscan','--move=quarantine',path], stdout=PIPE, encoding='utf8')
+        self.process = Popen(['clamdscan.exe','--multiscan','--move=quarantine',path], stdout=PIPE, encoding='utf8', creationflags = CREATE_NO_WINDOW )
         while self.process.poll() is None:
             self.ret = self.process.stdout.readline()
             if self.ret == '':
