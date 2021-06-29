@@ -1294,16 +1294,16 @@ QPushButton:hover
 </string>
                  </property>
                  <property name="text">
-                  <string>An opensource antivirus software based on ClamAV.</string>
+                  <string>An opensource antivirus solution based on ClamAV.</string>
                  </property>
                 </widget>
                 <widget class="QLabel" name="label_2">
                  <property name="geometry">
                   <rect>
                    <x>10</x>
-                   <y>130</y>
+                   <y>90</y>
                    <width>741</width>
-                   <height>41</height>
+                   <height>121</height>
                   </rect>
                  </property>
                  <property name="font">
@@ -1320,7 +1320,12 @@ QPushButton:hover
 </string>
                  </property>
                  <property name="text">
-                  <string>This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2
+                  <string>Developed by: 
+Adith K. Murali
+Bilal Jafar
+Vinayak Bhat S.
+
+This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2
 or later.</string>
                  </property>
                 </widget>
@@ -1328,7 +1333,7 @@ or later.</string>
                  <property name="geometry">
                   <rect>
                    <x>10</x>
-                   <y>180</y>
+                   <y>230</y>
                    <width>571</width>
                    <height>16</height>
                   </rect>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowdNBWsz.ui'
+## Form generated from reading UI file 'mainWindowTWhehK.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.1
 ##
@@ -583,7 +583,7 @@ class Ui_mainWindow(object):
 "")
         self.label_2 = QLabel(self.frameAboutContent)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(10, 130, 741, 41))
+        self.label_2.setGeometry(QRect(10, 90, 741, 121))
         font5 = QFont()
         font5.setBold(True)
         self.label_2.setFont(font5)
@@ -595,7 +595,7 @@ class Ui_mainWindow(object):
 "")
         self.label_3 = QLabel(self.frameAboutContent)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(10, 180, 571, 16))
+        self.label_3.setGeometry(QRect(10, 230, 571, 16))
         self.label_3.setFont(font5)
         self.label_3.setStyleSheet(u"QLabel\n"
 "{\n"
@@ -775,8 +775,13 @@ class Ui_mainWindow(object):
         self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project", None))
         self.AboutGithub.setText("")
         self.AboutGPL.setText("")
-        self.label.setText(QCoreApplication.translate("mainWindow", u"An opensource antivirus software based on ClamAV.", None))
-        self.label_2.setText(QCoreApplication.translate("mainWindow", u"This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2\n"
+        self.label.setText(QCoreApplication.translate("mainWindow", u"An opensource antivirus solution based on ClamAV.", None))
+        self.label_2.setText(QCoreApplication.translate("mainWindow", u"Developed by: \n"
+"Adith K. Murali\n"
+"Bilal Jafar\n"
+"Vinayak Bhat S.\n"
+"\n"
+"This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2\n"
 "or later.", None))
         self.label_3.setText(QCoreApplication.translate("mainWindow", u"Developed using PySide6 and Python3. The full source code is available in our GitHub repository.", None))
         self.quarantineHomeButton.setText("")
