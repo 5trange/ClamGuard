@@ -5,4 +5,4 @@ A background process of ClamGuard watches the system drive for any malicious cod
 
 ## Currently being tested using
 - Python Version: 3.9.4
-- ClamAV 0.103.2
+- ClamAV 0.103.3
