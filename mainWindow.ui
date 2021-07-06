@@ -1437,7 +1437,7 @@ QPushButton:hover
 	</string>
                  </property>
                  <property name="text">
-                  <string>ClamGuard Project</string>
+                  <string>ClamGuard Project </string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1775,7 +1775,7 @@ QPushButton:hover
              <string notr="true">color: #81a1c1;</string>
             </property>
             <property name="text">
-             <string>ClamGuard Version: 0.6.28-rc</string>
+             <string>ClamGuard Version: 0.7.7-rc</string>
             </property>
            </widget>
           </item>

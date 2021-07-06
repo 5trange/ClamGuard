@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowiVxXAl.ui'
+## Form generated from reading UI file 'mainWindowJrdpdK.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.1
 ##
@@ -944,7 +944,7 @@ class Ui_mainWindow(object):
         self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"Cancel Update", None))
         self.homeButtonAbout.setText("")
         self.moonG3.setText("")
-        self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project", None))
+        self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project ", None))
         self.AboutGithub.setText("")
         self.AboutGPL.setText("")
         self.label.setText(QCoreApplication.translate("mainWindow", u"An opensource antivirus solution based on ClamAV.", None))
@@ -964,6 +964,6 @@ class Ui_mainWindow(object):
         ___qtablewidgetitem.setText(QCoreApplication.translate("mainWindow", u"Name", None));
         ___qtablewidgetitem1 = self.quarantineView.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("mainWindow", u"Size", None));
-        self.engineVer.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Version: 0.6.28-rc", None))
+        self.engineVer.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Version: 0.7.7-rc", None))
     # retranslateUi
 
