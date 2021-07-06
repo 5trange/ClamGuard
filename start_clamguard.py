@@ -73,6 +73,7 @@ class SplashScreen(QMainWindow):
         self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
         self.show()
 
+        # Checks if clamd can be pinged, if successful, continues execution.
         self.init_thread = clamd_init()
         self.init_thread.start()
         self.init_thread.finished.connect(lambda: self.ui.progressBar.setValue(100))
@@ -431,6 +432,7 @@ class CustomScan(QThread):
             except Exception as e:
                 print(f"Debug: Error!:{e}")
 
+# Checking if clamd is online.
 class clamd_init(QThread):
     def run(self):
         self.host = '127.0.0.1'
