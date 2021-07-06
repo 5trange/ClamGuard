@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowTWhehK.ui'
+## Form generated from reading UI file 'mainWindowiVxXAl.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.1
 ##
@@ -28,7 +28,7 @@ class Ui_mainWindow(object):
         self.drop_shadow_layout.setContentsMargins(0, 0, 0, 0)
         self.dropshadowFrame = QFrame(self.centralwidget)
         self.dropshadowFrame.setObjectName(u"dropshadowFrame")
-        self.dropshadowFrame.setStyleSheet(u"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(55, 56, 59, 255));\n"
+        self.dropshadowFrame.setStyleSheet(u"background-color: #2e3440;\n"
 "border-radius: 5px;")
         self.dropshadowFrame.setFrameShape(QFrame.NoFrame)
         self.dropshadowFrame.setFrameShadow(QFrame.Raised)
@@ -61,7 +61,7 @@ class Ui_mainWindow(object):
         font1.setPointSize(10)
         font1.setBold(True)
         self.title_label.setFont(font1)
-        self.title_label.setStyleSheet(u"color: rgb(0, 255, 38);")
+        self.title_label.setStyleSheet(u"color: #81a1c1;")
 
         self.horizontalLayout_2.addWidget(self.title_label)
 
@@ -83,13 +83,13 @@ class Ui_mainWindow(object):
 "{\n"
 "	border:none;\n"
 "	border-radius: 8px;\n"
-"	background-color: rgb(176, 109, 16);\n"
+"	background-color: #a3be8c;\n"
 "}\n"
 "\n"
 "QPushButton:hover\n"
 "{\n"
 "	\n"
-"	background-color: rgb(255, 128, 0);\n"
+"	background-color: #ebcb8b;\n"
 "}\n"
 "")
 
@@ -103,13 +103,13 @@ class Ui_mainWindow(object):
 "{\n"
 "	border:none;\n"
 "	border-radius:8px;\n"
-"	background-color: rgb(161, 0, 2);\n"
+"	background-color: #d08770;\n"
 "}\n"
 "\n"
 "QPushButton:hover\n"
 "{\n"
 "	\n"
-"	background-color: rgb(255, 0, 4);\n"
+"	background-color: #bf616a;\n"
 "}\n"
 "")
 
@@ -149,12 +149,12 @@ class Ui_mainWindow(object):
         self.scanFrame.setCursor(QCursor(Qt.PointingHandCursor))
         self.scanFrame.setStyleSheet(u"QFrame\n"
 "{\n"
-"	border: 5px solid rgb(0, 182, 24);\n"
+"	border: 5px solid #81a1c1;\n"
 "	border-radius: 80px;\n"
 "}\n"
 "QFrame:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 5px solid #b48ead;\n"
 "}\n"
 "	")
         self.scanFrame.setFrameShape(QFrame.StyledPanel)
@@ -170,7 +170,7 @@ class Ui_mainWindow(object):
         self.scanlabel.setFont(font2)
         self.scanlabel.setStyleSheet(u"QLabel\n"
 "{\n"
-"	color: rgb(0, 255, 38);\n"
+"	color: #81a1c1;\n"
 "	border:none;\n"
 "}\n"
 "\n"
@@ -187,7 +187,7 @@ class Ui_mainWindow(object):
 "	border:none;\n"
 "}\n"
 "")
-        self.scanImg.setPixmap(QPixmap(u"img/search_green.png"))
+        self.scanImg.setPixmap(QPixmap(u"img/search.png"))
         self.scanImg.setScaledContents(True)
         self.updateFrame = QFrame(self.frame_content_home)
         self.updateFrame.setObjectName(u"updateFrame")
@@ -197,12 +197,12 @@ class Ui_mainWindow(object):
         self.updateFrame.setCursor(QCursor(Qt.PointingHandCursor))
         self.updateFrame.setStyleSheet(u"QFrame\n"
 "{\n"
-"	border: 5px solid rgb(0, 182, 24);\n"
+"	border: 5px solid #81a1c1;\n"
 "	border-radius: 80px;\n"
 "}\n"
 "QFrame:hover\n"
 "{\n"
-"	border: 5px solid rgb(0, 255, 38);\n"
+"	border: 5px solid #b48ead;\n"
 "}\n"
 "	")
         self.updateFrame.setFrameShape(QFrame.StyledPanel)
@@ -218,7 +218,7 @@ class Ui_mainWindow(object):
 "	border:none;\n"
 "}\n"
 "")
-        self.updateImg.setPixmap(QPixmap(u"img/update_green.png"))
+        self.updateImg.setPixmap(QPixmap(u"img/update.png"))
         self.updateImg.setScaledContents(True)
         self.updateLabel = QLabel(self.updateFrame)
         self.updateLabel.setObjectName(u"updateLabel")
@@ -229,14 +229,14 @@ class Ui_mainWindow(object):
         self.updateLabel.setFont(font3)
         self.updateLabel.setStyleSheet(u"QLabel\n"
 "{\n"
-"	color: rgb(0, 255, 38);\n"
+"	color: #81a1c1;\n"
 "	border:none;\n"
 "}\n"
 "\n"
 "	")
         self.aboutLabel = QLabel(self.frame_content_home)
         self.aboutLabel.setObjectName(u"aboutLabel")
-        self.aboutLabel.setGeometry(QRect(720, 40, 31, 31))
+        self.aboutLabel.setGeometry(QRect(50, 480, 31, 31))
         self.aboutLabel.setFont(font1)
         self.aboutLabel.setCursor(QCursor(Qt.PointingHandCursor))
         self.aboutLabel.setStyleSheet(u"QLabel\n"
@@ -249,11 +249,11 @@ class Ui_mainWindow(object):
 "	color:rgb(0, 255, 38);\n"
 "	border:1px solid rgb(255, 255, 255);\n"
 "}")
-        self.aboutLabel.setPixmap(QPixmap(u"img/info_green.png"))
+        self.aboutLabel.setPixmap(QPixmap(u"img/info.png"))
         self.aboutLabel.setScaledContents(True)
         self.quarantineLabel = QLabel(self.frame_content_home)
         self.quarantineLabel.setObjectName(u"quarantineLabel")
-        self.quarantineLabel.setGeometry(QRect(680, 40, 31, 31))
+        self.quarantineLabel.setGeometry(QRect(10, 480, 31, 31))
         self.quarantineLabel.setFont(font1)
         self.quarantineLabel.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineLabel.setStyleSheet(u"QLabel\n"
@@ -266,8 +266,18 @@ class Ui_mainWindow(object):
 "	color:rgb(0, 255, 38);\n"
 "	border:1px solid rgb(255, 255, 255);\n"
 "}")
-        self.quarantineLabel.setPixmap(QPixmap(u"img/warning_green.png"))
+        self.quarantineLabel.setPixmap(QPixmap(u"img/warning.png"))
         self.quarantineLabel.setScaledContents(True)
+        self.voyagerHome = QLabel(self.frame_content_home)
+        self.voyagerHome.setObjectName(u"voyagerHome")
+        self.voyagerHome.setGeometry(QRect(0, 0, 801, 551))
+        self.voyagerHome.setPixmap(QPixmap(u"img/voyager.png"))
+        self.voyagerHome.setScaledContents(True)
+        self.voyagerHome.raise_()
+        self.scanFrame.raise_()
+        self.updateFrame.raise_()
+        self.aboutLabel.raise_()
+        self.quarantineLabel.raise_()
 
         self.verticalLayout_4.addWidget(self.frame_content_home)
 
@@ -288,18 +298,23 @@ class Ui_mainWindow(object):
         self.homeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
         icon = QIcon()
-        icon.addFile(u"img/home_green.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"img/home.png", QSize(), QIcon.Normal, QIcon.Off)
         self.homeButton.setIcon(icon)
         self.homeButton.setIconSize(QSize(50, 50))
+        self.moonG = QLabel(self.frameHome)
+        self.moonG.setObjectName(u"moonG")
+        self.moonG.setGeometry(QRect(630, 0, 191, 171))
+        self.moonG.setPixmap(QPixmap(u"img/pixelmoon.png"))
+        self.moonG.setScaledContents(True)
 
         self.verticalLayout_5.addWidget(self.frameHome)
 
@@ -316,12 +331,12 @@ class Ui_mainWindow(object):
         self.quickscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.quickscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -334,12 +349,12 @@ class Ui_mainWindow(object):
         self.fullscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.fullscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -352,12 +367,12 @@ class Ui_mainWindow(object):
         self.customscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.customscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -370,13 +385,12 @@ class Ui_mainWindow(object):
         self.cancelscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(255,0,4);\n"
-"	color: rgb(255,0,4);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -398,8 +412,78 @@ class Ui_mainWindow(object):
         self.scanStatus.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	 \n"
-"	background-color: rgb(33, 33, 33);\n"
-"	color: rgb(0,255,38);\n"
+"	background-color: #2e3440;\n"
+"	color: #d8dee9;\n"
+"}\n"
+"\n"
+"/* VERTICAL SCROLLBAR */\n"
+" QScrollBar:vertical {\n"
+"	border: none;\n"
+"    \n"
+"	background-color: #3b4252;\n"
+"    width: 14px;\n"
+"    margin: 15px 0 15px 0;\n"
+"	border-radius: 0px;\n"
+" }\n"
+"\n"
+"/*  HANDLE BAR VERTICAL */\n"
+"QScrollBar::handle:vertical {	\n"
+"	background-color: rgb(80, 80, 122);\n"
+"	min-height: 30px;\n"
+"	border-radius: 7px;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover{	\n"
+"	background-color: rgb(255, 0, 127);\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed {	\n"
+"	background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* BTN TOP - SCROLLBAR */\n"
+"QScrollBar::sub-line:vertical {\n"
+"	border: none;\n"
+"	\n"
+"	background-color: #3b4252;\n"
+"	height: 15px;\n"
+"	border-top-left-radius: 0px;\n"
+"	border-top-right-radius: 0px;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:hover {	\n"
+"	\n"
+"	background-color: rgb(80, 80, 122);\n"
+"}\n"
+"QScrol"
+                        "lBar::sub-line:vertical:pressed {	\n"
+"	background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* BTN BOTTOM - SCROLLBAR */\n"
+"QScrollBar::add-line:vertical {\n"
+"	border: none;\n"
+"	\n"
+"	background-color: #3b4252;\n"
+"	height: 15px;\n"
+"	border-bottom-left-radius: 0px;\n"
+"	border-bottom-right-radius: 0px;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:hover {	\n"
+"	\n"
+"	background-color: rgb(78, 78, 119);\n"
+"}\n"
+"QScrollBar::add-line:vertical:pressed {	\n"
+"	background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* RESET ARROW */\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"	background: none;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	background: none;\n"
 "}\n"
 "	")
         self.scanStatus.setReadOnly(True)
@@ -426,16 +510,21 @@ class Ui_mainWindow(object):
         self.updatehomeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.updatehomeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
         self.updatehomeButton.setIcon(icon)
         self.updatehomeButton.setIconSize(QSize(50, 50))
+        self.moonG2 = QLabel(self.frameGoHome)
+        self.moonG2.setObjectName(u"moonG2")
+        self.moonG2.setGeometry(QRect(630, 0, 191, 171))
+        self.moonG2.setPixmap(QPixmap(u"img/pixelmoon.png"))
+        self.moonG2.setScaledContents(True)
 
         self.verticalLayout_2.addWidget(self.frameGoHome)
 
@@ -454,12 +543,12 @@ class Ui_mainWindow(object):
         self.checkUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.checkUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
         self.cancelUpdate = QPushButton(self.frameUpdateButtons)
@@ -471,13 +560,12 @@ class Ui_mainWindow(object):
         self.cancelUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(255,0,4);\n"
-"	color: rgb(255,0,4);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -498,8 +586,78 @@ class Ui_mainWindow(object):
         self.updateStatus.setStyleSheet(u"QPlainTextEdit\n"
 "{\n"
 "	 \n"
-"	background-color: rgb(33, 33, 33);\n"
-"	color: rgb(0,255,38);\n"
+"	background-color: #2e3440;\n"
+"	color: #d8dee9;\n"
+"}\n"
+"\n"
+"/* VERTICAL SCROLLBAR */\n"
+" QScrollBar:vertical {\n"
+"	border: none;\n"
+"    \n"
+"	background-color: #3b4252;\n"
+"    width: 14px;\n"
+"    margin: 15px 0 15px 0;\n"
+"	border-radius: 0px;\n"
+" }\n"
+"\n"
+"/*  HANDLE BAR VERTICAL */\n"
+"QScrollBar::handle:vertical {	\n"
+"	background-color: rgb(80, 80, 122);\n"
+"	min-height: 30px;\n"
+"	border-radius: 7px;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover{	\n"
+"	background-color: rgb(255, 0, 127);\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed {	\n"
+"	background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* BTN TOP - SCROLLBAR */\n"
+"QScrollBar::sub-line:vertical {\n"
+"	border: none;\n"
+"	\n"
+"	background-color: #3b4252;\n"
+"	height: 15px;\n"
+"	border-top-left-radius: 0px;\n"
+"	border-top-right-radius: 0px;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::sub-line:vertical:hover {	\n"
+"	\n"
+"	background-color: rgb(80, 80, 122);\n"
+"}\n"
+"QScrol"
+                        "lBar::sub-line:vertical:pressed {	\n"
+"	background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* BTN BOTTOM - SCROLLBAR */\n"
+"QScrollBar::add-line:vertical {\n"
+"	border: none;\n"
+"	\n"
+"	background-color: #3b4252;\n"
+"	height: 15px;\n"
+"	border-bottom-left-radius: 0px;\n"
+"	border-bottom-right-radius: 0px;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"}\n"
+"QScrollBar::add-line:vertical:hover {	\n"
+"	\n"
+"	background-color: rgb(78, 78, 119);\n"
+"}\n"
+"QScrollBar::add-line:vertical:pressed {	\n"
+"	background-color: rgb(185, 0, 92);\n"
+"}\n"
+"\n"
+"/* RESET ARROW */\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"	background: none;\n"
+"}\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	background: none;\n"
 "}\n"
 "	")
         self.updateStatus.setReadOnly(True)
@@ -525,16 +683,21 @@ class Ui_mainWindow(object):
         self.homeButtonAbout.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButtonAbout.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
         self.homeButtonAbout.setIcon(icon)
         self.homeButtonAbout.setIconSize(QSize(50, 50))
+        self.moonG3 = QLabel(self.frameHomeAbout)
+        self.moonG3.setObjectName(u"moonG3")
+        self.moonG3.setGeometry(QRect(630, 0, 191, 171))
+        self.moonG3.setPixmap(QPixmap(u"img/pixelmoon.png"))
+        self.moonG3.setScaledContents(True)
 
         self.verticalLayout_7.addWidget(self.frameHomeAbout)
 
@@ -550,7 +713,7 @@ class Ui_mainWindow(object):
         self.ProjectTitle.setFont(font3)
         self.ProjectTitle.setStyleSheet(u"QLabel\n"
 "{\n"
-"	color: rgb(0, 255, 38);\n"
+"	color: #81a1c1;\n"
 "	border:none;\n"
 "}\n"
 "\n"
@@ -558,14 +721,14 @@ class Ui_mainWindow(object):
         self.ProjectTitle.setAlignment(Qt.AlignCenter)
         self.AboutGithub = QLabel(self.frameAboutContent)
         self.AboutGithub.setObjectName(u"AboutGithub")
-        self.AboutGithub.setGeometry(QRect(10, 270, 101, 41))
+        self.AboutGithub.setGeometry(QRect(10, 280, 101, 41))
         self.AboutGithub.setCursor(QCursor(Qt.PointingHandCursor))
         self.AboutGithub.setStyleSheet(u"")
         self.AboutGithub.setPixmap(QPixmap(u"img/GitHub.png"))
         self.AboutGithub.setScaledContents(True)
         self.AboutGPL = QLabel(self.frameAboutContent)
         self.AboutGPL.setObjectName(u"AboutGPL")
-        self.AboutGPL.setGeometry(QRect(140, 270, 91, 41))
+        self.AboutGPL.setGeometry(QRect(140, 280, 91, 41))
         self.AboutGPL.setPixmap(QPixmap(u"img/gpl.png"))
         self.AboutGPL.setScaledContents(True)
         self.label = QLabel(self.frameAboutContent)
@@ -577,19 +740,19 @@ class Ui_mainWindow(object):
         self.label.setFont(font4)
         self.label.setStyleSheet(u"QLabel\n"
 "{\n"
-"	color: rgb(0, 255, 38);\n"
+"	color: #81a1c1;\n"
 "	border:none;\n"
 "}\n"
 "")
         self.label_2 = QLabel(self.frameAboutContent)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(10, 90, 741, 121))
+        self.label_2.setGeometry(QRect(10, 70, 741, 161))
         font5 = QFont()
         font5.setBold(True)
         self.label_2.setFont(font5)
         self.label_2.setStyleSheet(u"QLabel\n"
 "{\n"
-"	color: rgb(0, 255, 38);\n"
+"	color: #81a1c1;\n"
 "	border:none;\n"
 "}\n"
 "")
@@ -599,7 +762,7 @@ class Ui_mainWindow(object):
         self.label_3.setFont(font5)
         self.label_3.setStyleSheet(u"QLabel\n"
 "{\n"
-"	color: rgb(0, 255, 38);\n"
+"	color: #81a1c1;\n"
 "	border:none;\n"
 "}\n"
 "")
@@ -623,16 +786,21 @@ class Ui_mainWindow(object):
         self.quarantineHomeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineHomeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
         self.quarantineHomeButton.setIcon(icon)
         self.quarantineHomeButton.setIconSize(QSize(50, 50))
+        self.moonG4 = QLabel(self.frameQuarantineNav)
+        self.moonG4.setObjectName(u"moonG4")
+        self.moonG4.setGeometry(QRect(630, 0, 191, 171))
+        self.moonG4.setPixmap(QPixmap(u"img/pixelmoon.png"))
+        self.moonG4.setScaledContents(True)
 
         self.verticalLayout_8.addWidget(self.frameQuarantineNav)
 
@@ -652,12 +820,12 @@ class Ui_mainWindow(object):
         self.quarantineRefresh.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineRefresh.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid rgb(0, 182, 24);\n"
-"	color: rgb(0,255,38);\n"
+"	border: 0px solid #81a1c1;\n"
+"	color: #81a1c1;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid rgb(0, 255, 38);\n"
+"	border: 1px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -673,8 +841,8 @@ class Ui_mainWindow(object):
         self.quarantineView.setObjectName(u"quarantineView")
         self.quarantineView.setStyleSheet(u"QTableWidget\n"
 "{ \n"
-"	background-color: rgb(33, 33, 33);\n"
-"	color: rgb(0,255,38);\n"
+"	background-color: #2e3440;\n"
+"	color: #d8dee9;\n"
 "}\n"
 "	")
         self.quarantineView.horizontalHeader().setMinimumSectionSize(50)
@@ -708,7 +876,7 @@ class Ui_mainWindow(object):
         font7.setPointSize(7)
         font7.setBold(True)
         self.engineVer.setFont(font7)
-        self.engineVer.setStyleSheet(u"color: rgb(0, 255, 38);")
+        self.engineVer.setStyleSheet(u"color: #81a1c1;")
 
         self.horizontalLayout_6.addWidget(self.engineVer)
 
@@ -751,7 +919,9 @@ class Ui_mainWindow(object):
         self.quarantineLabel.setToolTip(QCoreApplication.translate("mainWindow", u"View Quarantine", None))
 #endif // QT_CONFIG(tooltip)
         self.quarantineLabel.setText("")
+        self.voyagerHome.setText("")
         self.homeButton.setText("")
+        self.moonG.setText("")
 #if QT_CONFIG(tooltip)
         self.quickscanButton.setToolTip("")
 #endif // QT_CONFIG(tooltip)
@@ -766,25 +936,29 @@ class Ui_mainWindow(object):
         self.customscanButton.setText(QCoreApplication.translate("mainWindow", u"Custom Scan", None))
         self.cancelscanButton.setText(QCoreApplication.translate("mainWindow", u"Cancel Scan", None))
         self.updatehomeButton.setText("")
+        self.moonG2.setText("")
 #if QT_CONFIG(tooltip)
         self.checkUpdate.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.checkUpdate.setText(QCoreApplication.translate("mainWindow", u"Check for Updates", None))
         self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"Cancel Update", None))
         self.homeButtonAbout.setText("")
+        self.moonG3.setText("")
         self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project", None))
         self.AboutGithub.setText("")
         self.AboutGPL.setText("")
         self.label.setText(QCoreApplication.translate("mainWindow", u"An opensource antivirus solution based on ClamAV.", None))
         self.label_2.setText(QCoreApplication.translate("mainWindow", u"Developed by: \n"
-"Adith K. Murali\n"
-"Bilal Jafar\n"
-"Vinayak Bhat S.\n"
+"Adith K. Murali, Bilal Jafar, Vinayak Bhat S.\n"
+"\n"
+"Artwork and design by:\n"
+"Jisin Thomas\n"
 "\n"
 "This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2\n"
 "or later.", None))
         self.label_3.setText(QCoreApplication.translate("mainWindow", u"Developed using PySide6 and Python3. The full source code is available in our GitHub repository.", None))
         self.quarantineHomeButton.setText("")
+        self.moonG4.setText("")
         self.quarantineRefresh.setText(QCoreApplication.translate("mainWindow", u"Refresh", None))
         ___qtablewidgetitem = self.quarantineView.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("mainWindow", u"Name", None));

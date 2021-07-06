@@ -45,7 +45,7 @@
     <item>
      <widget class="QFrame" name="dropshadowFrame">
       <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(55, 56, 59, 255));
+       <string notr="true">background-color: #2e3440;
 border-radius: 5px;</string>
       </property>
       <property name="frameShape">
@@ -136,7 +136,7 @@ border-radius: 5px;</string>
                 </font>
                </property>
                <property name="styleSheet">
-                <string notr="true">color: rgb(0, 255, 38);</string>
+                <string notr="true">color: #81a1c1;</string>
                </property>
                <property name="text">
                 <string>ClamGuard</string>
@@ -180,13 +180,13 @@ border-radius: 5px;</string>
 {
 	border:none;
 	border-radius: 8px;
-	background-color: rgb(176, 109, 16);
+	background-color: #a3be8c;
 }
 
 QPushButton:hover
 {
 	
-	background-color: rgb(255, 128, 0);
+	background-color: #ebcb8b;
 }
 </string>
                </property>
@@ -214,13 +214,13 @@ QPushButton:hover
 {
 	border:none;
 	border-radius:8px;
-	background-color: rgb(161, 0, 2);
+	background-color: #d08770;
 }
 
 QPushButton:hover
 {
 	
-	background-color: rgb(255, 0, 4);
+	background-color: #bf616a;
 }
 </string>
                </property>
@@ -310,12 +310,12 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QFrame
 {
-	border: 5px solid rgb(0, 182, 24);
+	border: 5px solid #81a1c1;
 	border-radius: 80px;
 }
 QFrame:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 5px solid #b48ead;
 }
 	</string>
                  </property>
@@ -345,7 +345,7 @@ QFrame:hover
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
-	color: rgb(0, 255, 38);
+	color: #81a1c1;
 	border:none;
 }
 
@@ -391,7 +391,7 @@ QFrame:hover
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap>img/search_green.png</pixmap>
+                   <pixmap>img/search.png</pixmap>
                   </property>
                   <property name="scaledContents">
                    <bool>true</bool>
@@ -428,12 +428,12 @@ QFrame:hover
                  <property name="styleSheet">
                   <string notr="true">QFrame
 {
-	border: 5px solid rgb(0, 182, 24);
+	border: 5px solid #81a1c1;
 	border-radius: 80px;
 }
 QFrame:hover
 {
-	border: 5px solid rgb(0, 255, 38);
+	border: 5px solid #b48ead;
 }
 	</string>
                  </property>
@@ -476,7 +476,7 @@ QFrame:hover
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap>img/update_green.png</pixmap>
+                   <pixmap>img/update.png</pixmap>
                   </property>
                   <property name="scaledContents">
                    <bool>true</bool>
@@ -500,7 +500,7 @@ QFrame:hover
                   <property name="styleSheet">
                    <string notr="true">QLabel
 {
-	color: rgb(0, 255, 38);
+	color: #81a1c1;
 	border:none;
 }
 
@@ -514,8 +514,8 @@ QFrame:hover
                 <widget class="QLabel" name="aboutLabel">
                  <property name="geometry">
                   <rect>
-                   <x>720</x>
-                   <y>40</y>
+                   <x>50</x>
+                   <y>480</y>
                    <width>31</width>
                    <height>31</height>
                   </rect>
@@ -548,7 +548,7 @@ QLabel:hover
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap>img/info_green.png</pixmap>
+                  <pixmap>img/info.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -557,8 +557,8 @@ QLabel:hover
                 <widget class="QLabel" name="quarantineLabel">
                  <property name="geometry">
                   <rect>
-                   <x>680</x>
-                   <y>40</y>
+                   <x>10</x>
+                   <y>480</y>
                    <width>31</width>
                    <height>31</height>
                   </rect>
@@ -591,12 +591,36 @@ QLabel:hover
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap>img/warning_green.png</pixmap>
+                  <pixmap>img/warning.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
                  </property>
                 </widget>
+                <widget class="QLabel" name="voyagerHome">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>801</width>
+                   <height>551</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/voyager.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+                <zorder>voyagerHome</zorder>
+                <zorder>scanFrame</zorder>
+                <zorder>updateFrame</zorder>
+                <zorder>aboutLabel</zorder>
+                <zorder>quarantineLabel</zorder>
                </widget>
               </item>
              </layout>
@@ -638,12 +662,12 @@ QLabel:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                  </property>
@@ -652,13 +676,32 @@ QPushButton:hover
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>img/home_green.png</normaloff>img/home_green.png</iconset>
+                   <normaloff>img/home.png</normaloff>img/home.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
                    <width>50</width>
                    <height>50</height>
                   </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="moonG">
+                 <property name="geometry">
+                  <rect>
+                   <x>630</x>
+                   <y>0</y>
+                   <width>191</width>
+                   <height>171</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/pixelmoon.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </widget>
@@ -695,12 +738,12 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                    </property>
@@ -732,12 +775,12 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                    </property>
@@ -769,12 +812,12 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                    </property>
@@ -803,13 +846,12 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(255,0,4);
-	color: rgb(255,0,4);
+	border: 1px solid #b48ead;
 }
 	</string>
                    </property>
@@ -845,8 +887,77 @@ QPushButton:hover
                     <string notr="true">QPlainTextEdit
 {
 	 
-	background-color: rgb(33, 33, 33);
-	color: rgb(0,255,38);
+	background-color: #2e3440;
+	color: #d8dee9;
+}
+
+/* VERTICAL SCROLLBAR */
+ QScrollBar:vertical {
+	border: none;
+    
+	background-color: #3b4252;
+    width: 14px;
+    margin: 15px 0 15px 0;
+	border-radius: 0px;
+ }
+
+/*  HANDLE BAR VERTICAL */
+QScrollBar::handle:vertical {	
+	background-color: rgb(80, 80, 122);
+	min-height: 30px;
+	border-radius: 7px;
+}
+QScrollBar::handle:vertical:hover{	
+	background-color: rgb(255, 0, 127);
+}
+QScrollBar::handle:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* BTN TOP - SCROLLBAR */
+QScrollBar::sub-line:vertical {
+	border: none;
+	
+	background-color: #3b4252;
+	height: 15px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical:hover {	
+	
+	background-color: rgb(80, 80, 122);
+}
+QScrollBar::sub-line:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* BTN BOTTOM - SCROLLBAR */
+QScrollBar::add-line:vertical {
+	border: none;
+	
+	background-color: #3b4252;
+	height: 15px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+QScrollBar::add-line:vertical:hover {	
+	
+	background-color: rgb(78, 78, 119);
+}
+QScrollBar::add-line:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* RESET ARROW */
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
 }
 	</string>
                    </property>
@@ -897,12 +1008,12 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                  </property>
@@ -911,13 +1022,32 @@ QPushButton:hover
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>img/home_green.png</normaloff>img/home_green.png</iconset>
+                   <normaloff>img/home.png</normaloff>img/home.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
                    <width>50</width>
                    <height>50</height>
                   </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="moonG2">
+                 <property name="geometry">
+                  <rect>
+                   <x>630</x>
+                   <y>0</y>
+                   <width>191</width>
+                   <height>171</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/pixelmoon.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </widget>
@@ -978,12 +1108,12 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1024,13 +1154,12 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(255,0,4);
-	color: rgb(255,0,4);
+	border: 1px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1088,8 +1217,77 @@ QPushButton:hover
                   <string notr="true">QPlainTextEdit
 {
 	 
-	background-color: rgb(33, 33, 33);
-	color: rgb(0,255,38);
+	background-color: #2e3440;
+	color: #d8dee9;
+}
+
+/* VERTICAL SCROLLBAR */
+ QScrollBar:vertical {
+	border: none;
+    
+	background-color: #3b4252;
+    width: 14px;
+    margin: 15px 0 15px 0;
+	border-radius: 0px;
+ }
+
+/*  HANDLE BAR VERTICAL */
+QScrollBar::handle:vertical {	
+	background-color: rgb(80, 80, 122);
+	min-height: 30px;
+	border-radius: 7px;
+}
+QScrollBar::handle:vertical:hover{	
+	background-color: rgb(255, 0, 127);
+}
+QScrollBar::handle:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* BTN TOP - SCROLLBAR */
+QScrollBar::sub-line:vertical {
+	border: none;
+	
+	background-color: #3b4252;
+	height: 15px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical:hover {	
+	
+	background-color: rgb(80, 80, 122);
+}
+QScrollBar::sub-line:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* BTN BOTTOM - SCROLLBAR */
+QScrollBar::add-line:vertical {
+	border: none;
+	
+	background-color: #3b4252;
+	height: 15px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+QScrollBar::add-line:vertical:hover {	
+	
+	background-color: rgb(78, 78, 119);
+}
+QScrollBar::add-line:vertical:pressed {	
+	background-color: rgb(185, 0, 92);
+}
+
+/* RESET ARROW */
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
 }
 	</string>
                  </property>
@@ -1150,12 +1348,12 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1164,13 +1362,32 @@ QPushButton:hover
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>img/home_green.png</normaloff>img/home_green.png</iconset>
+                   <normaloff>img/home.png</normaloff>img/home.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
                    <width>50</width>
                    <height>50</height>
                   </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="moonG3">
+                 <property name="geometry">
+                  <rect>
+                   <x>630</x>
+                   <y>0</y>
+                   <width>191</width>
+                   <height>171</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/pixelmoon.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </widget>
@@ -1213,7 +1430,7 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
-	color: rgb(0, 255, 38);
+	color: #81a1c1;
 	border:none;
 }
 
@@ -1230,7 +1447,7 @@ QPushButton:hover
                  <property name="geometry">
                   <rect>
                    <x>10</x>
-                   <y>270</y>
+                   <y>280</y>
                    <width>101</width>
                    <height>41</height>
                   </rect>
@@ -1255,7 +1472,7 @@ QPushButton:hover
                  <property name="geometry">
                   <rect>
                    <x>140</x>
-                   <y>270</y>
+                   <y>280</y>
                    <width>91</width>
                    <height>41</height>
                   </rect>
@@ -1288,7 +1505,7 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
-	color: rgb(0, 255, 38);
+	color: #81a1c1;
 	border:none;
 }
 </string>
@@ -1301,9 +1518,9 @@ QPushButton:hover
                  <property name="geometry">
                   <rect>
                    <x>10</x>
-                   <y>90</y>
+                   <y>70</y>
                    <width>741</width>
-                   <height>121</height>
+                   <height>161</height>
                   </rect>
                  </property>
                  <property name="font">
@@ -1314,16 +1531,17 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
-	color: rgb(0, 255, 38);
+	color: #81a1c1;
 	border:none;
 }
 </string>
                  </property>
                  <property name="text">
                   <string>Developed by: 
-Adith K. Murali
-Bilal Jafar
-Vinayak Bhat S.
+Adith K. Murali, Bilal Jafar, Vinayak Bhat S.
+
+Artwork and design by:
+Jisin Thomas
 
 This software is free software, you can modify or redistribute it under the terms of GNU General Public License version 2
 or later.</string>
@@ -1346,7 +1564,7 @@ or later.</string>
                  <property name="styleSheet">
                   <string notr="true">QLabel
 {
-	color: rgb(0, 255, 38);
+	color: #81a1c1;
 	border:none;
 }
 </string>
@@ -1396,12 +1614,12 @@ or later.</string>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1410,13 +1628,32 @@ QPushButton:hover
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>img/home_green.png</normaloff>img/home_green.png</iconset>
+                   <normaloff>img/home.png</normaloff>img/home.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
                    <width>50</width>
                    <height>50</height>
                   </size>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="moonG4">
+                 <property name="geometry">
+                  <rect>
+                   <x>630</x>
+                   <y>0</y>
+                   <width>191</width>
+                   <height>171</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap>img/pixelmoon.png</pixmap>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </widget>
@@ -1450,12 +1687,12 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid rgb(0, 182, 24);
-	color: rgb(0,255,38);
+	border: 0px solid #81a1c1;
+	color: #81a1c1;
 }
 QPushButton:hover
 {
-	border: 1px solid rgb(0, 255, 38);
+	border: 1px solid #b48ead;
 }
 	</string>
                    </property>
@@ -1469,8 +1706,8 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QTableWidget
 { 
-	background-color: rgb(33, 33, 33);
-	color: rgb(0,255,38);
+	background-color: #2e3440;
+	color: #d8dee9;
 }
 	</string>
                    </property>
@@ -1535,7 +1772,7 @@ QPushButton:hover
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 255, 38);</string>
+             <string notr="true">color: #81a1c1;</string>
             </property>
             <property name="text">
              <string>ClamGuard Version: 0.6.28-rc</string>
