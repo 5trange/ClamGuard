@@ -663,7 +663,9 @@ QLabel:hover
                   <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
@@ -739,7 +741,9 @@ QPushButton:hover
                     <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
@@ -776,7 +780,9 @@ QPushButton:hover
                     <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
@@ -813,7 +819,9 @@ QPushButton:hover
                     <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
@@ -847,11 +855,14 @@ QPushButton:hover
                     <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	background-color: #bf616a;
+	border: 1px solid #bf616a;
 }
 	</string>
                    </property>
@@ -1009,7 +1020,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
@@ -1109,7 +1122,9 @@ QPushButton:hover
                   <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
@@ -1155,11 +1170,14 @@ QPushButton:hover
                   <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	background-color: #bf616a;
+	border: 1px solid #bf616a;
 }
 	</string>
                  </property>
@@ -1349,7 +1367,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                   <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
@@ -1615,7 +1635,9 @@ or later.</string>
                   <string notr="true">QPushButton
 {
 	border: 0px solid #81a1c1;
+	border-radius: 0px;
 	color: #81a1c1;
+	background-color: #4c566a;
 }
 QPushButton:hover
 {
