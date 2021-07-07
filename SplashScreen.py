@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'SplashScreenBHMpMb.ui'
+## Form generated from reading UI file 'SplashScreenCyuhVA.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.1
 ##
@@ -26,8 +26,10 @@ class Ui_SplashScreen(object):
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)
         self.dropShadowFrame = QFrame(self.centralwidget)
         self.dropShadowFrame.setObjectName(u"dropShadowFrame")
-        self.dropShadowFrame.setStyleSheet(u"background-color: #2e3440;\n"
-"border-radius: 5px;")
+        self.dropShadowFrame.setStyleSheet(u"QFrame{\n"
+"	background-color: #2e3440;\n"
+"    border-radius: 10px;\n"
+"}")
         self.dropShadowFrame.setFrameShape(QFrame.StyledPanel)
         self.dropShadowFrame.setFrameShadow(QFrame.Raised)
         self.label_title = QLabel(self.dropShadowFrame)
@@ -70,12 +72,12 @@ class Ui_SplashScreen(object):
 "}\n"
 "")
         self.label_loading.setAlignment(Qt.AlignCenter)
-        self.label = QLabel(self.dropShadowFrame)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(-10, 0, 681, 491))
-        self.label.setPixmap(QPixmap(u"img/voyager.png"))
-        self.label.setScaledContents(True)
-        self.label.raise_()
+        self.pix = QLabel(self.dropShadowFrame)
+        self.pix.setObjectName(u"pix")
+        self.pix.setGeometry(QRect(-10, 0, 681, 491))
+        self.pix.setPixmap(QPixmap(u"img/voyager.png"))
+        self.pix.setScaledContents(True)
+        self.pix.raise_()
         self.label_title.raise_()
         self.progressBar.raise_()
         self.label_loading.raise_()
@@ -93,6 +95,6 @@ class Ui_SplashScreen(object):
         SplashScreen.setWindowTitle(QCoreApplication.translate("SplashScreen", u"Starting ClamGuard", None))
         self.label_title.setText(QCoreApplication.translate("SplashScreen", u"<html><head/><body><p align=\"center\">CLAMGUARD</p></body></html>", None))
         self.label_loading.setText(QCoreApplication.translate("SplashScreen", u"Starting modules..", None))
-        self.label.setText("")
+        self.pix.setText("")
     # retranslateUi
 

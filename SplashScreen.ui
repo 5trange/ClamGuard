@@ -33,8 +33,10 @@
     <item>
      <widget class="QFrame" name="dropShadowFrame">
       <property name="styleSheet">
-       <string notr="true">background-color: #2e3440;
-border-radius: 5px;</string>
+       <string notr="true">QFrame{
+	background-color: #2e3440;
+    border-radius: 10px;
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -125,7 +127,7 @@ QProgressBar::chunk{
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="pix">
        <property name="geometry">
         <rect>
          <x>-10</x>
@@ -144,7 +146,7 @@ QProgressBar::chunk{
         <bool>true</bool>
        </property>
       </widget>
-      <zorder>label</zorder>
+      <zorder>pix</zorder>
       <zorder>label_title</zorder>
       <zorder>progressBar</zorder>
       <zorder>label_loading</zorder>
