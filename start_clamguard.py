@@ -239,7 +239,6 @@ class MainWindow(QMainWindow):
         self.ui.scanStatus.clear()
         self.scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
         self.scan_dir = self.scan_dir.replace("/","\\") # Shindows likes to use backslashes hhhh
-        print("Debug: "+self.scan_dir)
         self.sthread = CustomScan(self.scan_dir)
         self.sthread.ret.connect(self.set_scan_value)
         self.sthread.start()
