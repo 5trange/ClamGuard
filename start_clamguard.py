@@ -111,7 +111,7 @@ class MainWindow(QMainWindow):
 
         # Tray Icon
         trayIcon = QSystemTrayIcon(QIcon('img\info.png'), parent = app)
-        trayIcon.setToolTip('ClamGuard Antivirus')
+        trayIcon.setToolTip('ClamGuard Security')
         trayIcon.setContextMenu(trayMenu)
         trayIcon.show()
 
