@@ -98,8 +98,22 @@ class MainWindow(QMainWindow):
 
         # Window control buttons
         self.ui.minButton.clicked.connect(lambda: self.showMinimized())  # Minimize on click
-        self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM)) # stop clamd
-        self.ui.closeButton.clicked.connect(lambda: self.close())  # Close on click
+        # Previously used for closing ClamGuard. Now closing is done through system tray. self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM)) # stop clamd
+        self.ui.closeButton.clicked.connect(lambda: self.hide())  # Close on click
+
+        # Tray menu
+        trayMenu = QMenu()
+        showAction = trayMenu.addAction('Show ClamGuard')
+        showAction.triggered.connect(lambda: self.show())
+        exitAction = trayMenu.addAction('Exit ClamGuard')
+        exitAction.triggered.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM))
+        exitAction.triggered.connect(lambda: self.close())
+
+        # Tray Icon
+        trayIcon = QSystemTrayIcon(QIcon('img\info.png'), parent = app)
+        trayIcon.setToolTip('ClamGuard Antivirus')
+        trayIcon.setContextMenu(trayMenu)
+        trayIcon.show()
 
         # Titlebar dragging
         self.ui.titleBar.mouseMoveEvent = self.moveWindow
