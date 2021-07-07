@@ -662,14 +662,14 @@ QLabel:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                  </property>
@@ -740,14 +740,14 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                    </property>
@@ -779,14 +779,14 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                    </property>
@@ -818,14 +818,14 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                    </property>
@@ -854,15 +854,15 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
 	background-color: #bf616a;
-	border: 1px solid #bf616a;
+	border: 3px solid #b48ead;
 }
 	</string>
                    </property>
@@ -1019,14 +1019,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1121,14 +1121,14 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1169,15 +1169,15 @@ QPushButton:hover
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
 	background-color: #bf616a;
-	border: 1px solid #bf616a;
+	border: 3px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1366,14 +1366,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1634,14 +1634,14 @@ or later.</string>
                  <property name="styleSheet">
                   <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
-	border-radius: 0px;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
-	background-color: #4c566a;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                  </property>
@@ -1709,12 +1709,14 @@ QPushButton:hover
                    <property name="styleSheet">
                     <string notr="true">QPushButton
 {
-	border: 0px solid #81a1c1;
+	border: 1px solid #b48ead;
+	border-radius: 5px;
 	color: #81a1c1;
+	background-color: #2e3440;
 }
 QPushButton:hover
 {
-	border: 1px solid #b48ead;
+	border: 3px solid #b48ead;
 }
 	</string>
                    </property>

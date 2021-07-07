@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowKukGlZ.ui'
+## Form generated from reading UI file 'mainWindowfOuKDB.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.1
 ##
@@ -298,14 +298,14 @@ class Ui_mainWindow(object):
         self.homeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
         icon = QIcon()
@@ -333,14 +333,14 @@ class Ui_mainWindow(object):
         self.quickscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.quickscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -353,14 +353,14 @@ class Ui_mainWindow(object):
         self.fullscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.fullscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -373,14 +373,14 @@ class Ui_mainWindow(object):
         self.customscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.customscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -393,15 +393,15 @@ class Ui_mainWindow(object):
         self.cancelscanButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelscanButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
 "	background-color: #bf616a;\n"
-"	border: 1px solid #bf616a;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -521,14 +521,14 @@ class Ui_mainWindow(object):
         self.updatehomeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.updatehomeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
         self.updatehomeButton.setIcon(icon)
@@ -556,14 +556,14 @@ class Ui_mainWindow(object):
         self.checkUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.checkUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
         self.cancelUpdate = QPushButton(self.frameUpdateButtons)
@@ -575,15 +575,15 @@ class Ui_mainWindow(object):
         self.cancelUpdate.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelUpdate.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
 "	background-color: #bf616a;\n"
-"	border: 1px solid #bf616a;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
 
@@ -701,14 +701,14 @@ class Ui_mainWindow(object):
         self.homeButtonAbout.setCursor(QCursor(Qt.PointingHandCursor))
         self.homeButtonAbout.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
         self.homeButtonAbout.setIcon(icon)
@@ -806,14 +806,14 @@ class Ui_mainWindow(object):
         self.quarantineHomeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineHomeButton.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
-"	border-radius: 0px;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
-"	background-color: #4c566a;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
         self.quarantineHomeButton.setIcon(icon)
@@ -842,12 +842,14 @@ class Ui_mainWindow(object):
         self.quarantineRefresh.setCursor(QCursor(Qt.PointingHandCursor))
         self.quarantineRefresh.setStyleSheet(u"QPushButton\n"
 "{\n"
-"	border: 0px solid #81a1c1;\n"
+"	border: 1px solid #b48ead;\n"
+"	border-radius: 5px;\n"
 "	color: #81a1c1;\n"
+"	background-color: #2e3440;\n"
 "}\n"
 "QPushButton:hover\n"
 "{\n"
-"	border: 1px solid #b48ead;\n"
+"	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
 
