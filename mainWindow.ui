@@ -139,7 +139,7 @@ border-radius: 5px;</string>
                 <string notr="true">color: #81a1c1;</string>
                </property>
                <property name="text">
-                <string>ClamGuard</string>
+                <string>ClamGuard Security</string>
                </property>
               </widget>
              </item>
@@ -180,13 +180,13 @@ border-radius: 5px;</string>
 {
 	border:none;
 	border-radius: 8px;
-	background-color: #a3be8c;
+	background-color: #ebcb8b;
 }
 
 QPushButton:hover
 {
 	
-	background-color: #ebcb8b;
+	background-color: #a3be8c;
 }
 </string>
                </property>
@@ -1457,7 +1457,7 @@ QPushButton:hover
 	</string>
                  </property>
                  <property name="text">
-                  <string>ClamGuard Project </string>
+                  <string>ClamGuard Project</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1688,26 +1688,32 @@ QPushButton:hover
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_9">
-                 <item>
-                  <widget class="QPushButton" name="quarantineRefresh">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="cursor">
-                    <cursorShape>PointingHandCursor</cursorShape>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton
+                <widget class="QPushButton" name="quarantineRefresh">
+                 <property name="geometry">
+                  <rect>
+                   <x>680</x>
+                   <y>9</y>
+                   <width>71</width>
+                   <height>30</height>
+                  </rect>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton
 {
 	border: 1px solid #b48ead;
 	border-radius: 5px;
@@ -1719,47 +1725,51 @@ QPushButton:hover
 	border: 3px solid #b48ead;
 }
 	</string>
-                   </property>
-                   <property name="text">
-                    <string>Refresh</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QTableWidget" name="quarantineView">
-                   <property name="styleSheet">
-                    <string notr="true">QTableWidget
+                 </property>
+                 <property name="text">
+                  <string>Refresh</string>
+                 </property>
+                </widget>
+                <widget class="QTableWidget" name="quarantineView">
+                 <property name="geometry">
+                  <rect>
+                   <x>9</x>
+                   <y>45</y>
+                   <width>745</width>
+                   <height>275</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QTableWidget
 { 
 	background-color: #2e3440;
 	color: #d8dee9;
 }
 	</string>
-                   </property>
-                   <attribute name="horizontalHeaderMinimumSectionSize">
-                    <number>50</number>
-                   </attribute>
-                   <attribute name="horizontalHeaderDefaultSectionSize">
-                    <number>200</number>
-                   </attribute>
-                   <attribute name="horizontalHeaderStretchLastSection">
-                    <bool>true</bool>
-                   </attribute>
-                   <attribute name="verticalHeaderVisible">
-                    <bool>false</bool>
-                   </attribute>
-                   <column>
-                    <property name="text">
-                     <string>Name</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>Size</string>
-                    </property>
-                   </column>
-                  </widget>
-                 </item>
-                </layout>
+                 </property>
+                 <attribute name="horizontalHeaderMinimumSectionSize">
+                  <number>50</number>
+                 </attribute>
+                 <attribute name="horizontalHeaderDefaultSectionSize">
+                  <number>200</number>
+                 </attribute>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>true</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <column>
+                  <property name="text">
+                   <string>Name</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Size</string>
+                  </property>
+                 </column>
+                </widget>
                </widget>
               </item>
              </layout>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowfOuKDB.ui'
+## Form generated from reading UI file 'mainWindowBptFpj.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.1
 ##
@@ -83,13 +83,13 @@ class Ui_mainWindow(object):
 "{\n"
 "	border:none;\n"
 "	border-radius: 8px;\n"
-"	background-color: #a3be8c;\n"
+"	background-color: #ebcb8b;\n"
 "}\n"
 "\n"
 "QPushButton:hover\n"
 "{\n"
 "	\n"
-"	background-color: #ebcb8b;\n"
+"	background-color: #a3be8c;\n"
 "}\n"
 "")
 
@@ -830,10 +830,9 @@ class Ui_mainWindow(object):
         self.frameQuarantineContent.setObjectName(u"frameQuarantineContent")
         self.frameQuarantineContent.setFrameShape(QFrame.StyledPanel)
         self.frameQuarantineContent.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_9 = QVBoxLayout(self.frameQuarantineContent)
-        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.quarantineRefresh = QPushButton(self.frameQuarantineContent)
         self.quarantineRefresh.setObjectName(u"quarantineRefresh")
+        self.quarantineRefresh.setGeometry(QRect(680, 9, 71, 30))
         self.quarantineRefresh.setMinimumSize(QSize(0, 30))
         font6 = QFont()
         font6.setPointSize(9)
@@ -852,9 +851,6 @@ class Ui_mainWindow(object):
 "	border: 3px solid #b48ead;\n"
 "}\n"
 "	")
-
-        self.verticalLayout_9.addWidget(self.quarantineRefresh)
-
         self.quarantineView = QTableWidget(self.frameQuarantineContent)
         if (self.quarantineView.columnCount() < 2):
             self.quarantineView.setColumnCount(2)
@@ -863,6 +859,7 @@ class Ui_mainWindow(object):
         __qtablewidgetitem1 = QTableWidgetItem()
         self.quarantineView.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.quarantineView.setObjectName(u"quarantineView")
+        self.quarantineView.setGeometry(QRect(9, 45, 745, 275))
         self.quarantineView.setStyleSheet(u"QTableWidget\n"
 "{ \n"
 "	background-color: #2e3440;\n"
@@ -873,9 +870,6 @@ class Ui_mainWindow(object):
         self.quarantineView.horizontalHeader().setDefaultSectionSize(200)
         self.quarantineView.horizontalHeader().setStretchLastSection(True)
         self.quarantineView.verticalHeader().setVisible(False)
-
-        self.verticalLayout_9.addWidget(self.quarantineView)
-
 
         self.verticalLayout_8.addWidget(self.frameQuarantineContent)
 
@@ -922,7 +916,7 @@ class Ui_mainWindow(object):
 
     def retranslateUi(self, mainWindow):
         mainWindow.setWindowTitle(QCoreApplication.translate("mainWindow", u"ClamGuard", None))
-        self.title_label.setText(QCoreApplication.translate("mainWindow", u"ClamGuard", None))
+        self.title_label.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Security", None))
         self.minButton.setText("")
         self.closeButton.setText("")
 #if QT_CONFIG(tooltip)
@@ -968,7 +962,7 @@ class Ui_mainWindow(object):
         self.cancelUpdate.setText(QCoreApplication.translate("mainWindow", u"Cancel Update", None))
         self.homeButtonAbout.setText("")
         self.moonG3.setText("")
-        self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project ", None))
+        self.ProjectTitle.setText(QCoreApplication.translate("mainWindow", u"ClamGuard Project", None))
         self.AboutGithub.setText("")
         self.AboutGPL.setText("")
         self.label.setText(QCoreApplication.translate("mainWindow", u"An opensource antivirus solution based on ClamAV.", None))
