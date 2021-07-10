@@ -193,7 +193,6 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False)
         self.ui.customscanButton.setEnabled(False)
         self.ui.homeButton.setEnabled(False)
-        self.ui.closeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
             "Quick scan started. Please wait...\n\nNOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.\n\n")
@@ -205,7 +204,6 @@ class MainWindow(QMainWindow):
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
-        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     # Fullscan threads and slots
     def launch_fullscan(self):
@@ -214,7 +212,6 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False)
         self.ui.customscanButton.setEnabled(False)
         self.ui.homeButton.setEnabled(False)
-        self.ui.closeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
             f"Full scan started.\n\nScanning {root_drive}.\n\nPlease note that full scan might take a long time to complete.\n\nIt is recommended to close all programs before scanning.\n\n")
@@ -226,7 +223,6 @@ class MainWindow(QMainWindow):
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
-        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     # Customscan threads and slots
     def launch_customscan(self):
@@ -235,7 +231,6 @@ class MainWindow(QMainWindow):
         self.ui.fullscanButton.setEnabled(False)
         self.ui.customscanButton.setEnabled(False)
         self.ui.homeButton.setEnabled(False)
-        self.ui.closeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
         self.scan_dir = self.scan_dir.replace("/","\\") # Shindows likes to use backslashes hhhh
@@ -247,7 +242,6 @@ class MainWindow(QMainWindow):
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.homeButton.setEnabled(True))
-        self.sthread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     def set_scan_value(self, scanstring):
         self.ui.scanStatus.appendPlainText(scanstring)
@@ -267,7 +261,6 @@ class MainWindow(QMainWindow):
         self.ui.cancelUpdate.setEnabled(True)
         self.ui.updatehomeButton.setEnabled(False)
         self.ui.checkUpdate.setEnabled(False)
-        self.ui.closeButton.setEnabled(False)
         self.ui.updateStatus.clear()
         self.ui.updateStatus.appendPlainText("Refreshing database...\n\n")
         self.thread = Updater()
@@ -276,7 +269,6 @@ class MainWindow(QMainWindow):
         self.thread.finished.connect(lambda: self.ui.cancelUpdate.setEnabled(False))
         self.thread.finished.connect(lambda: self.ui.checkUpdate.setEnabled(True))
         self.thread.finished.connect(lambda: self.ui.updatehomeButton.setEnabled(True))
-        self.thread.finished.connect(lambda: self.ui.closeButton.setEnabled(True))
 
     def set_update_value(self, updatestring):
         self.ui.updateStatus.appendPlainText(updatestring)
