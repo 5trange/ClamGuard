@@ -442,7 +442,6 @@ class clamd_init(QThread):
     def run(self):
         self.host = '127.0.0.1'
         self.port = 3310
-        self.timeout = None
         self.counter = 1
         self.max_retries = 50
         self.clamd_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
