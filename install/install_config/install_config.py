@@ -4,14 +4,15 @@ import fileinput
 import os
 
 # System vars
-program_data = os.environ['PROGRAMDATA'] + '\.clamguard\db'
-program_data.replace("/","\\")
+program_data = os.environ['PROGRAMDATA']
+dbloc = program_data + '\.clamguard\db'
+dbloc.replace("/","\\")
 
 # clamd.conf
 with open('clamd.conf', 'r') as file:
   data = file.read()
 
-data = data.replace('%DBLOC%', program_data)
+data = data.replace('%DBLOC%', dbloc)
 
 with open('clamd.conf', 'w') as file:
   file.write(data)
@@ -20,7 +21,7 @@ with open('clamd.conf', 'w') as file:
 with open('freshclam.conf', 'r') as file:
   data = file.read()
 
-data = data.replace('%DBLOC%', program_data)
+data = data.replace('%DBLOC%', dbloc)
 
 with open('freshclam.conf', 'w') as file:
   file.write(data)
