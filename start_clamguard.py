@@ -348,7 +348,7 @@ class QuickScan(QThread):
     def run(self):
         try:
             self.process = Popen(
-                ['clamdscan.exe', appdata_dir, drivers_dir, '--infected', '--multiscan', '--move=quarantine'],
+                ['clamdscan.exe', appdata_dir, drivers_dir, '--infected', '--multiscan', f'--move={quarantine}'],
                 stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
             while self.process.poll() is None:
                 if (self.abort == True):
@@ -377,7 +377,7 @@ class FullScan(QThread):
     def run(self):
         try:
             self.process = Popen(
-                ['clamdscan.exe', root_drive, '--infected', '--move=quarantine'],
+                ['clamdscan.exe', root_drive, '--infected', f'--move={quarantine}'],
                 stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
             while self.process.poll() is None:
                 if (self.abort == True):
@@ -420,7 +420,7 @@ class CustomScan(QThread):
             self.ret.emit(f"Scanning {self.scan_dir}\n\n")
             try:
                 self.process = Popen(
-                    ['clamdscan.exe', self.scan_dir, '--infected', '--move=quarantine'],
+                    ['clamdscan.exe', self.scan_dir, '--infected', f'--move={quarantine}'],
                     stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
                 while self.process.poll() is None:
                     if (self.abort == True):

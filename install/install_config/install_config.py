@@ -9,8 +9,8 @@ import os
 program_data = os.environ['PROGRAMDATA']
 program_data.replace("/","\\")
 dbloc = program_data + '\ClamGuard\db'
-clamdloc = program_data + '\ClamGuard\log\clamguard_clamd.log'
-freshloc = program_data + '\ClamGuard\log\clamguard_fresh.log'
+clamdloc = program_data + '\ClamGuard\logs\clamguard_clamd.log'
+freshloc = program_data + '\ClamGuard\logs\clamguard_fresh.log'
 
 # clamd.conf
 with open('clamd.conf', 'r') as file:

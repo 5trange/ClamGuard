@@ -28,6 +28,9 @@ import subprocess
 import watchdog.observers
 from subprocess import *
 
+program_data = os.environ['PROGRAMDATA']
+program_data.replace("/","\\")
+quarantine = program_data + '\\ClamGuard\\quarantine'
 sysDrive = os.environ['SYSTEMDRIVE']+"\\"
 ignoreRec: str = sysDrive + r'$Recycle.Bin'
 print("Starting ClamGuard WatchDog Service..")
@@ -47,7 +50,7 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
 
     def scan(self, path):
         print(path)
-        self.process = Popen(['clamdscan.exe','--multiscan','--move=quarantine',path], stdout=PIPE, encoding='utf8', creationflags = CREATE_NO_WINDOW )
+        self.process = Popen(['clamdscan.exe', '--multiscan', f'--move={quarantine}', path], stdout=PIPE, encoding='utf8', creationflags = CREATE_NO_WINDOW )
         while self.process.poll() is None:
             self.ret = self.process.stdout.readline()
             if self.ret == '':
