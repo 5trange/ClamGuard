@@ -39,11 +39,17 @@ from SplashScreen import Ui_SplashScreen  # Importing SplashScreen.py
 from filesystemMonitor import * # Importing filesystemMonitor.py
 
 # Globals vars + env path
+program_data = os.environ['PROGRAMDATA']
+program_data.replace("/","\\")
 appdata_dir = os.environ['APPDATA']
+appdata_dir.replace("/","\\")
 win_dir = os.environ['SYSTEMROOT']
+win_dir.replace("/","\\")
+
 root_drive = os.environ['SYSTEMDRIVE']
 drivers_dir = win_dir + '\\System32\\Drivers\\'
 system32_dir = win_dir + '\\System32\\'
+quarantine = program_data + '\\ClamGuard\\quarantine'
 
 # Start clamd
 try:
