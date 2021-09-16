@@ -116,7 +116,7 @@ class MainWindow(QMainWindow):
         exitAction.triggered.connect(lambda: self.close())
 
         # Tray Icon
-        trayIcon = QSystemTrayIcon(QIcon('img\clamguard.png'), parent = app)
+        trayIcon = QSystemTrayIcon(QIcon('img\\clamguard.png'), parent = app)
         trayIcon.setToolTip('ClamGuard Security')
         trayIcon.setContextMenu(trayMenu)
         trayIcon.show()
