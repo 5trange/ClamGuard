@@ -295,12 +295,10 @@ class MainWindow(QMainWindow):
         self.QuarantineThread.start()
 
     def populate_quarantine(self):
-        WorkingDirectory = os.getcwd()
-        QuarantineDirectory = WorkingDirectory + "\\quarantine\\"
-        lines = os.listdir(QuarantineDirectory)
+        lines = os.listdir(quarantine)
         entries = 0
         for line in lines:
-            size = os.path.getsize(str(QuarantineDirectory+line))
+            size = os.path.getsize(str(quarantine+'\\'+line))
             if entries == 0:
                 self.ui.quarantineView.setRowCount(0)
             self.ui.quarantineView.insertRow(entries)
