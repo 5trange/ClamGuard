@@ -27,8 +27,12 @@ import time
 import os
 import threading
 import signal
+import ctypes
 import webbrowser
 import socket
+import win32event
+import win32api
+from winerror import *
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import *
 from PySide6.QtGui import *
@@ -37,6 +41,15 @@ from subprocess import *
 from mainWindow import Ui_mainWindow  # Importing mainWindow.py
 from SplashScreen import Ui_SplashScreen  # Importing SplashScreen.py
 from filesystemMonitor import * # Importing filesystemMonitor.py
+
+
+# Run once
+mutex = win32event.CreateMutex(None, False, 'clamguard')
+last_error = win32api.GetLastError()
+if last_error == ERROR_ALREADY_EXISTS:
+   print("An instance of ClamGuard is already running! Exiting this instance.")
+   ctypes.windll.user32.MessageBoxW(0, u"An instance of ClamGuard is already running!", u"Error", 0)
+   sys.exit(1)
 
 # Globals vars + env path
 program_data = os.environ['PROGRAMDATA']
