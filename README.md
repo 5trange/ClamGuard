@@ -8,4 +8,4 @@ A background process of ClamGuard watches the system drive for any malicious cod
 - ClamAV 0.104.0
 
 ## Releases
-[Version 0.7.7](https://github.com/5trange/ClamGuard/releases/tag/0.7.7)
+[Version 0.7.7](https://github.com/5trange/ClamGuard/releases/tag/v0.7.7)
