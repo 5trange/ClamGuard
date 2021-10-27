@@ -4,4 +4,4 @@ Simple GUI with functionalities including different types of scans, quarantine s
 A background process of ClamGuard watches the system drive for any malicious code.  
 
 ## Releases
-[Version 0.7.7](https://sourceforge.net/projects/clamguard/)
+[![Download ClamGuard](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/clamguard/files/latest/download)
