@@ -1,7 +1,7 @@
 [Setup]
 AppName=ClamGuard Security
 AppVersion=0.7.7
-AppCopyright=Copyright © 2021, The ClamGuard Developers
+AppCopyright=Copyright ï¿½ 2021, The ClamGuard Developers
 AppId={{1A402BF3-535F-412A-87A2-BE331147C413}
 LicenseFile=E:\Binary\dist\LICENSE
 DefaultDirName={commonpf}\ClamGuard
@@ -11,7 +11,7 @@ InternalCompressLevel=ultra
 VersionInfoVersion=0.7.7
 VersionInfoCompany=The ClamGuard Developers
 VersionInfoDescription=Free and opensource antivirus based on ClamAV
-VersionInfoCopyright=Copyright © 2021, The ClamGuard Developers
+VersionInfoCopyright=Copyright ï¿½ 2021, The ClamGuard Developers
 VersionInfoProductName=ClamGuard Security
 VersionInfoProductVersion=0.7.7
 UninstallDisplayName=ClamGuard Security
