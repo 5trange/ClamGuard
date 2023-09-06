@@ -1,3 +1,5 @@
 /__pycache__
 /clamguard/__pycache__
 /build
+/engine/zig-out
+/engine/zig-cache
