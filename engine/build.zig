@@ -24,8 +24,10 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-	exe.linkSystemLibrary("c");
-	exe.linkSystemLibrary("clamav");
+    // Link the C standard library and ClamAV to the executable.
+    exe.linkSystemLibrary("c");
+    exe.linkSystemLibrary("clamav");
+
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).
