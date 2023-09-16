@@ -27,7 +27,6 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-
     switch (tag) {
         .windows => {
             const clamav_path = b.env_map.get("CLAMAV_DIR") orelse "C:\\clamav";
