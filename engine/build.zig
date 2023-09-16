@@ -1,4 +1,8 @@
 const std = @import("std");
+const buildin = @import("builtin");
+const unicode = std.unicode;
+const tag = buildin.os.tag;
+const join = std.fs.path.join;
 
 // Although this function looks imperative, note that its job is to
 // declaratively construct a build graph that will be executed by an external
@@ -24,8 +28,22 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-	exe.linkSystemLibrary("c");
-	exe.linkSystemLibrary("clamav");
+    switch (tag) {
+        .windows => {
+            const clamav_path = b.env_map.get("CLAMAV_DIR") orelse "C:\\clamav";
+            std.debug.print("clamav path is {s}", .{clamav_path});
+            const clamav_include_raw = std.fmt.allocPrint(b.allocator, "{s}\\include", .{clamav_path});
+            const clamav_include = clamav_include_raw catch "C:\\clamav\\include";
+            defer b.allocator.free(clamav_include);
+            exe.linkSystemLibrary("openssl");
+            exe.addIncludePath(clamav_include);
+            exe.addLibraryPath(clamav_path);
+        },
+        else => {},
+    }
+
+    exe.linkSystemLibrary("c");
+    exe.linkSystemLibrary("clamav");
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).
