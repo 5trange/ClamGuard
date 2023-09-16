@@ -41,7 +41,7 @@ pub fn build(b: *std.Build) void {
             const openssl_path = b.env_map.get("OPENSSLDIR") orelse "C:\\openssl";
             std.debug.print("openssl path is {s}\n", .{openssl_path});
             const openssl_lib_raw = std.fmt.allocPrint(b.allocator, "{s}\\lib", .{openssl_path});
-            const openssl_lib = openssl_lib_raw catch "C:\\openssl\\include";
+            const openssl_lib = openssl_lib_raw catch "C:\\openssl\\lib";
             defer b.allocator.free(openssl_lib);
             const openssl_include_raw = std.fmt.allocPrint(b.allocator, "{s}\\include", .{openssl_path});
             const openssl_include = openssl_include_raw catch "C:\\openssl\\include";
