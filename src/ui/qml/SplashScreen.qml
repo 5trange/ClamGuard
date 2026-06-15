@@ -86,7 +86,7 @@ ApplicationWindow {
                 width: parent.width
                 height: 21
 
-                text: "Starting modules.."
+                text: splashscreen?.status ?? ""
 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
