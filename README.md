@@ -4,7 +4,7 @@
 - [ClamGuard](#clamguard)
   - [Installation](#installation)
   - [Releases](#releases)
-  - [Showcase](#showcase)
+  - [Screenshot](#screenshot)
 <!--toc:end-->
 
 Free and open source antivirus software based on ClamAV.
@@ -31,7 +31,7 @@ Run the application:
 uv run python src/main.py
 ```
 
-## Showcase
+## Screenshot
 
 ![application Screenshot](
   https://user-images.githubusercontent.com/64513428/139042686-87e9d2fa-c747-4cd7-9f6a-b1395c1ef540.png

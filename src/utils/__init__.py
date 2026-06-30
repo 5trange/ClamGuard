@@ -3,7 +3,6 @@ import time
 
 from PySide6.QtCore import QThread, Signal
 from .initialise import init_clamd
-from .default import socket_path
 
 import pyclamd
 
@@ -24,9 +23,12 @@ class ClamDInit(QThread):
             self.host = "127.0.0.1"
             self.port = 3310
         else:
+            from .default import socket_path
+
             self.socket_path = socket_path
 
     def run(self):
+        time.sleep(2)
         while self.counter <= self.max_retries:
             self.status.emit(
                 {
