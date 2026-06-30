@@ -24,7 +24,7 @@ def main():
     main_window_backend = MainWindowBackend()
     engine.rootContext().setContextProperty("mainwindow", main_window_backend)
 
-    main_window_path = Path(__file__).parent / "ui/qml/MainWindow.qml"
+    main_window_path = Path(__file__).parent / "ui/qml/SplashScreen.qml"
     engine.load(str(main_window_path))
 
     if not engine.rootObjects():
