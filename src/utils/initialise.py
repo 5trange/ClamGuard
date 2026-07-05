@@ -2,7 +2,7 @@ import os
 import subprocess
 
 from utils.default import DEFAULT_CLAMD_SETTINGS, DEFAULT_FRESHCLAM_SETTINGS
-from utils.paths import get_clamd_path, get_config_path
+from utils.paths import get_clamd_path, get_freshclam_path, get_config_path
 
 
 def write_default_clamav_settings():
@@ -33,12 +33,28 @@ def init_clamd():
     try:
         if os.name == "nt":
             clamd_process = subprocess.Popen(
-                ["clamd.exe"], creationflags=subprocess.CREATE_NO_WINDOW
+                ["clamd", "--config-file", get_clamd_path()], creationflags=subprocess.CREATE_NO_WINDOW
             )
         else:
             clamd_process = subprocess.Popen(
                 ["clamd", "--config-file", get_clamd_path()]
             )
         return clamd_process
+    except Exception as e:
+        print(f"Debug: Error:{e}")
+
+
+
+def init_freshclam():
+    try:
+        if os.name == "nt":
+            freshclam_process = subprocess.Popen(
+                ["freshclam", "--config-file", get_freshclam_path()], creationflags=subprocess.CREATE_NO_WINDOW
+            )
+        else:
+            freshclam_process = subprocess.Popen(
+                ["freshclam", "--config-file", get_freshclam_path()]
+            )
+        return freshclam_process
     except Exception as e:
         print(f"Debug: Error:{e}")

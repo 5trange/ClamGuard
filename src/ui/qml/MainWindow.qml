@@ -5,7 +5,6 @@ import "pages"
 
 ApplicationWindow {
     id: root
-    flags: Qt.FramelessWindowHint
 
     width: 800
     height: 600

@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
 
 ApplicationWindow {
     id: splashScreenwindow
@@ -9,7 +8,14 @@ ApplicationWindow {
     height: 400
     visible: true
     title: "Starting ClamGuard"
-    flags: Qt.FramelessWindowHint
+
+    Connections {
+        target: splashscreen
+
+        function onStartupFinished() {
+            splashScreenwindow.close()
+        }
+    }
 
     Component.onCompleted: {
       splashscreen.start()
@@ -63,8 +69,8 @@ ApplicationWindow {
 
                 from: 0
                 to: 100
-                value: splashscreen ? splashscreen.progress : 0
-
+                value: splashscreen ? splashscreen.progress : 1
+                
                 background: Rectangle {
                     color: "#2e3440"
                 }

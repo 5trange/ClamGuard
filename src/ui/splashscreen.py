@@ -1,11 +1,12 @@
 from PySide6.QtCore import QObject, Signal, Property, Slot
-from utils import ClamDInit
+from utils import ClamDInit, FreshClamInit
 
 
 class SplashScreenBackend(QObject):
     progressChanged = Signal()
-    startupFinished = Signal()
     statusChanged = Signal()
+    fatalError = Signal()
+    startupFinished = Signal()
 
     def __init__(self):
         super().__init__()
@@ -31,19 +32,37 @@ class SplashScreenBackend(QObject):
     def on_change(self, message):
         self.setStatus(message.get("message"))
         if not message.get("success") and not message.get("end"):
-            self.setProgress(50)
+            self.setProgress(message.get("progress", 0))
         elif not message.get("success") and message.get("end"):
-            self.setProgress(0)
-        else:
+            self.setProgress(message.get("progress", 0))
+            self.fatalError.emit()
+        elif message.get("success") and message.get("end"):
             self.setProgress(100)
+            self.startupFinished.emit()
 
     @Property(int, notify=progressChanged)
     def progress(self):
         return self._progress
+    
+    @Slot(dict)
+    def on_freshclam_status(self, message):
+        if not message["end"]:
+            return
+
+        # Don't continue if FreshClam failed
+        if not message["success"]:
+            self.setProgress(0)
+            self.fatalError.emit()
+            return
+        
+        self.clamav_thread = ClamDInit()
+        self.clamav_thread.status.connect(self.on_change)
+        self.clamav_thread.finished.connect(lambda: print("ClamD thread finished"))
+        self.clamav_thread.start()
 
     @Slot()
     def start(self):
-        self.clamav_thread = ClamDInit()
-        self.clamav_thread.finished.connect(self.startupFinished)
-        self.clamav_thread.status.connect(self.on_change)
-        self.clamav_thread.start()
+        self.freshclam_thread = FreshClamInit()
+        self.freshclam_thread.status.connect(self.on_freshclam_status)
+        self.freshclam_thread.finished.connect(lambda: print("FreshClam thread finished"))
+        self.freshclam_thread.start()
