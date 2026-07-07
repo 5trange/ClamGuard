@@ -2,7 +2,7 @@ import os
 import time
 
 from PySide6.QtCore import QThread, Signal
-from .initialise import init_clamd, init_freshclam
+from core.initialise import init_clamd, init_freshclam
 
 import pyclamd
 
@@ -31,22 +31,32 @@ class FreshClamInit(QThread):
                 "progress": 10,
             }
         )
-        return_code = self.freshclam_process.wait()
-        if return_code == 0:
-            self.status.emit(
-                {
-                    "success": True,
-                    "end": True,
-                    "message": "Freshclam update completed successfully.",
-                    "progress": 20,
-                }
-            )
+        if self.freshclam_process:
+            return_code = self.freshclam_process.wait()
+            if return_code == 0:
+                self.status.emit(
+                    {
+                        "success": True,
+                        "end": True,
+                        "message": "Freshclam update completed successfully.",
+                        "progress": 20,
+                    }
+                )
+            else:
+                self.status.emit(
+                    {
+                        "success": False,
+                        "end": True,
+                        "message": f"Freshclam update failed with return code {return_code}.",
+                        "progress": 0,
+                    }
+                )
         else:
             self.status.emit(
                 {
                     "success": False,
                     "end": True,
-                    "message": f"Freshclam update failed with return code {return_code}.",
+                    "message": "Freshclam update failed with return code -1.",
                     "progress": 0,
                 }
             )
@@ -68,7 +78,7 @@ class ClamDInit(QThread):
             self.host = "127.0.0.1"
             self.port = 3310
         else:
-            from .default import socket_path
+            from core.default import socket_path
 
             self.socket_path = socket_path
 
@@ -116,7 +126,7 @@ class ClamDInit(QThread):
             except Exception as e:
                 print(f"Connection failed: {e}")
             finally:
-                 print("ClamD run ended")
+                print("ClamD run ended")
 
             print(f"Connection failed. Retries left: {self.max_retries - self.counter}")
 

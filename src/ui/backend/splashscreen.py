@@ -1,5 +1,5 @@
 from PySide6.QtCore import QObject, Signal, Property, Slot
-from utils import ClamDInit, FreshClamInit
+from ...services.clamav.daemon import FreshClamInit, ClamDInit
 
 
 class SplashScreenBackend(QObject):
@@ -43,7 +43,7 @@ class SplashScreenBackend(QObject):
     @Property(int, notify=progressChanged)
     def progress(self):
         return self._progress
-    
+
     @Slot(dict)
     def on_freshclam_status(self, message):
         if not message["end"]:
@@ -54,7 +54,7 @@ class SplashScreenBackend(QObject):
             self.setProgress(0)
             self.fatalError.emit()
             return
-        
+
         self.clamav_thread = ClamDInit()
         self.clamav_thread.status.connect(self.on_change)
         self.clamav_thread.finished.connect(lambda: print("ClamD thread finished"))
@@ -64,5 +64,7 @@ class SplashScreenBackend(QObject):
     def start(self):
         self.freshclam_thread = FreshClamInit()
         self.freshclam_thread.status.connect(self.on_freshclam_status)
-        self.freshclam_thread.finished.connect(lambda: print("FreshClam thread finished"))
+        self.freshclam_thread.finished.connect(
+            lambda: print("FreshClam thread finished")
+        )
         self.freshclam_thread.start()

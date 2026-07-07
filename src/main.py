@@ -1,20 +1,22 @@
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication
-from PySide6.QtQuickControls2 import QQuickStyle
 from PySide6.QtQml import QQmlApplicationEngine
+from PySide6.QtQuickControls2 import QQuickStyle
+from PySide6.QtWidgets import QApplication
+
+from core.initialise import initialise_config_folder
 from ui import show_main_window
-from ui.mainwindow import MainWindowBackend
-from utils.initialise import initialise_config_folder
-from ui.splashscreen import SplashScreenBackend
+from ui.backend.mainwindow import MainWindowBackend
+from ui.backend.splashscreen import SplashScreenBackend
 
 
 def main():
     if os.name == "nt":
         import ctypes
+
         myappid = "com.clamguard.app"
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
@@ -27,7 +29,7 @@ def main():
     app.setWindowIcon(QIcon(str(icon_path)))
 
     engine = QQmlApplicationEngine()
-    
+
     splashscreen_backend = SplashScreenBackend()
     splashscreen_backend.fatalError.connect(engine.quit)
     splashscreen_backend.startupFinished.connect(lambda: show_main_window(engine))

@@ -2,7 +2,7 @@ import os
 import tempfile
 from pathlib import Path
 
-from utils.paths import get_config_path
+from .paths import get_config_path
 
 
 runtime_path = Path(tempfile.gettempdir()) / "clamguard"
@@ -16,7 +16,7 @@ if os.name == "nt":
     TCPAddr 127.0.0.1
     DatabaseDirectory {get_config_path() / "db"}
     """
-else: 
+else:
     socket_path = runtime_path / "clamguard.sock"
     DEFAULT_CLAMD_SETTINGS = f"""
     Foreground yes
@@ -35,3 +35,4 @@ else:
     UpdateLogFile /tmp/freshclam.log
     DatabaseMirror database.clamav.net
     """
+
