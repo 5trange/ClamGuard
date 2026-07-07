@@ -25,7 +25,7 @@ import watchdog.events
 import threading
 import os
 import watchdog.observers
-from subprocess import *
+from subprocess import Popen, PIPE
 
 program_data = os.environ["PROGRAMDATA"]
 program_data.replace("/", "\\")
@@ -55,22 +55,22 @@ class SystemHandler(watchdog.events.PatternMatchingEventHandler):
 
     def on_created(self, event):
         buffer = event.src_path
-        buffer = buffer.replace(":", ":\\")
+        buffer = str(buffer).replace(":", ":\\")
         self.watchdog_thread = threading.Thread(target=self.scan, args=[buffer])
         self.watchdog_thread.start()
 
     def scan(self, path):
         print(path)
         self.process = Popen(
-            ["clamdscan.exe", "--multiscan", f"--move={quarantine}", path],
+            ["clamdscan", "--multiscan", f"--move={quarantine}", path],
             stdout=PIPE,
             encoding="utf8",
-            creationflags=CREATE_NO_WINDOW,
         )
         while self.process.poll() is None:
-            self.ret = self.process.stdout.readline()
-            if self.ret == "":
-                break
+            if self.process.stdout:
+                self.ret = self.process.stdout.readline()
+                if self.ret == "":
+                    break
             else:
                 print(self.ret)
 
