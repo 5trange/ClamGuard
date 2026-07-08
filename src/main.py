@@ -6,7 +6,6 @@ from PySide6.QtGui import QIcon
 from PySide6.QtCore import QUrl
 from PySide6.QtQml import QQmlApplicationEngine
 
-# from PySide6.QtQuickControls2 import QQuickStyle
 from PySide6.QtWidgets import QApplication
 
 from core.initialise import initialise_config_folder
@@ -26,7 +25,6 @@ def main():
 
     initialise_config_folder()
 
-    # QQuickStyle.setStyle("Fusion")
     app = QApplication(sys.argv)
 
     app.setWindowIcon(QIcon(":/img/clamguard.ico"))

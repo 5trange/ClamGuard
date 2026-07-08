@@ -17,7 +17,6 @@
     <qresource prefix="/qml">
         <file alias="MainWindow.qml">qml/MainWindow.qml</file>
         <file alias="SplashScreen.qml">qml/SplashScreen.qml</file>
-
         <file alias="pages/AboutPage.qml">qml/pages/AboutPage.qml</file>
         <file alias="pages/HomePage.qml">qml/pages/HomePage.qml</file>
         <file alias="pages/QuarantinePage.qml">qml/pages/QuarantinePage.qml</file>
