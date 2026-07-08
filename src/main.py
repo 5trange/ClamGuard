@@ -3,14 +3,18 @@ import sys
 from pathlib import Path
 
 from PySide6.QtGui import QIcon
+from PySide6.QtCore import QUrl
 from PySide6.QtQml import QQmlApplicationEngine
-from PySide6.QtQuickControls2 import QQuickStyle
+
+# from PySide6.QtQuickControls2 import QQuickStyle
 from PySide6.QtWidgets import QApplication
 
 from core.initialise import initialise_config_folder
 from ui import show_main_window
 from ui.backend.mainwindow import MainWindowBackend
 from ui.backend.splashscreen import SplashScreenBackend
+
+import core.resources_rc
 
 
 def main():
@@ -22,12 +26,10 @@ def main():
 
     initialise_config_folder()
 
-    QQuickStyle.setStyle("Fusion")
+    # QQuickStyle.setStyle("Fusion")
     app = QApplication(sys.argv)
 
-    icon_path = Path(__file__).parent / "ui/qml/img/clamguard.png"
-    app.setWindowIcon(QIcon(str(icon_path)))
-
+    app.setWindowIcon(QIcon(":/img/clamguard.ico"))
     engine = QQmlApplicationEngine()
 
     splashscreen_backend = SplashScreenBackend()
@@ -38,8 +40,7 @@ def main():
     main_window_backend = MainWindowBackend()
     engine.rootContext().setContextProperty("mainwindow", main_window_backend)
 
-    main_window_path = Path(__file__).parent / "ui/qml/SplashScreen.qml"
-    engine.load(str(main_window_path))
+    engine.load(QUrl("qrc:/qml/SplashScreen.qml"))
 
     if not engine.rootObjects():
         print("Error: No root objects loaded. Exiting application.")

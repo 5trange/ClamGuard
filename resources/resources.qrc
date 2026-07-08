@@ -1,0 +1,27 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/img">
+        <file alias="GitHub.png">img/GitHub.png</file>
+        <file alias="clamguard.ico">img/clamguard.ico</file>
+        <file alias="clamguard.png">img/clamguard.png</file>
+        <file alias="gpl.png">img/gpl.png</file>
+        <file alias="home.png">img/home.png</file>
+        <file alias="info.png">img/info.png</file>
+        <file alias="pixelmoon.png">img/pixelmoon.png</file>
+        <file alias="search.png">img/search.png</file>
+        <file alias="update.png">img/update.png</file>
+        <file alias="voyager.png">img/voyager.png</file>
+        <file alias="warning.png">img/warning.png</file>
+    </qresource>
+
+    <qresource prefix="/qml">
+        <file alias="MainWindow.qml">qml/MainWindow.qml</file>
+        <file alias="SplashScreen.qml">qml/SplashScreen.qml</file>
+
+        <file alias="pages/AboutPage.qml">qml/pages/AboutPage.qml</file>
+        <file alias="pages/HomePage.qml">qml/pages/HomePage.qml</file>
+        <file alias="pages/QuarantinePage.qml">qml/pages/QuarantinePage.qml</file>
+        <file alias="pages/ScanPage.qml">qml/pages/ScanPage.qml</file>
+        <file alias="pages/UpdatePage.qml">qml/pages/UpdatePage.qml</file>
+    </qresource>
+</RCC>

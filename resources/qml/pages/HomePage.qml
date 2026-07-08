@@ -16,7 +16,7 @@ Page {
         Image {
             id: voyagerHome
             anchors.fill: parent
-            source: "../img/voyager.png"
+            source: "qrc:/img/voyager.png"
             fillMode: Image.PreserveAspectCrop
         }
 
@@ -43,7 +43,7 @@ Page {
                 width: 100
                 height: 100
 
-                source: "../img/search.png"
+                source: "qrc:/img/search.png"
                 fillMode: Image.PreserveAspectFit
             }
 
@@ -94,7 +94,7 @@ Page {
                 width: 100
                 height: 100
 
-                source: "../img/update.png"
+                source: "qrc:/img/update.png"
                 fillMode: Image.PreserveAspectFit
             }
 
@@ -130,7 +130,7 @@ Page {
             width: 32
             height: 32
 
-            source: "../img/warning.png"
+            source: "qrc:/img/warning.png"
 
             fillMode: Image.PreserveAspectFit
 
@@ -156,7 +156,7 @@ Page {
             width: 32
             height: 32
 
-            source: "../img/info.png"
+            source: "qrc:/img/info.png"
 
             fillMode: Image.PreserveAspectFit
 

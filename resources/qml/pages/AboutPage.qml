@@ -36,7 +36,7 @@ Page {
 
                 text: ""
 
-                icon.source: "../img/home.png"
+                icon.source: "qrc:/img/home.png"
                 icon.width: 50
                 icon.height: 50
 
@@ -59,7 +59,7 @@ Page {
                 width: 191
                 height: 171
 
-                source: "../img/pixelmoon.png"
+                source: "qrc:/img/pixelmoon.png"
                 fillMode: Image.PreserveAspectFit
             }
         }
@@ -93,7 +93,7 @@ Page {
                         width: 96
                         height: 96
 
-                        source: "../img/clamguard.png"
+                        source: "qrc:/img/clamguard.png"
                         fillMode: Image.PreserveAspectFit
                     }
 

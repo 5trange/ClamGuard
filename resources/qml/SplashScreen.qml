@@ -37,7 +37,7 @@ ApplicationWindow {
                 id: pix
 
                 anchors.fill: parent
-                source: "img/voyager.png"
+                source: "qrc:/img/voyager.png"
                 fillMode: Image.Stretch
             }
 
