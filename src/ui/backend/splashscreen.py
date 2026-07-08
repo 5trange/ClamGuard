@@ -1,5 +1,5 @@
 from PySide6.QtCore import QObject, Signal, Property, Slot
-from ...services.clamav.daemon import FreshClamInit, ClamDInit
+from services.clamav.daemon import FreshClamInit, ClamDInit
 
 
 class SplashScreenBackend(QObject):
