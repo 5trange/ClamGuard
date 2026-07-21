@@ -3,3 +3,4 @@
 .venv
 __pycache__
 src/core/resources_rc.py
+dist/
