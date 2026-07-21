@@ -59,4 +59,3 @@ def init_freshclam():
         return freshclam_process
     except Exception as e:
         print(f"Debug: Error:{e}")
-

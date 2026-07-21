@@ -6,15 +6,15 @@ import "pages"
 ApplicationWindow {
     id: root
 
-    width: 800
-    height: 600
+    width: mainwindow.windowWidth
+    height: mainwindow.windowHeight
     minimumWidth: 800
     minimumHeight: 600
     maximumWidth: 800
     maximumHeight: 600
 
     visible: true
-    title: "ClamGuard"
+    title: mainwindow.windowTitle
 
     color: "#2e3440"
 
@@ -24,32 +24,25 @@ ApplicationWindow {
 
         Rectangle {
             id: titleBar
-
             Layout.fillWidth: true
             Layout.preferredHeight: 30
-
             color: "transparent"
 
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
-
                 onPressed: {
                     root.startSystemMove()
                 }
-
                 z: -1
             }
 
             RowLayout {
-
                 anchors.fill: parent
                 anchors.top: parent.top
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-
                 spacing: 8
-
 
                 Label {
                     text: "ClamGuard Security"
@@ -62,11 +55,9 @@ ApplicationWindow {
 
                 Rectangle {
                     id: minButton
-
                     width: 16
                     height: 16
                     radius: 8
-
                     color: mouse.containsMouse ? "#A3BE8C" : "#EBCB8B"
 
                     Behavior on color {
@@ -79,7 +70,7 @@ ApplicationWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
 
-                        onClicked: mainwindow.minimizeWindow()
+                        onClicked: mainwindow.minimizeWindow(root)
                     }
                 }
 
@@ -89,7 +80,6 @@ ApplicationWindow {
                     width: 16
                     height: 16
                     radius: 8
-
                     color: closeMouse.containsMouse ? "#BF616A" : "#D08770"
 
                     Behavior on color {
@@ -110,7 +100,6 @@ ApplicationWindow {
 
         StackLayout {
             id: pages
-
             Layout.fillWidth: true
             Layout.fillHeight: true
 

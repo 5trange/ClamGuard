@@ -70,7 +70,7 @@ ApplicationWindow {
                 from: 0
                 to: 100
                 value: splashscreen ? splashscreen.progress : 1
-                
+
                 background: Rectangle {
                     color: "#2e3440"
                 }

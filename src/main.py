@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QUrl
-from PySide6.QtQml import QQmlApplicationEngine
+from PySide6.QtQml import QQmlApplicationEngine, qmlRegisterSingletonInstance
 
 from PySide6.QtWidgets import QApplication
 
@@ -27,13 +27,13 @@ def main():
 
     app = QApplication(sys.argv)
 
-    app.setWindowIcon(QIcon(":/img/clamguard.ico"))
+    app.setWindowIcon(QIcon("qrc:/img/clamguard.ico"))
     engine = QQmlApplicationEngine()
 
     splashscreen_backend = SplashScreenBackend()
+    engine.rootContext().setContextProperty("splashscreen", splashscreen_backend)
     splashscreen_backend.fatalError.connect(engine.quit)
     splashscreen_backend.startupFinished.connect(lambda: show_main_window(engine))
-    engine.rootContext().setContextProperty("splashscreen", splashscreen_backend)
 
     main_window_backend = MainWindowBackend()
     engine.rootContext().setContextProperty("mainwindow", main_window_backend)
