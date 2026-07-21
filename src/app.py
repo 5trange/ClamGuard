@@ -40,36 +40,39 @@ from PySide6.QtWidgets import *
 from subprocess import *
 from mainWindow import Ui_mainWindow  # Importing mainWindow.py
 from SplashScreen import Ui_SplashScreen  # Importing SplashScreen.py
-from filesystemMonitor import * # Importing filesystemMonitor.py
+from filesystemMonitor import *  # Importing filesystemMonitor.py
 
 
 # Run once
-mutex = win32event.CreateMutex(None, False, 'clamguard')
+mutex = win32event.CreateMutex(None, False, "clamguard")
 last_error = win32api.GetLastError()
 if last_error == ERROR_ALREADY_EXISTS:
-   print("An instance of ClamGuard is already running! Exiting this instance.")
-   ctypes.windll.user32.MessageBoxW(0, u"An instance of ClamGuard is already running!", u"Error", 0)
-   sys.exit(1)
+    print("An instance of ClamGuard is already running! Exiting this instance.")
+    ctypes.windll.user32.MessageBoxW(
+        0, "An instance of ClamGuard is already running!", "Error", 0
+    )
+    sys.exit(1)
 
 # Globals vars + env path
-program_data = os.environ['PROGRAMDATA']
-program_data.replace("/","\\")
-appdata_dir = os.environ['APPDATA']
-appdata_dir.replace("/","\\")
-win_dir = os.environ['SYSTEMROOT']
-win_dir.replace("/","\\")
+program_data = os.environ["PROGRAMDATA"]
+program_data.replace("/", "\\")
+appdata_dir = os.environ["APPDATA"]
+appdata_dir.replace("/", "\\")
+win_dir = os.environ["SYSTEMROOT"]
+win_dir.replace("/", "\\")
 
-root_drive = os.environ['SYSTEMDRIVE']
-drivers_dir = win_dir + '\\System32\\Drivers\\'
-system32_dir = win_dir + '\\System32\\'
-quarantine = program_data + '\\ClamGuard\\quarantine'
+root_drive = os.environ["SYSTEMDRIVE"]
+drivers_dir = win_dir + "\\System32\\Drivers\\"
+system32_dir = win_dir + "\\System32\\"
+quarantine = program_data + "\\ClamGuard\\quarantine"
 
 # Start clamd
 try:
-    clamd_process = Popen(['clamd.exe'], creationflags = CREATE_NO_WINDOW)
+    clamd_process = Popen(["clamd.exe"], creationflags=CREATE_NO_WINDOW)
 except Exception as e:
     print(f"Debug: Error:{e}")
     raise
+
 
 # Splashscreen class
 class SplashScreen(QMainWindow):
@@ -99,6 +102,7 @@ class SplashScreen(QMainWindow):
         self.init_thread.finished.connect(lambda: self.close())
         self.init_thread.finished.connect(lambda: self.main_window.show())
 
+
 # MainWindow class
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -116,21 +120,23 @@ class MainWindow(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # Setting frame border
 
         # Window control buttons
-        self.ui.minButton.clicked.connect(lambda: self.showMinimized())  # Minimize on click
+        self.ui.minButton.clicked.connect(
+            lambda: self.showMinimized()
+        )  # Minimize on click
         # Previously used for closing ClamGuard. Now closing is done through system tray. self.ui.closeButton.clicked.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM)) # stop clamd
         self.ui.closeButton.clicked.connect(lambda: self.hide())  # Close on click
 
         # Tray menu
         trayMenu = QMenu()
-        showAction = trayMenu.addAction('Show ClamGuard')
+        showAction = trayMenu.addAction("Show ClamGuard")
         showAction.triggered.connect(lambda: self.show())
-        exitAction = trayMenu.addAction('Exit ClamGuard')
+        exitAction = trayMenu.addAction("Exit ClamGuard")
         exitAction.triggered.connect(lambda: os.kill(clamd_process.pid, signal.SIGTERM))
         exitAction.triggered.connect(lambda: self.close())
 
         # Tray Icon
-        trayIcon = QSystemTrayIcon(QIcon('img\\clamguard.png'), parent = app)
-        trayIcon.setToolTip('ClamGuard Security')
+        trayIcon = QSystemTrayIcon(QIcon("img\\clamguard.png"), parent=app)
+        trayIcon.setToolTip("ClamGuard Security")
         trayIcon.setContextMenu(trayMenu)
         trayIcon.show()
 
@@ -214,11 +220,14 @@ class MainWindow(QMainWindow):
         self.ui.homeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
-            "Quick scan started. Please wait...\n\nNOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.\n\n")
+            "Quick scan started. Please wait...\n\nNOTE: Quick scan is very CPU Intensive, It is recommended to close all programs before scanning.\n\n"
+        )
         self.sthread = QuickScan()
         self.sthread.ret.connect(self.set_scan_value)
         self.sthread.start()
-        self.sthread.finished.connect(lambda: self.ui.cancelscanButton.setEnabled(False))
+        self.sthread.finished.connect(
+            lambda: self.ui.cancelscanButton.setEnabled(False)
+        )
         self.sthread.finished.connect(lambda: self.ui.quickscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
@@ -233,11 +242,14 @@ class MainWindow(QMainWindow):
         self.ui.homeButton.setEnabled(False)
         self.ui.scanStatus.clear()
         self.ui.scanStatus.appendPlainText(
-            f"Full scan started.\n\nScanning {root_drive}.\n\nPlease note that full scan might take a long time to complete.\n\nIt is recommended to close all programs before scanning.\n\n")
+            f"Full scan started.\n\nScanning {root_drive}.\n\nPlease note that full scan might take a long time to complete.\n\nIt is recommended to close all programs before scanning.\n\n"
+        )
         self.sthread = FullScan()
         self.sthread.ret.connect(self.set_scan_value)
         self.sthread.start()
-        self.sthread.finished.connect(lambda: self.ui.cancelscanButton.setEnabled(False))
+        self.sthread.finished.connect(
+            lambda: self.ui.cancelscanButton.setEnabled(False)
+        )
         self.sthread.finished.connect(lambda: self.ui.quickscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
@@ -251,12 +263,18 @@ class MainWindow(QMainWindow):
         self.ui.customscanButton.setEnabled(False)
         self.ui.homeButton.setEnabled(False)
         self.ui.scanStatus.clear()
-        self.scan_dir = QFileDialog.getExistingDirectory(self,self.tr("Choose a folder to scan."),self.tr('/'))
-        self.scan_dir = self.scan_dir.replace("/","\\") # Shindows likes to use backslashes hhhh
+        self.scan_dir = QFileDialog.getExistingDirectory(
+            self, self.tr("Choose a folder to scan."), self.tr("/")
+        )
+        self.scan_dir = self.scan_dir.replace(
+            "/", "\\"
+        )  # Shindows likes to use backslashes hhhh
         self.sthread = CustomScan(self.scan_dir)
         self.sthread.ret.connect(self.set_scan_value)
         self.sthread.start()
-        self.sthread.finished.connect(lambda: self.ui.cancelscanButton.setEnabled(False))
+        self.sthread.finished.connect(
+            lambda: self.ui.cancelscanButton.setEnabled(False)
+        )
         self.sthread.finished.connect(lambda: self.ui.quickscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.fullscanButton.setEnabled(True))
         self.sthread.finished.connect(lambda: self.ui.customscanButton.setEnabled(True))
@@ -311,12 +329,14 @@ class MainWindow(QMainWindow):
         lines = os.listdir(quarantine)
         entries = 0
         for line in lines:
-            size = os.path.getsize(str(quarantine+'\\'+line))
+            size = os.path.getsize(str(quarantine + "\\" + line))
             if entries == 0:
                 self.ui.quarantineView.setRowCount(0)
             self.ui.quarantineView.insertRow(entries)
             self.ui.quarantineView.setItem(entries, 0, QTableWidgetItem(line))
-            self.ui.quarantineView.setItem(entries, 1, QTableWidgetItem(f'{size} Bytes'))
+            self.ui.quarantineView.setItem(
+                entries, 1, QTableWidgetItem(f"{size} Bytes")
+            )
             entries = entries + 1
 
     # Opening github repo page.
@@ -330,9 +350,14 @@ class Updater(QThread):
 
     def run(self):
         try:
-            self.process = Popen(['freshclam.exe'], stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
+            self.process = Popen(
+                ["freshclam.exe"],
+                stdout=PIPE,
+                encoding="utf-8",
+                creationflags=CREATE_NO_WINDOW,
+            )
             while self.process.poll() is None:
-                if (self.abort == True):
+                if self.abort == True:
                     try:
                         self.ret.emit("\n\nStopping update...")
                         break
@@ -340,13 +365,15 @@ class Updater(QThread):
                         print(f"Debug: Error!:{e}")
                 else:
                     self.updatebuffer = str(self.process.stdout.readline())
-                    self.updatebuffer = os.linesep.join([s for s in self.updatebuffer.splitlines() if s])
-                    if self.updatebuffer != '':
+                    self.updatebuffer = os.linesep.join(
+                        [s for s in self.updatebuffer.splitlines() if s]
+                    )
+                    if self.updatebuffer != "":
                         self.ret.emit(self.updatebuffer)
 
-            if (self.abort == False):
+            if self.abort == False:
                 self.ret.emit("\nDatabase refreshed.")
-            elif (self.abort == True):
+            elif self.abort == True:
                 self.ret.emit("\n\nDatabase update cancelled.")
         except Exception as e:
             print(f"Debug: Error!:{e}")
@@ -359,10 +386,20 @@ class QuickScan(QThread):
     def run(self):
         try:
             self.process = Popen(
-                ['clamdscan.exe', appdata_dir, drivers_dir, '--infected', '--multiscan', f'--move={quarantine}'],
-                stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
+                [
+                    "clamdscan.exe",
+                    appdata_dir,
+                    drivers_dir,
+                    "--infected",
+                    "--multiscan",
+                    f"--move={quarantine}",
+                ],
+                stdout=PIPE,
+                encoding="utf-8",
+                creationflags=CREATE_NO_WINDOW,
+            )
             while self.process.poll() is None:
-                if (self.abort == True):
+                if self.abort == True:
                     try:
                         self.ret.emit("\n\nStopping scan...")
                         break
@@ -370,16 +407,19 @@ class QuickScan(QThread):
                         print(f"Debug: Error!:{e}")
                 else:
                     self.scanbuffer = self.process.stdout.readline()
-                    self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
-                    if self.scanbuffer != '':
+                    self.scanbuffer = os.linesep.join(
+                        [s for s in self.scanbuffer.splitlines() if s]
+                    )
+                    if self.scanbuffer != "":
                         self.ret.emit(self.scanbuffer)
 
-            if (self.abort == False):
+            if self.abort == False:
                 self.ret.emit("\nQuick scan complete.")
-            elif (self.abort == True):
+            elif self.abort == True:
                 self.ret.emit("\n\nScan cancelled.")
         except Exception as e:
             print(f"Debug: Error!:{e}")
+
 
 class FullScan(QThread):
     ret = Signal(str)
@@ -388,10 +428,13 @@ class FullScan(QThread):
     def run(self):
         try:
             self.process = Popen(
-                ['clamdscan.exe', root_drive, '--infected', f'--move={quarantine}'],
-                stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
+                ["clamdscan.exe", root_drive, "--infected", f"--move={quarantine}"],
+                stdout=PIPE,
+                encoding="utf-8",
+                creationflags=CREATE_NO_WINDOW,
+            )
             while self.process.poll() is None:
-                if (self.abort == True):
+                if self.abort == True:
                     try:
                         self.ret.emit("\n\nStopping scan...")
                         break
@@ -399,21 +442,24 @@ class FullScan(QThread):
                         print(f"Debug: Error!:{e}")
                 else:
                     self.scanbuffer = self.process.stdout.readline()
-                    self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
-                    if self.scanbuffer != '':
+                    self.scanbuffer = os.linesep.join(
+                        [s for s in self.scanbuffer.splitlines() if s]
+                    )
+                    if self.scanbuffer != "":
                         self.ret.emit(self.scanbuffer)
 
-            if (self.abort == False):
+            if self.abort == False:
                 self.ret.emit("\nFull scan complete.")
-            elif (self.abort == True):
+            elif self.abort == True:
                 self.ret.emit("\n\nFull scan cancelled.")
         except Exception as e:
             print(f"Debug: Error!:{e}")
 
+
 class CustomScan(QThread):
     ret = Signal(str)
     abort = False
-    scan_dir = ''
+    scan_dir = ""
 
     # Constructor modification to pass scan_dir
     def __init__(self, scan_dir, parent=None):
@@ -421,20 +467,28 @@ class CustomScan(QThread):
         self.scan_dir = scan_dir
 
     def run(self):
-        if self.scan_dir == '':
+        if self.scan_dir == "":
             self.abort = True
             print("Debug: Scan directory empty!")
             self.ret.emit("No directory selected. Scan cancelled.")
         else:
-            print("Debug: "+self.scan_dir)
+            print("Debug: " + self.scan_dir)
             self.ret.emit(f"Directory selected: {self.scan_dir}")
             self.ret.emit(f"Scanning {self.scan_dir}\n\n")
             try:
                 self.process = Popen(
-                    ['clamdscan.exe', self.scan_dir, '--infected', f'--move={quarantine}'],
-                    stdout=PIPE, encoding='utf-8', creationflags = CREATE_NO_WINDOW)
+                    [
+                        "clamdscan.exe",
+                        self.scan_dir,
+                        "--infected",
+                        f"--move={quarantine}",
+                    ],
+                    stdout=PIPE,
+                    encoding="utf-8",
+                    creationflags=CREATE_NO_WINDOW,
+                )
                 while self.process.poll() is None:
-                    if (self.abort == True):
+                    if self.abort == True:
                         try:
                             self.ret.emit("\n\nStopping scan...")
                             break
@@ -442,41 +496,47 @@ class CustomScan(QThread):
                             print(f"Debug: Error!:{e}")
                     else:
                         self.scanbuffer = self.process.stdout.readline()
-                        self.scanbuffer = os.linesep.join([s for s in self.scanbuffer.splitlines() if s])
-                        if self.scanbuffer != '':
+                        self.scanbuffer = os.linesep.join(
+                            [s for s in self.scanbuffer.splitlines() if s]
+                        )
+                        if self.scanbuffer != "":
                             self.ret.emit(self.scanbuffer)
 
-                if (self.abort == False):
+                if self.abort == False:
                     self.ret.emit("\nCustom scan complete.")
-                elif (self.abort == True):
+                elif self.abort == True:
                     self.ret.emit("\n\nCustom scan cancelled.")
 
             except Exception as e:
                 print(f"Debug: Error!:{e}")
 
+
 # Checking if clamd is online.
 class clamd_init(QThread):
     def run(self):
-        self.host = '127.0.0.1'
+        self.host = "127.0.0.1"
         self.port = 3310
         self.counter = 1
         self.max_retries = 50
         self.clamd_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        while (self.counter <= self.max_retries):
+        while self.counter <= self.max_retries:
             try:
                 self.result = self.clamd_socket.connect_ex((self.host, self.port))
                 if self.result == 0:
-                    print('ClamAV Daemon is online')
+                    print("ClamAV Daemon is online")
                     self.clamd_socket.close()
                     break
             except socket.error:
                 raise
-            print(f'Connection failed. Retrying... Retries left: {self.max_retries - self.counter}')
-            self.counter = self.counter+1
-        if (self.result != 0):
+            print(
+                f"Connection failed. Retrying... Retries left: {self.max_retries - self.counter}"
+            )
+            self.counter = self.counter + 1
+        if self.result != 0:
             print("Couldn't connect to ClamAV Daemon!")
             os.kill(clamd_process.pid, signal.SIGTERM)
-            sys.exit(1) # Prolly not very safe
+            sys.exit(1)  # Prolly not very safe
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
