@@ -3,4 +3,6 @@
 .venv
 __pycache__
 src/core/resources_rc.py
+ClamGuard.spec
 dist/
+build/

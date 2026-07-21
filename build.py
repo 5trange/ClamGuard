@@ -42,7 +42,9 @@ def build_executable():
             "--icon",
             "resources/icon.ico",
             "--distpath",
-            "dist/"
+            "build/dist/",
+            "--workpath",
+            "build/temp"
         ]
     )
     return_code = process.wait()
