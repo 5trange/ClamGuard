@@ -5,6 +5,8 @@ import QtQuick.Layouts
 Page {
     id: pageQuarantine
 
+    signal quarantineGoHome()
+
     background: Rectangle {
         color: "transparent"
     }
@@ -13,9 +15,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        //
-        // Header
-        //
         Rectangle {
             id: frameQuarantineNav
 
@@ -48,6 +47,8 @@ Page {
                     border.width: quarantineHomeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
+
+                onClicked: pageQuarantine.quarantineGoHome()
             }
 
             Image {
@@ -64,9 +65,6 @@ Page {
             }
         }
 
-        //
-        // Content
-        //
         Rectangle {
             id: frameQuarantineContent
 

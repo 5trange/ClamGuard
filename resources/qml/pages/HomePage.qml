@@ -1,9 +1,13 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
 
 Page {
     id: homePage
+
+    signal openScanPage()
+    signal openUpdatePage()
+    signal openAboutPage()
+    signal openQuarantinePage()
 
     background: Rectangle {
         color: "transparent"
@@ -66,8 +70,7 @@ Page {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
 
-                // Connect later
-                // onClicked: ...
+                onClicked: homePage.openScanPage()
             }
         }
 
@@ -117,7 +120,7 @@ Page {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
 
-                // onClicked: ...
+                onClicked: homePage.openUpdatePage()
             }
         }
 
@@ -143,7 +146,7 @@ Page {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
 
-                // onClicked: ...
+                onClicked: homePage.openQuarantinePage()
             }
         }
 
@@ -169,7 +172,7 @@ Page {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
 
-                // onClicked: ...
+                onClicked: homePage.openAboutPage()
             }
         }
     }

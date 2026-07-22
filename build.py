@@ -7,14 +7,15 @@ import argparse
 def parse_args():
     parser = argparse.ArgumentParser(description="Manage the ClamGuard project")
 
-    subparsers = parser.add_subparsers(dest="command", required=True, help="Available subcommands")
-    build_parser = subparsers.add_parser("build", help="Build the project using PyInstaller")
-    build_parser.add_argument("--no-resources", action="store_true", help="Skip resources building step")
+    subparsers = parser.add_subparsers(dest="command", required=False, help="Available subcommands")
+    subparsers.add_parser("build", help="Build the project using PyInstaller")
+    parser.add_argument("--no-resources", action="store_true", help="Skip resources building step")
 
     return parser.parse_args()
 
 
 def build_resources():
+    print("Building resources...")
     process = subprocess.Popen(
         [
             "uv",
@@ -30,6 +31,7 @@ def build_resources():
         print("Error : Running the pyside6-rcc command")
 
 def build_executable():
+    print("Building executable...")
     process = subprocess.Popen(
         [
             "uv",
@@ -53,8 +55,9 @@ def build_executable():
 
 def main():
     args = parse_args()
-    if not args.no_resources:
+    if not getattr(args, "no_resources", None):
         build_resources()
+
     if args.command == "build":
         build_executable()
 

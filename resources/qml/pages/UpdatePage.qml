@@ -5,6 +5,8 @@ import QtQuick.Layouts
 Page {
     id: pageUpdate
 
+    signal updateGoToHome()
+
     background: Rectangle {
         color: "transparent"
     }
@@ -13,9 +15,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        //
-        // Header
-        //
         Rectangle {
             id: frameGoHome
 
@@ -48,6 +47,8 @@ Page {
                     border.width: updatehomeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
+
+                onClicked: pageUpdate.updateGoToHome()
             }
 
             Image {
@@ -64,9 +65,6 @@ Page {
             }
         }
 
-        //
-        // Update Buttons
-        //
         RowLayout {
             id: frameUpdateButtons
 
@@ -138,9 +136,6 @@ Page {
             }
         }
 
-        //
-        // Update Log
-        //
         Rectangle {
             id: frameUpdateStatus
 

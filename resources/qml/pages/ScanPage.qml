@@ -5,6 +5,8 @@ import QtQuick.Layouts
 Page {
     id: pageScan
 
+    signal scanGoToHome
+
     background: Rectangle {
         color: "transparent"
     }
@@ -13,9 +15,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        //
-        // Header
-        //
         Rectangle {
             id: frameHome
 
@@ -51,6 +50,7 @@ Page {
                     border.width: homeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
+                onClicked: pageScan.scanGoToHome()
             }
 
             Image {

@@ -1,10 +1,9 @@
 import os
 import sys
-from pathlib import Path
 
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QUrl
-from PySide6.QtQml import QQmlApplicationEngine, qmlRegisterSingletonInstance
+from PySide6.QtQml import QQmlApplicationEngine
 
 from PySide6.QtWidgets import QApplication
 
@@ -31,11 +30,11 @@ def main():
     engine = QQmlApplicationEngine()
 
     splashscreen_backend = SplashScreenBackend()
-    engine.rootContext().setContextProperty("splashscreen", splashscreen_backend)
+    main_window_backend = MainWindowBackend()
     splashscreen_backend.fatalError.connect(engine.quit)
     splashscreen_backend.startupFinished.connect(lambda: show_main_window(engine))
 
-    main_window_backend = MainWindowBackend()
+    engine.rootContext().setContextProperty("splashscreen", splashscreen_backend)
     engine.rootContext().setContextProperty("mainwindow", main_window_backend)
 
     engine.load(QUrl("qrc:/qml/SplashScreen.qml"))

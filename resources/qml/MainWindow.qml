@@ -103,11 +103,26 @@ ApplicationWindow {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            HomePage {}
-            ScanPage {}
-            UpdatePage {}
-            AboutPage {}
-            QuarantinePage {}
+            HomePage {
+                id: home
+
+                onOpenScanPage: pages.currentIndex = 1
+                onOpenUpdatePage: pages.currentIndex = 2
+                onOpenAboutPage: pages.currentIndex = 3
+                onOpenQuarantinePage: pages.currentIndex = 4
+            }
+            ScanPage {
+                onScanGoToHome: pages.currentIndex = 0
+            }
+            UpdatePage {
+                onUpdateGoToHome: pages.currentIndex = 0
+            }
+            AboutPage {
+                onAboutGoHome: pages.currentIndex = 0
+            }
+            QuarantinePage {
+                onQuarantineGoHome: pages.currentIndex = 0
+            }
         }
 
         Rectangle {
@@ -119,7 +134,7 @@ ApplicationWindow {
             Label {
                 anchors.centerIn: parent
 
-                text: "Engine Version"
+                text: mainwindow.engineVersion
                 color: "#eceff4"
             }
         }
