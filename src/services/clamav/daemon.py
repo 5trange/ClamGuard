@@ -1,10 +1,10 @@
 import os
 import time
 
-from PySide6.QtCore import QThread, Signal
-from core.initialise import init_clamd, init_freshclam
-
 import pyclamd
+from PySide6.QtCore import QThread, Signal, Slot
+
+from core.initialise import init_clamd, init_freshclam
 
 
 class FreshClamInit(QThread):
@@ -146,3 +146,12 @@ class ClamDInit(QThread):
                 "progress": 0,
             }
         )
+
+
+class UpdateWorker(QThread):
+    finished = Signal()
+
+    @Slot()
+    def run(self):
+        time.sleep(3)
+        self.finished.emit()

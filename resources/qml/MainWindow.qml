@@ -6,15 +6,15 @@ import "pages"
 ApplicationWindow {
     id: root
 
-    width: mainwindow.windowWidth
-    height: mainwindow.windowHeight
+    width: mainwindow ? mainwindow.windowWidth : 800
+    height: mainwindow ? mainwindow.windowHeight : 600
     minimumWidth: 800
     minimumHeight: 600
     maximumWidth: 800
     maximumHeight: 600
 
     visible: true
-    title: mainwindow.windowTitle
+    title: mainwindow ? mainwindow.windowTitle : ""
 
     color: "#2e3440"
 
@@ -134,7 +134,7 @@ ApplicationWindow {
             Label {
                 anchors.centerIn: parent
 
-                text: mainwindow.engineVersion
+                text: mainwindow ? mainwindow.engineVersion : ""
                 color: "#eceff4"
             }
         }

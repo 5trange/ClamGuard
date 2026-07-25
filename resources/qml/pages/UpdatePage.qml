@@ -7,6 +7,22 @@ Page {
 
     signal updateGoToHome()
 
+    Connections {
+        target: mainwindow
+
+        function onUpdateStarted() {
+            updatehomeButton.enabled = false
+            cancelUpdate.enabled = true
+            checkUpdate.enabled = false
+        }
+
+        function onUpdateFinished() {
+            updatehomeButton.enabled = true
+            cancelUpdate.enabled = false
+            checkUpdate.enabled = true
+        }
+    }
+
     background: Rectangle {
         color: "transparent"
     }
@@ -25,6 +41,8 @@ Page {
 
             Button {
                 id: updatehomeButton
+
+                enabled: true
 
                 anchors.left: parent.left
                 anchors.leftMargin: 9
@@ -75,6 +93,7 @@ Page {
 
             Button {
                 id: checkUpdate
+                enabled: true
 
                 Layout.preferredWidth: 182
                 Layout.preferredHeight: 120
@@ -99,6 +118,17 @@ Page {
                     font: checkUpdate.font
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    wrapMode: Text.WordWrap
+                }
+
+                onClicked: {
+                    updatehomeButton.enabled = false
+                    cancelUpdate.enabled = true
+                    checkUpdate.enabled = false
+                    mainwindow.checkForUpdates()
+                    updatehomeButton.enabled = true
+                    cancelUpdate.enabled = false
+                    checkUpdate.enabled = false
                 }
             }
 
@@ -111,6 +141,8 @@ Page {
 
                 Layout.preferredWidth: 182
                 Layout.preferredHeight: 120
+
+                enabled: false
 
                 text: "Cancel Update"
 

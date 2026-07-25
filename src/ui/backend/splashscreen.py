@@ -1,5 +1,7 @@
-from PySide6.QtCore import QObject, Signal, Property, Slot
-from services.clamav.daemon import FreshClamInit, ClamDInit
+from PySide6.QtCore import Property, QObject, Signal, Slot
+
+from services.clamav.daemon import ClamDInit, FreshClamInit
+
 
 class SplashScreenBackend(QObject):
     progressChanged = Signal()
