@@ -90,9 +90,8 @@ class ClamDInit(QThread):
                         }
                     )
                     return
-
-            except Exception as e:
-                print(f"Connection failed: {e}")
+            except pyclamd.ConnectionError as e:
+                 print(type(e), e)
             finally:
                 print("ClamD run ended")
 

@@ -1,5 +1,3 @@
-import time
-
 from PySide6.QtCore import Property, QObject, Signal, Slot
 from PySide6.QtQuick import QQuickWindow
 

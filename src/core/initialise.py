@@ -2,7 +2,7 @@ import os
 import subprocess
 
 from .default import DEFAULT_CLAMD_SETTINGS, DEFAULT_FRESHCLAM_SETTINGS
-from .paths import get_clamd_path, get_freshclam_path, get_config_path
+from .paths import get_clamd_path, get_config_path, get_freshclam_path
 
 
 def write_default_clamav_settings():
@@ -41,8 +41,15 @@ def init_clamd():
                 ["clamd", "--config-file", get_clamd_path()]
             )
         return clamd_process
-    except Exception as e:
-        print(f"Debug: Error:{e}")
+    except FileNotFoundError:
+        print("Debug: clamd not found")
+        return None
+    except PermissionError:
+        print("Debug: Permission denied")
+        return None
+    except OSError:
+        print("Debug: OSError")
+        return None
 
 
 def init_freshclam():
@@ -63,5 +70,12 @@ def init_freshclam():
                 text=True,
             )
         return freshclam_process
-    except Exception as e:
-        print(f"Debug: Error:{e}")
+    except FileNotFoundError:
+        print("Debug: freshclam not found")
+        return None
+    except PermissionError:
+        print("Debug: Permission denied")
+        return None
+    except OSError:
+        print("Debug: OSError")
+        return None

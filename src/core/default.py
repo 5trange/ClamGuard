@@ -4,7 +4,6 @@ from pathlib import Path
 
 from .paths import get_config_path
 
-
 runtime_path = Path(tempfile.gettempdir()) / "clamguard"
 runtime_path.mkdir(exist_ok=True)
 
