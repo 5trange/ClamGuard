@@ -79,7 +79,7 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 20
 
-                ColumnLayout {
+                Column {
                     width: parent.width
                     spacing: 18
 
@@ -112,7 +112,7 @@ Page {
 
                         Layout.alignment: Qt.AlignHCenter
 
-                        text: qsTr("Version 1.0.0")
+                        text: qsTr("Version 1.3.0")
                         color: "#d8dee9"
 
                         font.pixelSize: 16
@@ -126,8 +126,9 @@ Page {
 
                     Text {
                         id: description
+                        width: parent.width
 
-                        Layout.fillWidth: true
+                        Layout.fillWidth: false
 
                         text:
                             qsTr("ClamGuard is a modern graphical frontend for ClamAV. "
@@ -162,7 +163,7 @@ Page {
 
                         Label {
                             id: developerLabel
-                            text: qsTr("Bilal Jafar")
+                            text: qsTr("Bilal Jafar, Adith K Murali, Vinayakan S")
                             color: "#d8dee9"
                         }
 
@@ -231,7 +232,7 @@ Page {
                                 verticalAlignment: Text.AlignVCenter
                             }
 
-                            // onClicked: Qt.openUrlExternally(...)
+                            onClicked: Qt.openUrlExternally("https://github.com/5trange/ClamGuard")
                         }
 
                         Button {
@@ -255,7 +256,7 @@ Page {
                                 verticalAlignment: Text.AlignVCenter
                             }
 
-                            // onClicked: Qt.openUrlExternally(...)
+                            onClicked: Qt.openUrlExternally("https://sourceforge.net/projects/clamguard/")
                         }
                     }
                 }

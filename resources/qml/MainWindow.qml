@@ -5,6 +5,7 @@ import "pages"
 
 ApplicationWindow {
     id: root
+    icon: "qrc:/img/clamguard.png"
 
     width: mainwindow ? mainwindow.windowWidth : 800
     height: mainwindow ? mainwindow.windowHeight : 600

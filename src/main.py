@@ -1,18 +1,16 @@
 import os
 import sys
 
-from PySide6.QtGui import QIcon
 from PySide6.QtCore import QUrl
+from PySide6.QtGui import QIcon
 from PySide6.QtQml import QQmlApplicationEngine
-
 from PySide6.QtWidgets import QApplication
 
+import core.resources_rc
 from core.initialise import initialise_config_folder
 from ui import show_main_window
 from ui.backend.mainwindow import MainWindowBackend
 from ui.backend.splashscreen import SplashScreenBackend
-
-import core.resources_rc
 
 
 def main():
@@ -25,6 +23,7 @@ def main():
     initialise_config_folder()
 
     app = QApplication(sys.argv)
+    app.setDesktopFileName("clamguard")
 
     app.setWindowIcon(QIcon("qrc:/img/clamguard.ico"))
     engine = QQmlApplicationEngine()
