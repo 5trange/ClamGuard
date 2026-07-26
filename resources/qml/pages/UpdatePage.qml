@@ -11,6 +11,7 @@ Page {
         target: mainwindow
 
         function onUpdateStarted() {
+            updateStatus.text = ""
             updatehomeButton.enabled = false
             cancelUpdate.enabled = true
             checkUpdate.enabled = false
@@ -20,6 +21,10 @@ Page {
             updatehomeButton.enabled = true
             cancelUpdate.enabled = false
             checkUpdate.enabled = true
+        }
+
+        function onUpdateOutputReceived(output) {
+            updateStatus.text += output
         }
     }
 
@@ -122,13 +127,7 @@ Page {
                 }
 
                 onClicked: {
-                    updatehomeButton.enabled = false
-                    cancelUpdate.enabled = true
-                    checkUpdate.enabled = false
                     mainwindow.checkForUpdates()
-                    updatehomeButton.enabled = true
-                    cancelUpdate.enabled = false
-                    checkUpdate.enabled = false
                 }
             }
 
@@ -164,6 +163,10 @@ Page {
                     font: cancelUpdate.font
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                }
+
+                onClicked: {
+                    mainwindow.cancelUpdate()
                 }
             }
         }

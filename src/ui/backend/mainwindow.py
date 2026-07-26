@@ -3,7 +3,7 @@ import time
 from PySide6.QtCore import Property, QObject, Signal, Slot
 from PySide6.QtQuick import QQuickWindow
 
-from services.clamav.daemon import UpdateWorker
+from services.clamav.daemon import FreshClamInit
 
 
 class MainWindowBackend(QObject):
@@ -13,6 +13,7 @@ class MainWindowBackend(QObject):
     engineVersionChanged = Signal()
     updateStarted = Signal()
     updateFinished = Signal()
+    updateOutputReceived = Signal(str)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -43,8 +44,15 @@ class MainWindowBackend(QObject):
         window.showMinimized()
 
     @Slot()
+    def cancelUpdate(self):
+        if self.update_worker:
+            self.update_worker.stop_run()
+            self.update_worker = None
+
+    @Slot()
     def checkForUpdates(self):
-        self.update_worker = UpdateWorker()
+        self.update_worker = FreshClamInit()
         self.update_worker.started.connect(self.updateStarted)
+        self.update_worker.outputReceived.connect(self.updateOutputReceived.emit)
         self.update_worker.finished.connect(self.updateFinished)
         self.update_worker.start()

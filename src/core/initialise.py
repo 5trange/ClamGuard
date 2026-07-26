@@ -51,10 +51,16 @@ def init_freshclam():
             freshclam_process = subprocess.Popen(
                 ["freshclam", "--config-file", get_freshclam_path()],
                 creationflags=subprocess.CREATE_NO_WINDOW,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
             )
         else:
             freshclam_process = subprocess.Popen(
-                ["freshclam", "--config-file", get_freshclam_path()]
+                ["freshclam", "--config-file", get_freshclam_path()],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
             )
         return freshclam_process
     except Exception as e:

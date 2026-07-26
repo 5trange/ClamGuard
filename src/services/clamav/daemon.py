@@ -2,64 +2,31 @@ import os
 import time
 
 import pyclamd
-from PySide6.QtCore import QThread, Signal, Slot
+from PySide6.QtCore import QThread, Signal
 
 from core.initialise import init_clamd, init_freshclam
 
 
 class FreshClamInit(QThread):
-    status = Signal(dict)
+    outputReceived = Signal(str)
+    finished = Signal()
 
     def __init__(self) -> None:
         super().__init__()
+        self.freshclam_process = None
+
+    def stop_run(self):
+        if self.freshclam_process:
+            self.freshclam_process.terminate()
+            self.freshclam_process = None
 
     def run(self):
-        self.status.emit(
-            {
-                "success": False,
-                "end": False,
-                "message": "Updating ClamAV database with Freshclam",
-                "progress": 0,
-            }
-        )
         self.freshclam_process = init_freshclam()
-        self.status.emit(
-            {
-                "success": False,
-                "end": False,
-                "message": "Updating ClamAV database with Freshclam",
-                "progress": 10,
-            }
-        )
-        if self.freshclam_process:
-            return_code = self.freshclam_process.wait()
-            if return_code == 0:
-                self.status.emit(
-                    {
-                        "success": True,
-                        "end": True,
-                        "message": "Freshclam update completed successfully.",
-                        "progress": 20,
-                    }
-                )
-            else:
-                self.status.emit(
-                    {
-                        "success": False,
-                        "end": True,
-                        "message": f"Freshclam update failed with return code {return_code}.",
-                        "progress": 0,
-                    }
-                )
-        else:
-            self.status.emit(
-                {
-                    "success": False,
-                    "end": True,
-                    "message": "Freshclam update failed with return code -1.",
-                    "progress": 0,
-                }
-            )
+        if self.freshclam_process is None or self.freshclam_process.stdout is None:
+            return
+        while line := self.freshclam_process.stdout.readline():
+            self.outputReceived.emit(line.strip())
+        self.finished.emit()
 
 
 # ClamAV in window uses tcp to access the details
@@ -73,6 +40,7 @@ class ClamDInit(QThread):
         self.counter = 1
         self.max_retries = 10
         self.handler = None
+        self.clamd_process = None
 
         if os.name == "nt":
             self.host = "127.0.0.1"
@@ -146,12 +114,3 @@ class ClamDInit(QThread):
                 "progress": 0,
             }
         )
-
-
-class UpdateWorker(QThread):
-    finished = Signal()
-
-    @Slot()
-    def run(self):
-        time.sleep(3)
-        self.finished.emit()
