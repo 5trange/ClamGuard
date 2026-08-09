@@ -1,15 +1,29 @@
 # This File exist to build the resource data use this file before running the program
 
-import subprocess
 import argparse
+import subprocess
+
+import requests
+from tqdm import tqdm
+
+CLAMAV_VERSION = "1.5.4"
+WINDOWS_FILE_URL = (
+    f"https://github.com/Cisco-Talos/clamav/releases/download/"
+    f"clamav-{CLAMAV_VERSION}/clamav-{CLAMAV_VERSION}.win.x64.zip"
+)
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Manage the ClamGuard project")
 
-    subparsers = parser.add_subparsers(dest="command", required=False, help="Available subcommands")
+    subparsers = parser.add_subparsers(
+        dest="command", required=False, help="Available subcommands"
+    )
     subparsers.add_parser("build", help="Build the project using PyInstaller")
-    parser.add_argument("--no-resources", action="store_true", help="Skip resources building step")
+    subparsers.add_parser("production", help="Build the project for production")
+    parser.add_argument(
+        "--no-resources", action="store_true", help="Skip resources building step"
+    )
 
     return parser.parse_args()
 
@@ -30,6 +44,7 @@ def build_resources():
     if return_code != 0:
         print("Error : Running the pyside6-rcc command")
 
+
 def build_executable():
     print("Building executable...")
     process = subprocess.Popen(
@@ -46,12 +61,28 @@ def build_executable():
             "--distpath",
             "build/dist/",
             "--workpath",
-            "build/temp"
+            "build/temp",
         ]
     )
     return_code = process.wait()
     if return_code != 0:
         print("Error : Running the pyinstaller command")
+
+
+def build_production():
+    with requests.get(WINDOWS_FILE_URL, stream=True) as response:
+        response.raise_for_status()
+        with open("build/dist/Clamav.zip", "wb") as f, tqdm(
+            desc="Downloading Clamav.zip",
+            total=int(response.headers.get("content-length", 0)),
+            unit='B',
+            unit_scale=True,
+            unit_divisor=1024,
+        ) as pbar:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+                pbar.update(len(chunk))
+
 
 def main():
     args = parse_args()
@@ -60,6 +91,10 @@ def main():
 
     if args.command == "build":
         build_executable()
+
+    elif args.command == "production":
+        build_production()
+
 
 if __name__ == "__main__":
     main()

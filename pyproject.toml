@@ -13,4 +13,6 @@ dependencies = [
     "pyside6>=6.11.1",
     "pywin32>=312 ; sys_platform == 'win32'",
     "watchdog>=6.0.0",
+    "requests>=2.34.2",
+    "tqdm>=4.70.0",
 ]
