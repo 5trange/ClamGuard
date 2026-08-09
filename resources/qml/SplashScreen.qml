@@ -13,6 +13,8 @@ ApplicationWindow {
     maximumHeight: 400
     title: "Starting ClamGuard"
 
+    flags: Qt.FramelessWindowHint
+
     Connections {
         target: splashscreen
 

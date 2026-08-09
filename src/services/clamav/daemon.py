@@ -1,10 +1,11 @@
 import os
+from this import s
 import time
 
 import pyclamd
 from PySide6.QtCore import QThread, Signal
 
-from core.initialise import init_clamd, init_freshclam
+from core.initialise import init_clamd, init_freshclam, scan_file
 
 
 class FreshClamInit(QThread):
@@ -113,3 +114,33 @@ class ClamDInit(QThread):
                 "progress": 0,
             }
         )
+
+class ClamAVScanner(QThread):
+    outputReceived = Signal(str)
+    finished = Signal()
+
+    def __init__(self, paths: list[str]):
+        super().__init__()
+        self.clamscan_process = scan_file(paths)
+
+    def run(self):
+        self.scan()
+
+    def stop(self):
+        if self.clamscan_process:
+            self.clamscan_process.terminate()
+            self.clamscan_process = None
+        self.finished.emit()
+
+    def scan(self):
+        if self.clamscan_process is None or self.clamscan_process.stdout is None:
+            return
+        while line := self.clamscan_process.stdout.readline():
+            self.outputReceived.emit(line.strip())
+
+        if self.clamscan_process:
+            return_code = self.clamscan_process.wait()
+            print(f"Scan finished with return code: {return_code}")
+
+        self.finished.emit()
+        self.clamscan_process = None

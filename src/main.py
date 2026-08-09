@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QApplication
 
 import core.resources_rc
 from core.initialise import initialise_config_folder
-from ui import show_main_window
+from ui import create_main_window
 from ui.backend.mainwindow import MainWindowBackend
 from ui.backend.splashscreen import SplashScreenBackend
 
@@ -31,7 +31,7 @@ def main():
     splashscreen_backend = SplashScreenBackend()
     main_window_backend = MainWindowBackend()
     splashscreen_backend.fatalError.connect(engine.quit)
-    splashscreen_backend.startupFinished.connect(lambda: show_main_window(engine))
+    splashscreen_backend.startupFinished.connect(lambda: create_main_window(app, engine))
 
     engine.rootContext().setContextProperty("splashscreen", splashscreen_backend)
     engine.rootContext().setContextProperty("mainwindow", main_window_backend)

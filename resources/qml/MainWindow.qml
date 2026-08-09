@@ -5,7 +5,6 @@ import "pages"
 
 ApplicationWindow {
     id: root
-    icon: "qrc:/img/clamguard.png"
 
     width: mainwindow ? mainwindow.windowWidth : 800
     height: mainwindow ? mainwindow.windowHeight : 600
@@ -13,6 +12,8 @@ ApplicationWindow {
     minimumHeight: 600
     maximumWidth: 800
     maximumHeight: 600
+
+    flags: Qt.FramelessWindowHint
 
     visible: true
     title: mainwindow ? mainwindow.windowTitle : ""
@@ -93,7 +94,7 @@ ApplicationWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
 
-                        onClicked: Qt.quit()
+                        onClicked: mainwindow.hideToTray(root)
                     }
                 }
             }

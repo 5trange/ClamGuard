@@ -24,7 +24,7 @@ Page {
         }
 
         function onUpdateOutputReceived(output) {
-            updateStatus.text += output
+            updateStatus.text += output + '\n'
         }
     }
 

@@ -79,3 +79,30 @@ def init_freshclam():
     except OSError:
         print("Debug: OSError")
         return None
+
+
+def scan_file(path: list[str]) -> subprocess.Popen | None:
+    try:
+
+        db_path = get_config_path() / "db"
+
+        result = subprocess.Popen(
+            ["clamscan", "--database", db_path, *path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+        )
+        return result
+
+    except FileNotFoundError:
+        print("clamscan not found")
+        return None
+
+    except PermissionError:
+        print("Permission denied")
+        return None
+
+    except OSError as e:
+        print(f"OS error: {e}")
+        return None
