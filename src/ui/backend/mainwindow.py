@@ -1,8 +1,8 @@
 from PySide6.QtCore import Property, QObject, QUrl, Signal, Slot
 from PySide6.QtQuick import QQuickWindow
 
-from services.clamav.daemon import ClamAVScanner, FreshClamInit
 from core.paths import get_full_scan_path, get_quick_scan_path
+from services.clamav.daemon import ClamAVScanner, FreshClamInit
 
 
 class MainWindowBackend(QObject):
@@ -23,7 +23,7 @@ class MainWindowBackend(QObject):
         self._window_width = 800
         self._window_height = 600
         self._engine_version = "Engine Version 1.3.0"
-        self.update_worker = None
+        self.update_worker: FreshClamInit | None = None
         self.scan_worker: ClamAVScanner | None = None
 
     @Property(str, notify=windowTitleChanged)
@@ -60,8 +60,8 @@ class MainWindowBackend(QObject):
     def checkForUpdates(self):
         self.update_worker = FreshClamInit()
         self.update_worker.started.connect(self.updateStarted)
-        self.update_worker.outputReceived.connect(self.runOutputReceived.emit)
-        self.update_worker.finished.connect(self.runFinished)
+        self.update_worker.outputReceived.connect(self.updateOutputReceived)
+        self.update_worker.finished.connect(self.updateFinished)
         self.update_worker.start()
 
     @Slot()

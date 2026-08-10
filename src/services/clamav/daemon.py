@@ -1,6 +1,6 @@
 import os
-from this import s
 import time
+from tkinter.constants import N
 
 import pyclamd
 from PySide6.QtCore import QThread, Signal
@@ -15,18 +15,25 @@ class FreshClamInit(QThread):
     def __init__(self) -> None:
         super().__init__()
         self.freshclam_process = None
+        self._stop_requested = False
 
     def stop_run(self):
-        if self.freshclam_process:
-            self.freshclam_process.terminate()
-            self.freshclam_process = None
+        self._stop_requested = True
 
     def run(self):
         self.freshclam_process = init_freshclam()
-        if self.freshclam_process is None or self.freshclam_process.stdout is None:
-            return
-        while line := self.freshclam_process.stdout.readline():
+
+        while not self._stop_requested:
+            if self.freshclam_process is None or self.freshclam_process.stdout is None:
+                return
+            line = self.freshclam_process.stdout.readline()
+            if not line:
+                break
             self.outputReceived.emit(line.strip())
+
+        if self.freshclam_process and self.freshclam_process.poll() is None:
+            self.freshclam_process.terminate()
+
         self.finished.emit()
 
 
@@ -92,7 +99,7 @@ class ClamDInit(QThread):
                     )
                     return
             except pyclamd.ConnectionError as e:
-                 print(type(e), e)
+                print(type(e), e)
             finally:
                 print("ClamD run ended")
 
@@ -114,6 +121,7 @@ class ClamDInit(QThread):
                 "progress": 0,
             }
         )
+
 
 class ClamAVScanner(QThread):
     outputReceived = Signal(str)

@@ -54,20 +54,29 @@ def init_clamd():
 
 def init_freshclam():
     try:
+        command = [
+            "freshclam",
+            "--config-file",
+            str(get_freshclam_path()),
+        ]
         if os.name == "nt":
+
             freshclam_process = subprocess.Popen(
-                ["freshclam", "--config-file", get_freshclam_path()],
+                command,
                 creationflags=subprocess.CREATE_NO_WINDOW,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
                 text=True,
+                bufsize=1,
             )
+            print(command)
         else:
             freshclam_process = subprocess.Popen(
-                ["freshclam", "--config-file", get_freshclam_path()],
+                command,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
                 text=True,
+                bufsize=1,
             )
         return freshclam_process
     except FileNotFoundError:
