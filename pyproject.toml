@@ -5,11 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "setuptools>=83.0.0",
+    "setuptools>=84.0.0",
     "ipython>=9.14.1",
     "platformdirs>=4.10.0",
     "pyclamd>=0.4.0",
-    "pyinstaller>=6.20.0",
+    "pyinstaller>=6.22.0",
     "pyside6>=6.11.1",
     "pywin32>=312 ; sys_platform == 'win32'",
     "watchdog>=6.0.0",
