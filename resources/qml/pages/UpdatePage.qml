@@ -5,26 +5,22 @@ import QtQuick.Layouts
 Page {
     id: pageUpdate
 
-    signal updateGoToHome()
+    signal updateGoToHome
 
     Connections {
         target: mainwindow
 
         function onUpdateStarted() {
-            updateStatus.text = ""
-            updatehomeButton.enabled = false
-            cancelUpdate.enabled = true
-            checkUpdate.enabled = false
+            updateStatus.text = "";
+            updatehomeButton.enabled = false;
+            checkUpdate.enabled = false;
+            cancelUpdate.enabled = true;
         }
 
         function onUpdateFinished() {
-            updatehomeButton.enabled = true
-            cancelUpdate.enabled = false
-            checkUpdate.enabled = true
-        }
-
-        function onUpdateOutputReceived(output) {
-            updateStatus.text += output + '\n'
+            updatehomeButton.enabled = true;
+            checkUpdate.enabled = true;
+            cancelUpdate.enabled = false;
         }
     }
 
@@ -127,7 +123,7 @@ Page {
                 }
 
                 onClicked: {
-                    mainwindow.checkForUpdates()
+                    mainwindow.checkForUpdates();
                 }
             }
 
@@ -166,7 +162,7 @@ Page {
                 }
 
                 onClicked: {
-                    mainwindow.cancelUpdate()
+                    mainwindow.cancelUpdate();
                 }
             }
         }
@@ -194,6 +190,14 @@ Page {
                     color: "#d8dee9"
                     selectionColor: "#5e81ac"
                     selectedTextColor: "white"
+
+                    Connections {
+                        target: mainwindow
+
+                        function onUpdateOutputReceived(output) {
+                            updateStatus.append(output);
+                        }
+                    }
 
                     background: Rectangle {
                         color: "#2e3440"

@@ -124,6 +124,7 @@ Page {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     clip: true
+                    model: quarantineModel
 
                     columnSpacing: 1
                     rowSpacing: 1

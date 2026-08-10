@@ -34,7 +34,7 @@ ApplicationWindow {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
                 onPressed: {
-                    root.startSystemMove()
+                    root.startSystemMove();
                 }
                 z: -1
             }
@@ -63,7 +63,9 @@ ApplicationWindow {
                     color: mouse.containsMouse ? "#A3BE8C" : "#EBCB8B"
 
                     Behavior on color {
-                        ColorAnimation { duration: 120 }
+                        ColorAnimation {
+                            duration: 120
+                        }
                     }
 
                     MouseArea {
@@ -85,7 +87,9 @@ ApplicationWindow {
                     color: closeMouse.containsMouse ? "#BF616A" : "#D08770"
 
                     Behavior on color {
-                        ColorAnimation { duration: 120 }
+                        ColorAnimation {
+                            duration: 120
+                        }
                     }
 
                     MouseArea {

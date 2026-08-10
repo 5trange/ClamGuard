@@ -4,10 +4,10 @@ import QtQuick.Controls
 Page {
     id: homePage
 
-    signal openScanPage()
-    signal openUpdatePage()
-    signal openAboutPage()
-    signal openQuarantinePage()
+    signal openScanPage
+    signal openUpdatePage
+    signal openAboutPage
+    signal openQuarantinePage
 
     background: Rectangle {
         color: "transparent"

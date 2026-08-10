@@ -5,7 +5,7 @@ import QtQuick.Layouts
 Page {
     id: pageAbout
 
-    signal aboutGoHome()
+    signal aboutGoHome
 
     background: Rectangle {
         color: "transparent"
@@ -130,11 +130,7 @@ Page {
 
                         Layout.fillWidth: false
 
-                        text:
-                            qsTr("ClamGuard is a modern graphical frontend for ClamAV. "
-                                 + "It provides an easy way to scan files, update virus "
-                                 + "definitions, and manage quarantined files through a "
-                                 + "simple Qt Quick interface.")
+                        text: qsTr("ClamGuard is a modern graphical frontend for ClamAV. " + "It provides an easy way to scan files, update virus " + "definitions, and manage quarantined files through a " + "simple Qt Quick interface.")
 
                         wrapMode: Text.WordWrap
 

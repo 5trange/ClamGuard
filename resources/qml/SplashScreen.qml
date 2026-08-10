@@ -19,12 +19,12 @@ ApplicationWindow {
         target: splashscreen
 
         function onStartupFinished() {
-            root.close()
+            root.close();
         }
     }
 
     Component.onCompleted: {
-      splashscreen.start()
+        splashscreen.start();
     }
 
     Rectangle {

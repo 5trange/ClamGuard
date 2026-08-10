@@ -8,25 +8,24 @@ Page {
 
     signal scanGoToHome
 
-
     Connections {
         target: mainwindow
 
         function onRunStarted() {
-            scanStatus.text = ""
-            homeButton.enabled = false
-            quickscanButton.enabled = false
-            fullscanButton.enabled = false
-            customscanButton.enabled = false
-            cancelscanButton.enabled = true
+            scanStatus.text = "";
+            homeButton.enabled = false;
+            quickscanButton.enabled = false;
+            fullscanButton.enabled = false;
+            customscanButton.enabled = false;
+            cancelscanButton.enabled = true;
         }
 
         function onRunFinished() {
-            homeButton.enabled = true
-            quickscanButton.enabled = true
-            fullscanButton.enabled = true
-            customscanButton.enabled = true
-            cancelscanButton.enabled = false
+            homeButton.enabled = true;
+            quickscanButton.enabled = true;
+            fullscanButton.enabled = true;
+            customscanButton.enabled = true;
+            cancelscanButton.enabled = false;
         }
     }
 
@@ -130,7 +129,7 @@ Page {
                 }
 
                 onClicked: {
-                    mainwindow.quickScan()
+                    mainwindow.quickScan();
                 }
             }
 
@@ -268,7 +267,7 @@ Page {
                         target: mainwindow
 
                         function onRunOutputReceived(output) {
-                            scanStatus.append(output)
+                            scanStatus.append(output);
                         }
                     }
 
