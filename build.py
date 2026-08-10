@@ -1,6 +1,7 @@
 # This File exist to build the resource data use this file before running the program
 
 import argparse
+from operator import sub
 import subprocess
 
 import requests
@@ -21,6 +22,7 @@ def parse_args():
     )
     subparsers.add_parser("build", help="Build the project using PyInstaller")
     subparsers.add_parser("production", help="Build the project for production")
+    subparsers.add_parser("clean", help="Clean the build artifacts")
     parser.add_argument(
         "--no-resources", action="store_true", help="Skip resources building step"
     )
@@ -84,6 +86,11 @@ def build_production():
                 pbar.update(len(chunk))
 
 
+def clean_build():
+    print("Cleaning build artifacts...")
+    subprocess.run(["rm", "-rf", "ClamGuard.spec", "build/", "dist/"], check=False)
+
+
 def main():
     args = parse_args()
     if not getattr(args, "no_resources", None):
@@ -94,6 +101,9 @@ def main():
 
     elif args.command == "production":
         build_production()
+
+    elif args.command == "clean":
+        clean_build()
 
 
 if __name__ == "__main__":
