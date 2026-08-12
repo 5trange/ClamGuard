@@ -41,9 +41,10 @@ def main():
     app.setWindowIcon(QIcon("qrc:/img/clamguard.ico"))
     engine = QQmlApplicationEngine()
 
-    splashscreen_backend = SplashScreenBackend()
-    main_window_backend = MainWindowBackend()
     quarantineModel = QuarantineModel()
+
+    splashscreen_backend = SplashScreenBackend()
+    main_window_backend = MainWindowBackend(quarantineModel)
     splashscreen_backend.fatalError.connect(engine.quit)
     splashscreen_backend.startupFinished.connect(
         lambda: create_main_window(app, engine)

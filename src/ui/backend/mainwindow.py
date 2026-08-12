@@ -1,8 +1,12 @@
+import re
+
 from PySide6.QtCore import Property, QObject, QUrl, Signal, Slot
 from PySide6.QtQuick import QQuickWindow
 
 from core.paths import get_full_scan_path, get_quick_scan_path
+from models.quarantine import QuarantineItem
 from services.clamav.daemon import ClamAVScanner, FreshClamInit
+from services.quarantine_service import QuarantineService
 
 
 class MainWindowBackend(QObject):
@@ -17,7 +21,7 @@ class MainWindowBackend(QObject):
     runFinished = Signal()
     runOutputReceived = Signal(str)
 
-    def __init__(self, parent=None):
+    def __init__(self, quarantineModel, parent=None):
         super().__init__(parent)
         self._window_title = "ClamGuard Antivirus"
         self._window_width = 800
@@ -25,6 +29,8 @@ class MainWindowBackend(QObject):
         self._engine_version = "Engine Version 1.3.0"
         self.update_worker: FreshClamInit | None = None
         self.scan_worker: ClamAVScanner | None = None
+        self.quarantine_service = QuarantineService()
+        self.quarantineModel = quarantineModel
 
     @Property(str, notify=windowTitleChanged)
     def windowTitle(self):
@@ -64,6 +70,28 @@ class MainWindowBackend(QObject):
         self.update_worker.finished.connect(self.updateFinished)
         self.update_worker.start()
 
+    @Slot(str)
+    def findVirus(self, file_path: str):
+        DICT_FORMAT = re.compile(
+            r"^(?P<file_path>.+/)(?P<file_name>[^/]+):(?:\s+(?P<type>.+?))?\s+(?P<status>FOUND|OK)$"
+        )
+        match = DICT_FORMAT.match(file_path)
+        if match:
+            file_path = match.group("file_path")
+            file_name = match.group("file_name")
+            file_type = match.group("type")
+            status = match.group("status")
+            if status == "FOUND":
+                self.onVirusFound(file_path, file_name, file_type)
+                self.quarantineModel.addItem(
+                    QuarantineItem(name=file_name, type=file_type, location=file_type)
+                )
+
+    @Slot(str, str, str)
+    def onVirusFound(self, file_path: str, file_name: str, file_type: str):
+        self.quarantine_service.quarantine(file_path + "/" + file_name)
+        self.runOutputReceived.emit(f"Quarantined: {file_name}")
+
     @Slot()
     def quickScan(self):
         paths = get_quick_scan_path()
@@ -71,6 +99,7 @@ class MainWindowBackend(QObject):
         self.scan_worker = ClamAVScanner(paths)
         self.scan_worker.started.connect(self.runStarted)
         self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
+        self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
         self.scan_worker.start()
         self.runOutputReceived.emit("Scan started for " + str(paths))
@@ -82,6 +111,7 @@ class MainWindowBackend(QObject):
         self.scan_worker = ClamAVScanner(paths)
         self.scan_worker.started.connect(self.runStarted)
         self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
+        self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
         self.scan_worker.start()
         self.runOutputReceived.emit("Scan started for " + str(paths))
@@ -91,6 +121,7 @@ class MainWindowBackend(QObject):
         self.scan_worker = ClamAVScanner([path.toLocalFile()])
         self.scan_worker.started.connect(self.runStarted)
         self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
+        self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
         self.scan_worker.start()
         self.runOutputReceived.emit("Scan started for " + path.toLocalFile())
