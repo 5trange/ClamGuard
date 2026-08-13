@@ -20,6 +20,7 @@ else:
     DEFAULT_CLAMD_SETTINGS = f"""
 Foreground yes
 LocalSocket {socket_path}
+DatabaseDirectory {get_config_path() / "db"}
 """
 
 if os.name == "nt":

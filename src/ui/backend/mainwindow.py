@@ -7,6 +7,13 @@ from core.paths import get_full_scan_path, get_quick_scan_path
 from models.quarantine import QuarantineItem
 from services.clamav.daemon import ClamAVScanner, FreshClamInit
 
+DICT_FORMAT = re.compile(
+    r"^(?P<file_path>.+/)"
+    r"(?P<file_name>[^/]+):"
+    r"(?:\s+(?P<type>.+?))?"
+    r"\s+(?P<status>FOUND|OK)$"
+)
+
 
 class MainWindowBackend(QObject):
     windowTitleChanged = Signal()
@@ -28,7 +35,7 @@ class MainWindowBackend(QObject):
         self._engine_version = "Engine Version 1.3.0"
         self.update_worker: FreshClamInit | None = None
         self.scan_worker: ClamAVScanner | None = None
-        self.quarantineModel = quarantineModel
+        self.quarantine_model = quarantineModel
 
     @Property(str, notify=windowTitleChanged)
     def windowTitle(self):
@@ -70,23 +77,26 @@ class MainWindowBackend(QObject):
 
     @Slot(str)
     def findVirus(self, file_path: str):
-        DICT_FORMAT = re.compile(
-            r"^(?P<file_path>.+/)(?P<file_name>[^/]+):(?:\s+(?P<type>.+?))?\s+(?P<status>FOUND|OK)$"
-        )
         match = DICT_FORMAT.match(file_path)
+        if not match:
+            return
+
         if match:
             file_path = match.group("file_path")
             file_name = match.group("file_name")
             file_type = match.group("type")
             status = match.group("status")
             if status == "FOUND":
-                self.onVirusFound(file_path, file_name, file_type)
-                self.quarantineModel.addItem(file_name, file_type, file_path)
+                self.quarantine_model.addItem(file_name, file_type, file_path)
+                self.runOutputReceived.emit(f"Quarantined: {file_name}")
+            else:
+                del match
 
-    @Slot(str, str, str)
-    def onVirusFound(self, file_path: str, file_name: str, file_type: str):
-        self.quarantine_service.quarantine(file_path + "/" + file_name)
-        self.runOutputReceived.emit(f"Quarantined: {file_name}")
+    def scanFinished(self):
+        if self.scan_worker is None:
+            return
+
+        self.scan_worker.deleteLater()
 
     @Slot()
     def quickScan(self):
@@ -94,11 +104,14 @@ class MainWindowBackend(QObject):
         paths = [str(path) for path in paths]
         self.scan_worker = ClamAVScanner(paths)
         self.scan_worker.started.connect(self.runStarted)
+        self.scan_worker.started.connect(
+            lambda: self.runOutputReceived.emit("Scan started for " + str(paths))
+        )
         self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
         self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
+        self.scan_worker.finished.connect(self.scanFinished)
         self.scan_worker.start()
-        self.runOutputReceived.emit("Scan started for " + str(paths))
 
     @Slot()
     def fullScan(self):
@@ -106,21 +119,29 @@ class MainWindowBackend(QObject):
         paths = [str(path) for path in paths]
         self.scan_worker = ClamAVScanner(paths)
         self.scan_worker.started.connect(self.runStarted)
+        self.scan_worker.started.connect(
+            lambda: self.runOutputReceived.emit("Scan started for " + str(paths))
+        )
         self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
         self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
+        self.scan_worker.finished.connect(self.scanFinished)
         self.scan_worker.start()
-        self.runOutputReceived.emit("Scan started for " + str(paths))
 
     @Slot(QUrl)
     def customScan(self, path: QUrl):
         self.scan_worker = ClamAVScanner([path.toLocalFile()])
         self.scan_worker.started.connect(self.runStarted)
-        self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
+        self.scan_worker.started.connect(
+            lambda: self.runOutputReceived.emit(
+                "Scan started for " + str(path.toLocalFile())
+            )
+        )
+        # self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
         self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
+        self.scan_worker.finished.connect(self.scanFinished)
         self.scan_worker.start()
-        self.runOutputReceived.emit("Scan started for " + path.toLocalFile())
 
     @Slot()
     def cancelScan(self):

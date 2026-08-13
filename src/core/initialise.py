@@ -95,13 +95,23 @@ def scan_file(path: list[str]) -> subprocess.Popen | None:
 
         db_path = get_config_path() / "db"
 
-        result = subprocess.Popen(
-            ["clamscan", "--database", db_path, *path],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            bufsize=1,
-        )
+        if os.name == "nt":
+            result = subprocess.Popen(
+                ["clamscan", "-r", "--exclude-dir", str(get_config_path()), "--database", db_path, *path],
+                creationflags=subprocess.CREATE_NO_WINDOW,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+            )
+        else:
+            result = subprocess.Popen(
+                ["clamscan", "-r", "--exclude-dir", str(get_config_path()), "--database", db_path, *path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+            )
         return result
 
     except FileNotFoundError:

@@ -1,6 +1,5 @@
 import os
 import time
-from tkinter.constants import N
 
 import pyclamd
 from PySide6.QtCore import QThread, Signal
@@ -10,7 +9,6 @@ from core.initialise import init_clamd, init_freshclam, scan_file
 
 class FreshClamInit(QThread):
     outputReceived = Signal(str)
-    finished = Signal()
 
     def __init__(self) -> None:
         super().__init__()
@@ -125,30 +123,41 @@ class ClamDInit(QThread):
 
 class ClamAVScanner(QThread):
     outputReceived = Signal(str)
-    finished = Signal()
 
-    def __init__(self, paths: list[str]):
-        super().__init__()
-        self.clamscan_process = scan_file(paths)
+    def __init__(self, paths: list[str], parent=None):
+        super().__init__(parent)
+
+        self.paths = paths
+        self.clamscan_process = None
 
     def run(self):
-        self.scan()
+        process = None
+
+        try:
+            process = scan_file(self.paths)
+            self.clamscan_process = process
+
+            if process is None or process.stdout is None:
+                return
+
+            for line in process.stdout:
+                self.outputReceived.emit(line.rstrip())
+
+            return_code = process.wait()
+
+            print(
+                f"Scan finished with return code: {return_code}"
+            )
+
+        finally:
+            if process is not None and process.poll() is None:
+                    process.terminate()
+                    process.wait()
+
+            self.clamscan_process = None
 
     def stop(self):
-        if self.clamscan_process:
-            self.clamscan_process.terminate()
-            self.clamscan_process = None
-        self.finished.emit()
+        process = self.clamscan_process
 
-    def scan(self):
-        if self.clamscan_process is None or self.clamscan_process.stdout is None:
-            return
-        while line := self.clamscan_process.stdout.readline():
-            self.outputReceived.emit(line.strip())
-
-        if self.clamscan_process:
-            return_code = self.clamscan_process.wait()
-            print(f"Scan finished with return code: {return_code}")
-
-        self.finished.emit()
-        self.clamscan_process = None
+        if process is not None and process.poll() is None:
+            process.terminate()

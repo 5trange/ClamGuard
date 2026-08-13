@@ -181,11 +181,14 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 9
 
+
                 TextArea {
                     id: updateStatus
 
                     readOnly: true
                     wrapMode: TextArea.Wrap
+
+                    property int maxLength: 100
 
                     color: "#d8dee9"
                     selectionColor: "#5e81ac"
@@ -194,8 +197,15 @@ Page {
                     Connections {
                         target: mainwindow
 
-                        function onUpdateOutputReceived(output) {
-                            updateStatus.append(output);
+                        function onRunOutputReceived(output) {
+                            updateStatus.append(output)
+
+                            if (updateStatus.length > updateStatus.maxLength) {
+                                updateStatus.text =
+                                    updateStatus.text.slice(-updateStatus.maxLength)
+                            }
+
+                            console.log("Text length:", updateStatus.length)
                         }
                     }
 
