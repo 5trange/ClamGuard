@@ -6,7 +6,6 @@ from PySide6.QtQuick import QQuickWindow
 from core.paths import get_full_scan_path, get_quick_scan_path
 from models.quarantine import QuarantineItem
 from services.clamav.daemon import ClamAVScanner, FreshClamInit
-from services.quarantine_service import QuarantineService
 
 
 class MainWindowBackend(QObject):
@@ -29,7 +28,6 @@ class MainWindowBackend(QObject):
         self._engine_version = "Engine Version 1.3.0"
         self.update_worker: FreshClamInit | None = None
         self.scan_worker: ClamAVScanner | None = None
-        self.quarantine_service = QuarantineService()
         self.quarantineModel = quarantineModel
 
     @Property(str, notify=windowTitleChanged)
@@ -83,9 +81,7 @@ class MainWindowBackend(QObject):
             status = match.group("status")
             if status == "FOUND":
                 self.onVirusFound(file_path, file_name, file_type)
-                self.quarantineModel.addItem(
-                    QuarantineItem(name=file_name, type=file_type, location=file_type)
-                )
+                self.quarantineModel.addItem(file_name, file_type, file_path)
 
     @Slot(str, str, str)
     def onVirusFound(self, file_path: str, file_name: str, file_type: str):

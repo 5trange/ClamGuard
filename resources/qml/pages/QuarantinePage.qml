@@ -6,7 +6,7 @@ Page {
     id: pageQuarantine
 
     Component.onCompleted: {
-        quarantineModel.load()
+        quarantineModel.load();
     }
 
     signal quarantineGoHome
@@ -127,10 +127,15 @@ Page {
                 HorizontalHeaderView {
                     id: quarantineHeader
 
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 35
-
                     syncView: quarantineView
+                    resizableColumns: true
+
+                    model: [
+                        "Name",
+                        "Type",
+                        "Original Location",
+                        "Date",
+                    ]
 
                     delegate: Rectangle {
                         implicitHeight: 35
@@ -142,7 +147,7 @@ Page {
                             anchors.fill: parent
                             anchors.leftMargin: 8
 
-                            text: model.display
+                            text: modelData
 
                             color: "#81a1c1"
                             font.bold: true
@@ -165,37 +170,20 @@ Page {
 
                     model: quarantineModel
 
-                    property var normalColumnWidths: [180, 220, 400, 180]
-
-                    property var expandedColumnWidths: [280, 350, 600, 250]
-
                     columnSpacing: 1
                     rowSpacing: 1
 
                     boundsBehavior: Flickable.StopAtBounds
 
-                    columnWidthProvider: function (column) {
-                        switch (column) {
-                        case 0:
-                            return quarantineView.width * 0.20;
-                        case 1:
-                            return quarantineView.width * 0.25;
-                        case 2:
-                            return quarantineView.width * 0.35;
-                        case 3:
-                            return quarantineView.width * 0.20;
-                        default:
-                            return 100;
-                        }
-                    }
-
-                    rowHeightProvider: function (row) {
-                        return 40;
-                    }
-
                     delegate: Rectangle {
+                        id: cell
+
                         implicitWidth: 200
                         implicitHeight: 40
+
+                        required property int column
+                        required property int row
+                        required property string text
 
                         color: "#2e3440"
                         border.width: 1
@@ -206,7 +194,7 @@ Page {
                             anchors.fill: parent
                             anchors.margins: 8
 
-                            text: display
+                            text: cell.text
                             color: "#d8dee9"
 
                             verticalAlignment: Text.AlignVCenter
@@ -218,21 +206,13 @@ Page {
 
                             anchors.fill: parent
                             hoverEnabled: true
-
-                            onEntered: {
-                                quarantineView.hoveredColumn = column;
-                                quarantineView.forceLayout();
-                            }
-
-                            onExited: {
-                                quarantineView.hoveredColumn = -1;
-                                quarantineView.forceLayout();
-                            }
                         }
 
-                        ToolTip.visible: mouseArea.containsMouse && cellText.truncated
-                        ToolTip.text: display
-                        ToolTip.delay: 500
+                        ToolTip {
+                            visible: mouseArea.containsMouse && cellText.truncated
+                            text: cell.text
+                            delay: 500
+                        }
                     }
 
                     ScrollBar.vertical: ScrollBar {}

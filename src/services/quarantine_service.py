@@ -11,15 +11,15 @@ class QuarantineService:
         self.quarantine_dir = config_path / "quarantine"
         self.quarantine_dir.mkdir(parents=True, exist_ok=True)
 
-    def quarantine(self, file_src: str):
-        file_path = Path(file_src).resolve()
+    def quarantine(self, file_raw: str) -> str:
+        file_path = Path(file_raw).resolve()
 
         if not file_path.is_file():
             raise FileNotFoundError(file_path)
-
-        self.quarantine_dir.mkdir(parents=True, exist_ok=True)
 
         quarantine_name = f"{secrets.token_hex(32)}.quarantine"
         destination = self.quarantine_dir / quarantine_name
 
         shutil.move(str(file_path), str(destination))
+
+        return quarantine_name

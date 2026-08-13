@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from PySide6.QtCore import (
     QAbstractTableModel,
+    QByteArray,
     QModelIndex,
     QPersistentModelIndex,
     Qt,
@@ -11,6 +12,7 @@ from PySide6.QtCore import (
 )
 
 from core.paths import get_config_path
+from services.quarantine_service import QuarantineService
 
 _EMPTY_INDEX = QModelIndex()
 
@@ -19,6 +21,7 @@ config_path = get_config_path()
 
 @dataclass
 class QuarantineItem:
+    token: str
     name: str
     type: str
     location: str
@@ -26,8 +29,11 @@ class QuarantineItem:
 
 
 class QuarantineModel(QAbstractTableModel):
+    TextRole = Qt.ItemDataRole.UserRole + 1
+
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.quarantine_service = QuarantineService()
         self._items: list[QuarantineItem] = []
         self._headers = [
             "Name",
@@ -54,7 +60,7 @@ class QuarantineModel(QAbstractTableModel):
         if not index.isValid():
             return None
 
-        if role != Qt.ItemDataRole.DisplayRole:
+        if role != Qt.ItemDataRole.DisplayRole and role != self.TextRole:
             return
 
         item = self._items[index.row()]
@@ -64,7 +70,11 @@ class QuarantineModel(QAbstractTableModel):
             item.location,
             item.date.isoformat(),
         ]
-        return values[index.column()]
+
+        if role in (Qt.ItemDataRole.DisplayRole, self.TextRole):
+            return values[index.column()]
+
+        return None
 
     def headerData(
         self,
@@ -80,6 +90,11 @@ class QuarantineModel(QAbstractTableModel):
 
         return section + 1
 
+    def roleNames(self):
+        return {
+            self.TextRole: QByteArray(b"text"),
+        }
+
     @Slot()
     def load(self):
         if not self.file_path.exists():
@@ -90,6 +105,7 @@ class QuarantineModel(QAbstractTableModel):
             with self.file_path.open("r", encoding="utf-8") as f:
                 self._items = [
                     QuarantineItem(
+                        token=item["token"],
                         name=item["name"],
                         type=item["type"],
                         location=item["location"],
@@ -105,6 +121,7 @@ class QuarantineModel(QAbstractTableModel):
     def save(self):
         data = [
             {
+                "token": item.token,
                 "name": item.name,
                 "type": item.type,
                 "location": item.location,
@@ -115,7 +132,7 @@ class QuarantineModel(QAbstractTableModel):
         with self.file_path.open("w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
 
-    def addItem(self, item: QuarantineItem):
+    def addItem(self, file_name: str, file_type: str, file_path: str):
         row = len(self._items)
 
         self.beginInsertRows(
@@ -124,6 +141,19 @@ class QuarantineModel(QAbstractTableModel):
             row,
         )
 
-        self._items.append(item)
+        try:
+            token = self.quarantine_service.quarantine(file_path + "/" + file_name)
+        except Exception as e:
+            print(f"Failed to quarantine file: {e}")
+            return
+
+        self._items.append(
+            QuarantineItem(
+                token=token,
+                name=file_name,
+                type=file_type,
+                location=file_path,
+            )
+        )
         self.endInsertRows()
         self.save()
