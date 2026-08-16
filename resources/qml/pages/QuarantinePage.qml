@@ -129,6 +129,7 @@ Page {
 
                     syncView: quarantineView
                     resizableColumns: true
+                    visible: quarantineModel.count > 0
 
                     model: [
                         "Name",
@@ -138,6 +139,7 @@ Page {
                     ]
 
                     delegate: Rectangle {
+                        implicitWidth: 100
                         implicitHeight: 35
 
                         color: "#3b4252"
@@ -158,65 +160,96 @@ Page {
                     }
                 }
 
-                TableView {
-                    id: quarantineView
-
-                    property int hoveredColumn: -1
-
+                Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
-                    clip: true
+                    TableView {
+                        id: quarantineView
 
-                    model: quarantineModel
+                        property int hoveredColumn: -1
 
-                    columnSpacing: 1
-                    rowSpacing: 1
+                        anchors.fill: parent
+                        visible: rows > 0
 
-                    boundsBehavior: Flickable.StopAtBounds
+                        clip: true
 
-                    delegate: Rectangle {
-                        id: cell
+                        model: quarantineModel
 
-                        implicitWidth: 200
-                        implicitHeight: 40
+                        columnSpacing: 1
+                        rowSpacing: 1
 
-                        required property int column
-                        required property int row
-                        required property string text
+                        boundsBehavior: Flickable.StopAtBounds
 
-                        color: "#2e3440"
-                        border.width: 1
-                        border.color: "#434c5e"
+                        delegate: Rectangle {
+                            id: cell
 
-                        Text {
-                            id: cellText
-                            anchors.fill: parent
-                            anchors.margins: 8
+                            implicitWidth: 200
+                            implicitHeight: 40
 
-                            text: cell.text
-                            color: "#d8dee9"
+                            required property int column
+                            required property int row
+                            required property string text
 
-                            verticalAlignment: Text.AlignVCenter
-                            elide: Text.ElideRight
+                            color: "#2e3440"
+                            border.width: 1
+                            border.color: "#434c5e"
+
+                            Text {
+                                id: cellText
+                                anchors.fill: parent
+                                anchors.margins: 8
+
+                                text: cell.text
+                                color: "#d8dee9"
+
+                                verticalAlignment: Text.AlignVCenter
+                                elide: Text.ElideRight
+                            }
+
+                            MouseArea {
+                                id: mouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                            }
+
+                            ToolTip {
+                                visible: mouseArea.containsMouse && cellText.truncated
+                                text: cell.text
+                                delay: 500
+                            }
                         }
 
-                        MouseArea {
-                            id: mouseArea
-
-                            anchors.fill: parent
-                            hoverEnabled: true
-                        }
-
-                        ToolTip {
-                            visible: mouseArea.containsMouse && cellText.truncated
-                            text: cell.text
-                            delay: 500
-                        }
+                        ScrollBar.vertical: ScrollBar {}
+                        ScrollBar.horizontal: ScrollBar {}
                     }
 
-                    ScrollBar.vertical: ScrollBar {}
-                    ScrollBar.horizontal: ScrollBar {}
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "#2e3440"
+                        visible: quarantineView.rows === 0
+
+                        Column {
+                            anchors.centerIn: parent
+                            spacing: 12
+
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("No Virus Found")
+                                color: "#81a1c1"
+                                font.pixelSize: 22
+                                font.bold: true
+                            }
+
+                            Text {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("Your quarantine folder is empty")
+                                color: "#d8dee9"
+                                font.pixelSize: 14
+                                opacity: 0.6
+                            }
+                        }
+                    }
                 }
             }
         }

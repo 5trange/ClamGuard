@@ -1,20 +1,21 @@
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 
 from PySide6.QtCore import (
+    Property,
     QAbstractTableModel,
     QByteArray,
     QModelIndex,
     QPersistentModelIndex,
     Qt,
+    Signal,
     Slot,
 )
 
 from clamguard.core.paths import get_config_path
 from clamguard.services.quarantine_service import QuarantineService
-
-_EMPTY_INDEX = QModelIndex()
 
 config_path = get_config_path()
 
@@ -30,80 +31,86 @@ class QuarantineItem:
 
 class QuarantineModel(QAbstractTableModel):
     TextRole = Qt.ItemDataRole.UserRole + 1
+    rowsChanged = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.quarantine_service = QuarantineService()
+        self._quarantine_service = QuarantineService()
         self._items: list[QuarantineItem] = []
-        self._headers = [
-            "Name",
-            "Type",
-            "Original Location",
-            "Date",
-        ]
-        self.data_path = config_path / "data"
-        self.data_path.mkdir(parents=True, exist_ok=True)
-        self.file_path = self.data_path / "records.json"
+        self._headers = ["Name", "Type", "Original Location", "Date"]
+        self._data_path = config_path / "data"
+        self._data_path.mkdir(parents=True, exist_ok=True)
+        self._file_path = self._data_path / "records.json"
         self.load()
 
-    def rowCount(self, parent: QModelIndex | QPersistentModelIndex = _EMPTY_INDEX):
+    def rowCount(
+        self, parent: QModelIndex | QPersistentModelIndex = QModelIndex()
+    ) -> int:
+        if parent.isValid():
+            return 0
         return len(self._items)
 
-    def columnCount(self, parent: QModelIndex | QPersistentModelIndex = _EMPTY_INDEX):
+    def columnCount(
+        self, parent: QModelIndex | QPersistentModelIndex = QModelIndex()
+    ) -> int:
+        if parent.isValid():
+            return 0
         return len(self._headers)
+
 
     def data(
         self,
         index: QModelIndex | QPersistentModelIndex,
         role: int = Qt.ItemDataRole.DisplayRole,
-    ):
-
+    ) -> str | None:
         if not index.isValid():
             return None
-
-        if role != Qt.ItemDataRole.DisplayRole and role != self.TextRole:
-            return
+        if role not in (Qt.ItemDataRole.DisplayRole, self.TextRole):
+            return None
 
         item = self._items[index.row()]
-        values = [
-            item.name,
-            item.type,
-            item.location,
-            item.date.isoformat(),
-        ]
+        col = index.column()
 
-        if role in (Qt.ItemDataRole.DisplayRole, self.TextRole):
-            return values[index.column()]
-
-        return None
+        match col:
+            case 0:
+                return item.name
+            case 1:
+                return item.type
+            case 2:
+                return item.location
+            case 3:
+                return item.date.strftime("%d %b %Y, %H:%M:%S")
+            case _:
+                return None
 
     def headerData(
         self,
-        section,
-        orientation,
+        section: int,
+        orientation: Qt.Orientation,
         role: int = Qt.ItemDataRole.DisplayRole,
-    ):
+    ) -> str | int | None:
         if role != Qt.ItemDataRole.DisplayRole:
             return None
-
         if orientation == Qt.Orientation.Horizontal:
             return self._headers[section]
-
         return section + 1
 
-    def roleNames(self):
-        return {
-            self.TextRole: QByteArray(b"text"),
-        }
+    def roleNames(self) -> dict[int, QByteArray]:
+        return {self.TextRole: QByteArray(b"text")}
+
+    @Property(int, notify=rowsChanged)
+    def count(self) -> int:
+        return self.rowCount()
 
     @Slot()
-    def load(self):
-        if not self.file_path.exists():
-            return
+    def load(self) -> None:
+        self.beginResetModel()
+        self._items = []
 
-        try:
-            self.beginResetModel()
-            with self.file_path.open("r", encoding="utf-8") as f:
+        if self._file_path.exists():
+            try:
+                with self._file_path.open("r", encoding="utf-8") as f:
+                    raw_data = json.load(f)
                 self._items = [
                     QuarantineItem(
                         token=item["token"],
@@ -112,14 +119,15 @@ class QuarantineModel(QAbstractTableModel):
                         location=item["location"],
                         date=datetime.fromisoformat(item["date"]),
                     )
-                    for item in json.loads(f.read())
+                    for item in raw_data
                 ]
-            self.endResetModel()
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            print(f"Failed to load quarantine data: {e}")
-            self._items = []
+            except (json.JSONDecodeError, KeyError, ValueError) as e:
+                print(f"Failed to load quarantine data: {e}")
 
-    def save(self):
+        self.endResetModel()
+        self.rowsChanged.emit()
+
+    def save(self) -> None:
         data = [
             {
                 "token": item.token,
@@ -130,24 +138,24 @@ class QuarantineModel(QAbstractTableModel):
             }
             for item in self._items
         ]
-        with self.file_path.open("w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4)
+        try:
+            with self._file_path.open("w", encoding="utf-8") as f:
+                json.dump(data, f, indent=4)
+        except OSError as e:
+            print(f"Failed to save quarantine data: {e}")
 
-    def addItem(self, file_name: str, file_type: str, file_path: str):
-        row = len(self._items)
-
-        self.beginInsertRows(
-            QModelIndex(),
-            row,
-            row,
-        )
+    @Slot(str, str, str)
+    def addItem(self, file_name: str, file_type: str, file_path: str) -> None:
+        full_path = Path(file_path) / file_name
 
         try:
-            token = self.quarantine_service.quarantine(file_path + "/" + file_name)
+            token = self._quarantine_service.quarantine(str(full_path))
         except Exception as e:
             print(f"Failed to quarantine file: {e}")
             return
 
+        row = len(self._items)
+        self.beginInsertRows(QModelIndex(), row, row)
         self._items.append(
             QuarantineItem(
                 token=token,
@@ -157,4 +165,5 @@ class QuarantineModel(QAbstractTableModel):
             )
         )
         self.endInsertRows()
+        self.rowsChanged.emit()
         self.save()

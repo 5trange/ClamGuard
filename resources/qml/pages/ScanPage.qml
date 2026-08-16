@@ -197,7 +197,7 @@ Page {
                     id: folderDialog
                     title: "Select a Folder"
                     onAccepted: {
-                        scanStatus.append("Scanning... " + selectedFolder + "\n");
+                        scanLog.appendLimited("Scanning... " + selectedFolder + "\n");
                         mainwindow.customScan(selectedFolder);
                     }
                 }
