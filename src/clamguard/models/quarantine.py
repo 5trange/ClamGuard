@@ -57,7 +57,6 @@ class QuarantineModel(QAbstractTableModel):
             return 0
         return len(self._headers)
 
-
     def data(
         self,
         index: QModelIndex | QPersistentModelIndex,
@@ -79,7 +78,22 @@ class QuarantineModel(QAbstractTableModel):
             case 2:
                 return item.location
             case 3:
-                return item.date.strftime("%d %b %Y, %H:%M:%S")
+                from datetime import datetime, timezone
+
+                now = datetime.now(timezone.utc)
+                delta = now - item.date
+
+                if delta.days > 365:
+                    return item.date.strftime("%d %b %Y")
+                elif delta.days > 0:
+                    return f"{delta.days}d ago"
+                elif delta.seconds > 3600:
+                    return f"{delta.seconds // 3600}h ago"
+                elif delta.seconds > 60:
+                    return f"{delta.seconds // 60}m ago"
+                else:
+                    return "Just now"
+
             case _:
                 return None
 

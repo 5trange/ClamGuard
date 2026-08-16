@@ -135,7 +135,7 @@ Page {
                         "Name",
                         "Type",
                         "Original Location",
-                        "Date",
+                        "Quarantined",
                     ]
 
                     delegate: Rectangle {
