@@ -2,23 +2,29 @@ import QtQuick
 import QtQuick.Controls
 
 ApplicationWindow {
-    id: splashScreenwindow
+    id: root
 
     width: 680
     height: 400
     visible: true
+    minimumWidth: 680
+    minimumHeight: 400
+    maximumWidth: 680
+    maximumHeight: 400
     title: "Starting ClamGuard"
+
+    flags: Qt.FramelessWindowHint
 
     Connections {
         target: splashscreen
 
         function onStartupFinished() {
-            splashScreenwindow.close()
+            root.close();
         }
     }
 
     Component.onCompleted: {
-      splashscreen.start()
+        splashscreen.start();
     }
 
     Rectangle {

@@ -1,65 +1,38 @@
 import os
 import time
 
-from PySide6.QtCore import QThread, Signal
-from core.initialise import init_clamd, init_freshclam
-
 import pyclamd
+from PySide6.QtCore import QThread, Signal
+
+from core.initialise import init_clamd, init_freshclam, scan_file
 
 
 class FreshClamInit(QThread):
-    status = Signal(dict)
+    outputReceived = Signal(str)
 
     def __init__(self) -> None:
         super().__init__()
+        self.freshclam_process = None
+        self._stop_requested = False
+
+    def stop_run(self):
+        self._stop_requested = True
 
     def run(self):
-        self.status.emit(
-            {
-                "success": False,
-                "end": False,
-                "message": "Updating ClamAV database with Freshclam",
-                "progress": 0,
-            }
-        )
         self.freshclam_process = init_freshclam()
-        self.status.emit(
-            {
-                "success": False,
-                "end": False,
-                "message": "Updating ClamAV database with Freshclam",
-                "progress": 10,
-            }
-        )
-        if self.freshclam_process:
-            return_code = self.freshclam_process.wait()
-            if return_code == 0:
-                self.status.emit(
-                    {
-                        "success": True,
-                        "end": True,
-                        "message": "Freshclam update completed successfully.",
-                        "progress": 20,
-                    }
-                )
-            else:
-                self.status.emit(
-                    {
-                        "success": False,
-                        "end": True,
-                        "message": f"Freshclam update failed with return code {return_code}.",
-                        "progress": 0,
-                    }
-                )
-        else:
-            self.status.emit(
-                {
-                    "success": False,
-                    "end": True,
-                    "message": "Freshclam update failed with return code -1.",
-                    "progress": 0,
-                }
-            )
+
+        while not self._stop_requested:
+            if self.freshclam_process is None or self.freshclam_process.stdout is None:
+                return
+            line = self.freshclam_process.stdout.readline()
+            if not line:
+                break
+            self.outputReceived.emit(line.strip())
+
+        if self.freshclam_process and self.freshclam_process.poll() is None:
+            self.freshclam_process.terminate()
+
+        self.finished.emit()
 
 
 # ClamAV in window uses tcp to access the details
@@ -73,6 +46,7 @@ class ClamDInit(QThread):
         self.counter = 1
         self.max_retries = 10
         self.handler = None
+        self.clamd_process = None
 
         if os.name == "nt":
             self.host = "127.0.0.1"
@@ -122,9 +96,8 @@ class ClamDInit(QThread):
                         }
                     )
                     return
-
-            except Exception as e:
-                print(f"Connection failed: {e}")
+            except pyclamd.ConnectionError as e:
+                print(type(e), e)
             finally:
                 print("ClamD run ended")
 
@@ -146,3 +119,45 @@ class ClamDInit(QThread):
                 "progress": 0,
             }
         )
+
+
+class ClamAVScanner(QThread):
+    outputReceived = Signal(str)
+
+    def __init__(self, paths: list[str], parent=None):
+        super().__init__(parent)
+
+        self.paths = paths
+        self.clamscan_process = None
+
+    def run(self):
+        process = None
+
+        try:
+            process = scan_file(self.paths)
+            self.clamscan_process = process
+
+            if process is None or process.stdout is None:
+                return
+
+            for line in process.stdout:
+                self.outputReceived.emit(line.rstrip())
+
+            return_code = process.wait()
+
+            print(
+                f"Scan finished with return code: {return_code}"
+            )
+
+        finally:
+            if process is not None and process.poll() is None:
+                    process.terminate()
+                    process.wait()
+
+            self.clamscan_process = None
+
+    def stop(self):
+        process = self.clamscan_process
+
+        if process is not None and process.poll() is None:
+            process.terminate()

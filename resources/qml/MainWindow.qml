@@ -6,15 +6,17 @@ import "pages"
 ApplicationWindow {
     id: root
 
-    width: mainwindow.windowWidth
-    height: mainwindow.windowHeight
+    width: mainwindow ? mainwindow.windowWidth : 800
+    height: mainwindow ? mainwindow.windowHeight : 600
     minimumWidth: 800
     minimumHeight: 600
     maximumWidth: 800
     maximumHeight: 600
 
+    flags: Qt.FramelessWindowHint
+
     visible: true
-    title: mainwindow.windowTitle
+    title: mainwindow ? mainwindow.windowTitle : ""
 
     color: "#2e3440"
 
@@ -32,7 +34,7 @@ ApplicationWindow {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
                 onPressed: {
-                    root.startSystemMove()
+                    root.startSystemMove();
                 }
                 z: -1
             }
@@ -61,7 +63,9 @@ ApplicationWindow {
                     color: mouse.containsMouse ? "#A3BE8C" : "#EBCB8B"
 
                     Behavior on color {
-                        ColorAnimation { duration: 120 }
+                        ColorAnimation {
+                            duration: 120
+                        }
                     }
 
                     MouseArea {
@@ -83,7 +87,9 @@ ApplicationWindow {
                     color: closeMouse.containsMouse ? "#BF616A" : "#D08770"
 
                     Behavior on color {
-                        ColorAnimation { duration: 120 }
+                        ColorAnimation {
+                            duration: 120
+                        }
                     }
 
                     MouseArea {
@@ -92,7 +98,7 @@ ApplicationWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
 
-                        onClicked: Qt.quit()
+                        onClicked: mainwindow.hideToTray(root)
                     }
                 }
             }
@@ -103,11 +109,26 @@ ApplicationWindow {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            HomePage {}
-            ScanPage {}
-            UpdatePage {}
-            AboutPage {}
-            QuarantinePage {}
+            HomePage {
+                id: home
+
+                onOpenScanPage: pages.currentIndex = 1
+                onOpenUpdatePage: pages.currentIndex = 2
+                onOpenAboutPage: pages.currentIndex = 3
+                onOpenQuarantinePage: pages.currentIndex = 4
+            }
+            ScanPage {
+                onScanGoToHome: pages.currentIndex = 0
+            }
+            UpdatePage {
+                onUpdateGoToHome: pages.currentIndex = 0
+            }
+            AboutPage {
+                onAboutGoHome: pages.currentIndex = 0
+            }
+            QuarantinePage {
+                onQuarantineGoHome: pages.currentIndex = 0
+            }
         }
 
         Rectangle {
@@ -119,7 +140,7 @@ ApplicationWindow {
             Label {
                 anchors.centerIn: parent
 
-                text: "Engine Version"
+                text: mainwindow ? mainwindow.engineVersion : ""
                 color: "#eceff4"
             }
         }

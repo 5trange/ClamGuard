@@ -5,6 +5,12 @@ import QtQuick.Layouts
 Page {
     id: pageQuarantine
 
+    Component.onCompleted: {
+        quarantineModel.load();
+    }
+
+    signal quarantineGoHome
+
     background: Rectangle {
         color: "transparent"
     }
@@ -13,9 +19,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        //
-        // Header
-        //
         Rectangle {
             id: frameQuarantineNav
 
@@ -48,6 +51,8 @@ Page {
                     border.width: quarantineHomeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
+
+                onClicked: pageQuarantine.quarantineGoHome()
             }
 
             Image {
@@ -64,9 +69,6 @@ Page {
             }
         }
 
-        //
-        // Content
-        //
         Rectangle {
             id: frameQuarantineContent
 
@@ -117,15 +119,56 @@ Page {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
+
+                        onClicked: quarantineModel.load()
+                    }
+                }
+
+                HorizontalHeaderView {
+                    id: quarantineHeader
+
+                    syncView: quarantineView
+                    resizableColumns: true
+
+                    model: [
+                        "Name",
+                        "Type",
+                        "Original Location",
+                        "Date",
+                    ]
+
+                    delegate: Rectangle {
+                        implicitHeight: 35
+
+                        color: "#3b4252"
+                        border.color: "#434c5e"
+
+                        Text {
+                            anchors.fill: parent
+                            anchors.leftMargin: 8
+
+                            text: modelData
+
+                            color: "#81a1c1"
+                            font.bold: true
+
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
                     }
                 }
 
                 TableView {
                     id: quarantineView
 
+                    property int hoveredColumn: -1
+
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+
                     clip: true
+
+                    model: quarantineModel
 
                     columnSpacing: 1
                     rowSpacing: 1
@@ -133,18 +176,42 @@ Page {
                     boundsBehavior: Flickable.StopAtBounds
 
                     delegate: Rectangle {
-                        implicitHeight: 34
-                        color: styleData.selected ? "#5e81ac" : "#2e3440"
+                        id: cell
+
+                        implicitWidth: 200
+                        implicitHeight: 40
+
+                        required property int column
+                        required property int row
+                        required property string text
+
+                        color: "#2e3440"
+                        border.width: 1
                         border.color: "#434c5e"
 
                         Text {
+                            id: cellText
                             anchors.fill: parent
                             anchors.margins: 8
 
-                            text: display
+                            text: cell.text
                             color: "#d8dee9"
+
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
+                        }
+
+                        MouseArea {
+                            id: mouseArea
+
+                            anchors.fill: parent
+                            hoverEnabled: true
+                        }
+
+                        ToolTip {
+                            visible: mouseArea.containsMouse && cellText.truncated
+                            text: cell.text
+                            delay: 500
                         }
                     }
 

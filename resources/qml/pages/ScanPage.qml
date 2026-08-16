@@ -1,9 +1,33 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 
 Page {
     id: pageScan
+
+    signal scanGoToHome
+
+    Connections {
+        target: mainwindow
+
+        function onRunStarted() {
+            scanStatus.text = "";
+            homeButton.enabled = false;
+            quickscanButton.enabled = false;
+            fullscanButton.enabled = false;
+            customscanButton.enabled = false;
+            cancelscanButton.enabled = true;
+        }
+
+        function onRunFinished() {
+            homeButton.enabled = true;
+            quickscanButton.enabled = true;
+            fullscanButton.enabled = true;
+            customscanButton.enabled = true;
+            cancelscanButton.enabled = false;
+        }
+    }
 
     background: Rectangle {
         color: "transparent"
@@ -13,9 +37,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        //
-        // Header
-        //
         Rectangle {
             id: frameHome
 
@@ -51,6 +72,7 @@ Page {
                     border.width: homeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
+                onClicked: pageScan.scanGoToHome()
             }
 
             Image {
@@ -105,6 +127,10 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                     font: quickscanButton.font
                 }
+
+                onClicked: {
+                    mainwindow.quickScan();
+                }
             }
 
             Button {
@@ -134,6 +160,7 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                     font: fullscanButton.font
                 }
+                onClicked: mainwindow.fullScan()
             }
 
             Button {
@@ -162,6 +189,17 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font: customscanButton.font
+                }
+
+                onClicked: folderDialog.open()
+
+                FolderDialog {
+                    id: folderDialog
+                    title: "Select a Folder"
+                    onAccepted: {
+                        scanStatus.append("Scanning... " + selectedFolder + "\n");
+                        mainwindow.customScan(selectedFolder);
+                    }
                 }
             }
 
@@ -192,6 +230,8 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                     font: cancelscanButton.font
                 }
+
+                onClicked: mainwindow.cancelScan()
             }
         }
 
@@ -223,6 +263,14 @@ Page {
                     selectedTextColor: "white"
 
                     text: ""
+
+                    Connections {
+                        target: mainwindow
+
+                        function onRunOutputReceived(output) {
+                            scanStatus.append(output);
+                        }
+                    }
 
                     background: Rectangle {
                         color: "#2e3440"

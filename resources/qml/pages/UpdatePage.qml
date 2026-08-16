@@ -5,6 +5,25 @@ import QtQuick.Layouts
 Page {
     id: pageUpdate
 
+    signal updateGoToHome
+
+    Connections {
+        target: mainwindow
+
+        function onUpdateStarted() {
+            updateStatus.text = "";
+            updatehomeButton.enabled = false;
+            checkUpdate.enabled = false;
+            cancelUpdate.enabled = true;
+        }
+
+        function onUpdateFinished() {
+            updatehomeButton.enabled = true;
+            checkUpdate.enabled = true;
+            cancelUpdate.enabled = false;
+        }
+    }
+
     background: Rectangle {
         color: "transparent"
     }
@@ -13,9 +32,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        //
-        // Header
-        //
         Rectangle {
             id: frameGoHome
 
@@ -26,6 +42,8 @@ Page {
 
             Button {
                 id: updatehomeButton
+
+                enabled: true
 
                 anchors.left: parent.left
                 anchors.leftMargin: 9
@@ -48,6 +66,8 @@ Page {
                     border.width: updatehomeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
+
+                onClicked: pageUpdate.updateGoToHome()
             }
 
             Image {
@@ -64,9 +84,6 @@ Page {
             }
         }
 
-        //
-        // Update Buttons
-        //
         RowLayout {
             id: frameUpdateButtons
 
@@ -77,6 +94,7 @@ Page {
 
             Button {
                 id: checkUpdate
+                enabled: true
 
                 Layout.preferredWidth: 182
                 Layout.preferredHeight: 120
@@ -101,6 +119,11 @@ Page {
                     font: checkUpdate.font
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    wrapMode: Text.WordWrap
+                }
+
+                onClicked: {
+                    mainwindow.checkForUpdates();
                 }
             }
 
@@ -113,6 +136,8 @@ Page {
 
                 Layout.preferredWidth: 182
                 Layout.preferredHeight: 120
+
+                enabled: false
 
                 text: "Cancel Update"
 
@@ -135,12 +160,13 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
+
+                onClicked: {
+                    mainwindow.cancelUpdate();
+                }
             }
         }
 
-        //
-        // Update Log
-        //
         Rectangle {
             id: frameUpdateStatus
 
@@ -155,15 +181,33 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 9
 
+
                 TextArea {
                     id: updateStatus
 
                     readOnly: true
                     wrapMode: TextArea.Wrap
 
+                    property int maxLength: 100
+
                     color: "#d8dee9"
                     selectionColor: "#5e81ac"
                     selectedTextColor: "white"
+
+                    Connections {
+                        target: mainwindow
+
+                        function onRunOutputReceived(output) {
+                            updateStatus.append(output)
+
+                            if (updateStatus.length > updateStatus.maxLength) {
+                                updateStatus.text =
+                                    updateStatus.text.slice(-updateStatus.maxLength)
+                            }
+
+                            console.log("Text length:", updateStatus.length)
+                        }
+                    }
 
                     background: Rectangle {
                         color: "#2e3440"

@@ -1,5 +1,7 @@
-from PySide6.QtCore import QObject, Signal, Property, Slot
-from services.clamav.daemon import FreshClamInit, ClamDInit
+from PySide6.QtCore import Property, QObject, Signal, Slot
+
+from services.clamav.daemon import ClamDInit, FreshClamInit
+
 
 class SplashScreenBackend(QObject):
     progressChanged = Signal()
@@ -11,6 +13,7 @@ class SplashScreenBackend(QObject):
         super().__init__()
         self._progress = 0
         self._status = "Starting modules.."
+        self.clamav_thread = None
 
     def getProgress(self):
         return self._progress
@@ -43,27 +46,16 @@ class SplashScreenBackend(QObject):
     def progress(self):
         return self._progress
 
-    @Slot(dict)
-    def on_freshclam_status(self, message):
-        if not message["end"]:
-            return
-
-        # Don't continue if FreshClam failed
-        if not message["success"]:
-            self.setProgress(0)
-            self.fatalError.emit()
-            return
-
-        self.clamav_thread = ClamDInit()
-        self.clamav_thread.status.connect(self.on_change)
-        self.clamav_thread.finished.connect(lambda: print("ClamD thread finished"))
-        self.clamav_thread.start()
+    @Slot()
+    def on_freshclam_finished(self):
+        if not self.clamav_thread:
+            self.clamav_thread = ClamDInit()
+            self.clamav_thread.status.connect(self.on_change)
+            self.clamav_thread.finished.connect(lambda: print("ClamD thread finished"))
+            self.clamav_thread.start()
 
     @Slot()
     def start(self):
         self.freshclam_thread = FreshClamInit()
-        self.freshclam_thread.status.connect(self.on_freshclam_status)
-        self.freshclam_thread.finished.connect(
-            lambda: print("FreshClam thread finished")
-        )
+        self.freshclam_thread.finished.connect(self.on_freshclam_finished)
         self.freshclam_thread.start()

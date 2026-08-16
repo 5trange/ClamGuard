@@ -1,42 +1,58 @@
 import os
 import sys
-from pathlib import Path
 
-from PySide6.QtGui import QIcon
 from PySide6.QtCore import QUrl
-from PySide6.QtQml import QQmlApplicationEngine, qmlRegisterSingletonInstance
-
+from PySide6.QtGui import QIcon
+from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtWidgets import QApplication
 
+import core.resources_rc
 from core.initialise import initialise_config_folder
-from ui import show_main_window
+from core.instance import InstanceManager
+from models.quarantine import QuarantineModel
+from ui import create_main_window
 from ui.backend.mainwindow import MainWindowBackend
 from ui.backend.splashscreen import SplashScreenBackend
 
-import core.resources_rc
+instance_manager = InstanceManager()
+
+
+def set_app_id(app_id: str):
+    import ctypes
+
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 
 
 def main():
-    if os.name == "nt":
-        import ctypes
 
-        myappid = "com.clamguard.app"
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    app = QApplication(sys.argv)
+    if os.name == "nt":
+        set_app_id("com.clamguard.app")
+    elif os.name == "linux":
+        app.setDesktopFileName("clamguard")
 
     initialise_config_folder()
 
-    app = QApplication(sys.argv)
+    if not instance_manager.start_server():
+        print("Failed to start server. Exiting.")
+        print(f"already running: {instance_manager.is_running()}")
+        sys.exit(0)
 
     app.setWindowIcon(QIcon("qrc:/img/clamguard.ico"))
     engine = QQmlApplicationEngine()
 
-    splashscreen_backend = SplashScreenBackend()
-    engine.rootContext().setContextProperty("splashscreen", splashscreen_backend)
-    splashscreen_backend.fatalError.connect(engine.quit)
-    splashscreen_backend.startupFinished.connect(lambda: show_main_window(engine))
+    quarantineModel = QuarantineModel()
 
-    main_window_backend = MainWindowBackend()
+    splashscreen_backend = SplashScreenBackend()
+    main_window_backend = MainWindowBackend(quarantineModel)
+    splashscreen_backend.fatalError.connect(engine.quit)
+    splashscreen_backend.startupFinished.connect(
+        lambda: create_main_window(app, engine)
+    )
+
+    engine.rootContext().setContextProperty("splashscreen", splashscreen_backend)
     engine.rootContext().setContextProperty("mainwindow", main_window_backend)
+    engine.rootContext().setContextProperty("quarantineModel", quarantineModel)
 
     engine.load(QUrl("qrc:/qml/SplashScreen.qml"))
 

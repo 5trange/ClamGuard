@@ -5,6 +5,8 @@ import QtQuick.Layouts
 Page {
     id: pageAbout
 
+    signal aboutGoHome
+
     background: Rectangle {
         color: "transparent"
     }
@@ -13,9 +15,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        //
-        // Header
-        //
         Rectangle {
             id: frameAboutNav
 
@@ -48,6 +47,8 @@ Page {
                     border.width: aboutHomeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
+
+                onClicked: pageAbout.aboutGoHome()
             }
 
             Image {
@@ -64,9 +65,6 @@ Page {
             }
         }
 
-        //
-        // About Card
-        //
         Rectangle {
             id: aboutFrame
 
@@ -81,7 +79,7 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 20
 
-                ColumnLayout {
+                Column {
                     width: parent.width
                     spacing: 18
 
@@ -114,7 +112,7 @@ Page {
 
                         Layout.alignment: Qt.AlignHCenter
 
-                        text: qsTr("Version 1.0.0")
+                        text: qsTr("Version 1.3.0")
                         color: "#d8dee9"
 
                         font.pixelSize: 16
@@ -128,14 +126,11 @@ Page {
 
                     Text {
                         id: description
+                        width: parent.width
 
-                        Layout.fillWidth: true
+                        Layout.fillWidth: false
 
-                        text:
-                            qsTr("ClamGuard is a modern graphical frontend for ClamAV. "
-                                 + "It provides an easy way to scan files, update virus "
-                                 + "definitions, and manage quarantined files through a "
-                                 + "simple Qt Quick interface.")
+                        text: qsTr("ClamGuard is a modern graphical frontend for ClamAV. " + "It provides an easy way to scan files, update virus " + "definitions, and manage quarantined files through a " + "simple Qt Quick interface.")
 
                         wrapMode: Text.WordWrap
 
@@ -164,7 +159,7 @@ Page {
 
                         Label {
                             id: developerLabel
-                            text: qsTr("Bilal Jafar")
+                            text: qsTr("Bilal Jafar, Adith K Murali, Vinayakan S")
                             color: "#d8dee9"
                         }
 
@@ -233,7 +228,7 @@ Page {
                                 verticalAlignment: Text.AlignVCenter
                             }
 
-                            // onClicked: Qt.openUrlExternally(...)
+                            onClicked: Qt.openUrlExternally("https://github.com/5trange/ClamGuard")
                         }
 
                         Button {
@@ -257,7 +252,7 @@ Page {
                                 verticalAlignment: Text.AlignVCenter
                             }
 
-                            // onClicked: Qt.openUrlExternally(...)
+                            onClicked: Qt.openUrlExternally("https://sourceforge.net/projects/clamguard/")
                         }
                     }
                 }
