@@ -40,19 +40,19 @@ class FreshClamInit(QThread):
 # ClamAV in window uses tcp to access the details
 # but linux and others uses socket
 class ClamDInit(QThread):
-    status = Signal(dict)
+    status: Signal = Signal(dict)
 
     def __init__(self) -> None:
         print("ClamDInit created", id(self))
         super().__init__()
-        self.counter = 1
-        self.max_retries = 10
-        self.handler = None
+        self.counter: int = 1
+        self.max_retries: int = 10
+        self.handler: pyclamd.ClamdNetworkSocket | pyclamd.ClamdUnixSocket | None = None
         self.clamd_process = None
 
         if os.name == "nt":
-            self.host = "127.0.0.1"
-            self.port = 3310
+            self.host: str = "127.0.0.1"
+            self.port: int = 3310
         else:
             from clamguard.core.default import socket_path
 
@@ -145,14 +145,12 @@ class ClamAVScanner(QThread):
 
             return_code = process.wait()
 
-            print(
-                f"Scan finished with return code: {return_code}"
-            )
+            print(f"Scan finished with return code: {return_code}")
 
         finally:
             if process is not None and process.poll() is None:
-                    process.terminate()
-                    process.wait()
+                process.terminate()
+                process.wait()
 
             self.clamscan_process = None
 

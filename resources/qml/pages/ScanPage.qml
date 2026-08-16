@@ -12,7 +12,7 @@ Page {
         target: mainwindow
 
         function onRunStarted() {
-            scanStatus.text = "";
+            scanLog.clear();
             homeButton.enabled = false;
             quickscanButton.enabled = false;
             fullscanButton.enabled = false;
@@ -252,28 +252,54 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 5
 
-                TextArea {
-                    id: scanStatus
+                ListView {
+                    id: scanLog
+                    anchors.fill: parent
+                    anchors.margins: 5
+                    clip: true
+                    spacing: 2
 
-                    readOnly: true
-                    wrapMode: TextArea.Wrap
+                    property bool userAtBottom: true
 
-                    color: "#d8dee9"
-                    selectionColor: "#5e81ac"
-                    selectedTextColor: "white"
+                    model: ListModel { id: logModel }
 
-                    text: ""
+                    delegate: Text {
+                        text: message
+                        color: "#d8dee9"
+                        width: ListView.view.width
+                        wrapMode: Text.Wrap
+                        lineHeight: 1.2
+                        lineHeightMode: Text.ProportionalHeight
+                    }
+
+                    onContentYChanged: {
+                        userAtBottom = (contentHeight - contentY - height) < 50;
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "#2e3440"
+                        z: -1
+                    }
+
+                    function clear(){
+                        logModel.clear();
+                    }
+
+                    function appendLimited(text) {
+                        logModel.append({ message: text });
+                        while (logModel.count > 500) {
+                            logModel.remove(0);
+                        }
+                        scanLog.forceLayout();
+                        scanLog.positionViewAtEnd();
+                    }
 
                     Connections {
                         target: mainwindow
-
                         function onRunOutputReceived(output) {
-                            scanStatus.append(output);
+                            scanLog.appendLimited(output);
                         }
-                    }
-
-                    background: Rectangle {
-                        color: "#2e3440"
                     }
                 }
             }

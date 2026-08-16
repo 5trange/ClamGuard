@@ -188,7 +188,7 @@ Page {
                     readOnly: true
                     wrapMode: TextArea.Wrap
 
-                    property int maxLength: 100
+                    property int maxLength: 1000
 
                     color: "#d8dee9"
                     selectionColor: "#5e81ac"
@@ -204,9 +204,7 @@ Page {
                                 updateStatus.text =
                                     updateStatus.text.slice(-updateStatus.maxLength)
                             }
-
-                            console.log("Text length:", updateStatus.length)
-                        }
+                       }
                     }
 
                     background: Rectangle {

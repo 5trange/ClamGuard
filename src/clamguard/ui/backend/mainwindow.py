@@ -129,6 +129,9 @@ class MainWindowBackend(QObject):
         self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
         self.scan_worker.finished.connect(self.scanFinished)
+        self.scan_worker.finished.connect(
+            lambda: self.runOutputReceived.emit("Scan has ended")
+        )
         self.scan_worker.start()
 
     @Slot()
@@ -147,6 +150,9 @@ class MainWindowBackend(QObject):
         self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
         self.scan_worker.finished.connect(self.scanFinished)
+        self.scan_worker.finished.connect(
+            lambda: self.runOutputReceived.emit("Scan has ended")
+        )
         self.scan_worker.start()
 
     @Slot(QUrl)
@@ -161,10 +167,13 @@ class MainWindowBackend(QObject):
                 "Scan started for " + str(path.toLocalFile())
             )
         )
-        # self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
+        self.scan_worker.outputReceived.connect(self.runOutputReceived.emit)
         self.scan_worker.outputReceived.connect(self.findVirus)
         self.scan_worker.finished.connect(self.runFinished)
         self.scan_worker.finished.connect(self.scanFinished)
+        self.scan_worker.finished.connect(
+            lambda: self.runOutputReceived.emit("Scan has ended")
+        )
         self.scan_worker.start()
 
     @Slot()
