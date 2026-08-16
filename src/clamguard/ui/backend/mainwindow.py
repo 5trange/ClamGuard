@@ -3,9 +3,9 @@ import re
 from PySide6.QtCore import Property, QObject, QUrl, Signal, Slot
 from PySide6.QtQuick import QQuickWindow
 
-from core.paths import get_full_scan_path, get_quick_scan_path
-from models.quarantine import QuarantineItem
-from services.clamav.daemon import ClamAVScanner, FreshClamInit
+from clamguard.core.paths import get_full_scan_path, get_quick_scan_path
+from clamguard.models.quarantine import QuarantineItem
+from clamguard.services.clamav.daemon import ClamAVScanner, FreshClamInit
 
 DICT_FORMAT = re.compile(
     r"^(?P<file_path>.+/)"
@@ -69,11 +69,22 @@ class MainWindowBackend(QObject):
 
     @Slot()
     def checkForUpdates(self):
+        if self.update_worker is not None and self.update_worker.isRunning():
+            return
+
         self.update_worker = FreshClamInit()
         self.update_worker.started.connect(self.updateStarted)
         self.update_worker.outputReceived.connect(self.updateOutputReceived)
         self.update_worker.finished.connect(self.updateFinished)
+        self.update_worker.finished.connect(self.updateWorkerFinished)
         self.update_worker.start()
+
+    def updateWorkerFinished(self):
+        if self.update_worker is None:
+            return
+
+        self.update_worker.deleteLater()
+        self.update_worker = None
 
     @Slot(str)
     def findVirus(self, file_path: str):
@@ -97,9 +108,16 @@ class MainWindowBackend(QObject):
             return
 
         self.scan_worker.deleteLater()
+        self.scan_worker = None
+
+    def _scanInProgress(self) -> bool:
+        return self.scan_worker is not None and self.scan_worker.isRunning()
 
     @Slot()
     def quickScan(self):
+        if self._scanInProgress():
+            return
+
         paths = get_quick_scan_path()
         paths = [str(path) for path in paths]
         self.scan_worker = ClamAVScanner(paths)
@@ -115,6 +133,9 @@ class MainWindowBackend(QObject):
 
     @Slot()
     def fullScan(self):
+        if self._scanInProgress():
+            return
+
         paths = get_full_scan_path()
         paths = [str(path) for path in paths]
         self.scan_worker = ClamAVScanner(paths)
@@ -130,6 +151,9 @@ class MainWindowBackend(QObject):
 
     @Slot(QUrl)
     def customScan(self, path: QUrl):
+        if self._scanInProgress():
+            return
+
         self.scan_worker = ClamAVScanner([path.toLocalFile()])
         self.scan_worker.started.connect(self.runStarted)
         self.scan_worker.started.connect(

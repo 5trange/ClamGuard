@@ -5,14 +5,22 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "setuptools>=84.0.0",
     "ipython>=9.14.1",
     "platformdirs>=4.10.0",
     "pyclamd>=0.4.0",
     "pyinstaller>=6.22.0",
     "pyside6>=6.11.1",
     "pywin32>=312 ; sys_platform == 'win32'",
-    "watchdog>=6.0.0",
     "requests>=2.34.2",
     "tqdm>=4.70.0",
 ]
+
+[project.scripts]
+clamguard = "clamguard.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/clamguard"]

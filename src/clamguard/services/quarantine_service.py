@@ -2,7 +2,7 @@ import secrets
 import shutil
 from pathlib import Path
 
-from core.paths import get_config_path
+from clamguard.core.paths import get_config_path
 
 config_path = get_config_path()
 

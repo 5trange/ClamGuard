@@ -39,7 +39,7 @@ def build_resources():
             "pyside6-rcc",
             "./resources/resources.qrc",
             "-o",
-            "./src/core/resources_rc.py",
+            "./src/clamguard/resources_rc.py",
         ]
     )
     return_code = process.wait()
@@ -54,12 +54,14 @@ def build_executable():
             "uv",
             "run",
             "pyinstaller",
-            "src/main.py",
+            "src/clamguard/__main__.py",
             "--onefile",
             "--name",
             "ClamGuard",
             "--icon",
             "resources/icon.ico",
+            "--paths",
+            "src",
             "--distpath",
             "build/dist/",
             "--workpath",

@@ -6,7 +6,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuick import QQuickWindow
 from PySide6.QtWidgets import QApplication
 
-from core.tray import SystemTray
+from clamguard.core.tray import SystemTray
 
 
 def show_main_window(window: QQuickWindow):

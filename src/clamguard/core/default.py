@@ -30,7 +30,7 @@ UpdateLogFile C:\\Windows\\Temp\\freshclam.log
 DatabaseMirror database.clamav.net
 """
 else:
-    (get_config_path() / "log").mkdir(exist_ok=True)
+    (get_config_path() / "log").mkdir(parents=True, exist_ok=True)
     DEFAULT_FRESHCLAM_SETTINGS = f"""
 DatabaseDirectory {get_config_path() / "db"}
 UpdateLogFile {get_config_path() / "log"}/freshclam.log

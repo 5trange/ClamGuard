@@ -25,10 +25,19 @@ cd ClamGuard
 uv sync
 ```
 
+Build the Qt resources bundle (only needed once, or after changing anything
+under `resources/`):
+
+```sh
+uv run python build.py
+```
+
 Run the application:
 
 ```sh
-uv run python src/main.py
+uv run clamguard
+# or
+uv run python -m clamguard
 ```
 
 ## Screenshot

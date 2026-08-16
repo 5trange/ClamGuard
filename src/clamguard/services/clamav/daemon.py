@@ -4,7 +4,7 @@ import time
 import pyclamd
 from PySide6.QtCore import QThread, Signal
 
-from core.initialise import init_clamd, init_freshclam, scan_file
+from clamguard.core.initialise import init_clamd, init_freshclam, scan_file
 
 
 class FreshClamInit(QThread):
@@ -17,6 +17,8 @@ class FreshClamInit(QThread):
 
     def stop_run(self):
         self._stop_requested = True
+        if self.freshclam_process and self.freshclam_process.poll() is None:
+            self.freshclam_process.terminate()
 
     def run(self):
         self.freshclam_process = init_freshclam()
@@ -52,13 +54,12 @@ class ClamDInit(QThread):
             self.host = "127.0.0.1"
             self.port = 3310
         else:
-            from core.default import socket_path
+            from clamguard.core.default import socket_path
 
             self.socket_path = socket_path
 
-    def __del__(self):
-        print("ClamDInit destroyed")
-        if self.clamd_process:
+    def stop(self):
+        if self.clamd_process and self.clamd_process.poll() is None:
             self.clamd_process.terminate()
 
     def run(self):
@@ -108,8 +109,7 @@ class ClamDInit(QThread):
 
         print("Couldn't connect to ClamAV Daemon!")
 
-        if self.clamd_process:
-            self.clamd_process.terminate()
+        self.stop()
 
         self.status.emit(
             {

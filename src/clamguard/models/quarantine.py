@@ -11,8 +11,8 @@ from PySide6.QtCore import (
     Slot,
 )
 
-from core.paths import get_config_path
-from services.quarantine_service import QuarantineService
+from clamguard.core.paths import get_config_path
+from clamguard.services.quarantine_service import QuarantineService
 
 _EMPTY_INDEX = QModelIndex()
 
@@ -44,6 +44,7 @@ class QuarantineModel(QAbstractTableModel):
         self.data_path = config_path / "data"
         self.data_path.mkdir(parents=True, exist_ok=True)
         self.file_path = self.data_path / "records.json"
+        self.load()
 
     def rowCount(self, parent: QModelIndex | QPersistentModelIndex = _EMPTY_INDEX):
         return len(self._items)
