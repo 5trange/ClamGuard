@@ -60,7 +60,6 @@ def init_freshclam():
             str(get_freshclam_path()),
         ]
         if os.name == "nt":
-
             freshclam_process = subprocess.Popen(
                 command,
                 creationflags=subprocess.CREATE_NO_WINDOW,
@@ -92,12 +91,19 @@ def init_freshclam():
 
 def scan_file(path: list[str]) -> subprocess.Popen | None:
     try:
-
         db_path = get_config_path() / "db"
 
         if os.name == "nt":
             result = subprocess.Popen(
-                ["clamscan", "-r", "--exclude-dir", str(get_config_path()), "--database", db_path, *path],
+                [
+                    "clamscan",
+                    "-r",
+                    "--exclude-dir",
+                    str(get_config_path()),
+                    "--database",
+                    db_path,
+                    *path,
+                ],
                 creationflags=subprocess.CREATE_NO_WINDOW,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -105,8 +111,24 @@ def scan_file(path: list[str]) -> subprocess.Popen | None:
                 bufsize=1,
             )
         else:
+            command = [
+                "clamscan",
+                "-r",
+                "--exclude-dir",
+                str(get_config_path()),
+                "--exclude-dir=^/proc",
+                "--exclude-dir=^/sys",
+                "--exclude-dir=^/dev",
+                "--exclude-dir=^/run",
+                "--exclude-dir=^/snap",
+                "--exclude-dir=^/tmp",
+                "--database",
+                db_path,
+                *path,
+            ]
+
             result = subprocess.Popen(
-                ["clamscan", "-r", "--exclude-dir", str(get_config_path()), "--database", db_path, *path],
+                args=list(command),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,

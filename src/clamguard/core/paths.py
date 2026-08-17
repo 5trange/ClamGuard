@@ -27,9 +27,8 @@ def get_quick_scan_path() -> list[Path]:
     if sys.platform == "win32":
         paths.append(Path.home() / "AppData" / "Local" / "Temp")
     else:
-        paths.append(Path("/tmp"))
         paths.append(Path.home() / ".config")
-        paths.append(Path.home() / ".local" / "share")
+        paths.append(Path.home() / ".local")
         paths.append(Path.home() / ".cache")
 
     return [path for path in paths if path.exists()]
