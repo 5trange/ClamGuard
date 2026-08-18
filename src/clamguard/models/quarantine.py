@@ -1,5 +1,6 @@
 import json
-from dataclasses import dataclass, field
+import logging
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -14,19 +15,18 @@ from PySide6.QtCore import (
     Slot,
 )
 
-from clamguard.core.paths import get_config_path
 from clamguard.services.quarantine_service import QuarantineService
 
-config_path = get_config_path()
+logger = logging.getLogger(__name__)
 
 
 @dataclass
 class QuarantineItem:
-    token: str
     name: str
-    type: str
-    location: str
-    date: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    file_type: str
+    original_location: str
+    quarantine_location: str
+    date: datetime
 
 
 class QuarantineModel(QAbstractTableModel):
@@ -38,9 +38,13 @@ class QuarantineModel(QAbstractTableModel):
         self._quarantine_service = QuarantineService()
         self._items: list[QuarantineItem] = []
         self._headers = ["Name", "Type", "Original Location", "Date"]
-        self._data_path = config_path / "data"
+
+        from clamguard.core.paths import get_config_path
+
+        self._data_path = get_config_path() / "data"
         self._data_path.mkdir(parents=True, exist_ok=True)
         self._file_path = self._data_path / "records.json"
+
         self.load()
 
     def rowCount(
@@ -62,40 +66,37 @@ class QuarantineModel(QAbstractTableModel):
         index: QModelIndex | QPersistentModelIndex,
         role: int = Qt.ItemDataRole.DisplayRole,
     ) -> str | None:
-        if not index.isValid():
-            return None
-        if role not in (Qt.ItemDataRole.DisplayRole, self.TextRole):
+        if not index.isValid() or role not in (
+            Qt.ItemDataRole.DisplayRole,
+            self.TextRole,
+        ):
             return None
 
         item = self._items[index.row()]
         col = index.column()
 
-        match col:
-            case 0:
-                return item.name
-            case 1:
-                return item.type
-            case 2:
-                return item.location
-            case 3:
-                from datetime import datetime, timezone
+        if col == 0:
+            return item.name
+        if col == 1:
+            return item.file_type
+        if col == 2:
+            return item.original_location
+        if col == 3:
+            now = datetime.now(timezone.utc)
+            delta = now - item.date
 
-                now = datetime.now(timezone.utc)
-                delta = now - item.date
+            if delta.days > 365:
+                return item.date.strftime("%d %b %Y")
+            elif delta.days > 0:
+                return f"{delta.days}d ago"
+            elif delta.seconds > 3600:
+                return f"{delta.seconds // 3600}h ago"
+            elif delta.seconds > 60:
+                return f"{delta.seconds // 60}m ago"
+            else:
+                return "Just now"
 
-                if delta.days > 365:
-                    return item.date.strftime("%d %b %Y")
-                elif delta.days > 0:
-                    return f"{delta.days}d ago"
-                elif delta.seconds > 3600:
-                    return f"{delta.seconds // 3600}h ago"
-                elif delta.seconds > 60:
-                    return f"{delta.seconds // 60}m ago"
-                else:
-                    return "Just now"
-
-            case _:
-                return None
+        return None
 
     def headerData(
         self,
@@ -125,18 +126,27 @@ class QuarantineModel(QAbstractTableModel):
             try:
                 with self._file_path.open("r", encoding="utf-8") as f:
                     raw_data = json.load(f)
-                self._items = [
-                    QuarantineItem(
-                        token=item["token"],
-                        name=item["name"],
-                        type=item["type"],
-                        location=item["location"],
-                        date=datetime.fromisoformat(item["date"]),
+
+                self._items = []
+                for item in raw_data:
+                    original_location = item.get("original_location", item.get("location", ""))
+                    quarantine_location = item.get("quarantine_location", "")
+
+                    if not quarantine_location and original_location:
+                        quarantine_location = str(self._quarantine_service.quarantine_dir / f"{item.get('token', 'unknown')}.quarantine")
+
+                    self._items.append(
+                        QuarantineItem(
+                            name=item["name"],
+                            file_type=item.get("type", item.get("file_type", "Unknown")),
+                            original_location=original_location,
+                            quarantine_location=quarantine_location,
+                            date=datetime.fromisoformat(item["date"]) if "date" in item else datetime.now(timezone.utc)
+                        )
                     )
-                    for item in raw_data
-                ]
             except (json.JSONDecodeError, KeyError, ValueError) as e:
                 print(f"Failed to load quarantine data: {e}")
+                self._items = []
 
         self.endResetModel()
         self.rowsChanged.emit()
@@ -144,10 +154,10 @@ class QuarantineModel(QAbstractTableModel):
     def save(self) -> None:
         data = [
             {
-                "token": item.token,
                 "name": item.name,
-                "type": item.type,
-                "location": item.location,
+                "type": item.file_type,
+                "original_location": item.original_location,
+                "quarantine_location": item.quarantine_location,
                 "date": item.date.isoformat(),
             }
             for item in self._items
@@ -156,28 +166,65 @@ class QuarantineModel(QAbstractTableModel):
             with self._file_path.open("w", encoding="utf-8") as f:
                 json.dump(data, f, indent=4)
         except OSError as e:
-            print(f"Failed to save quarantine data: {e}")
+            logger.error(f"Failed to save quarantine data: {e}")
 
     @Slot(str, str, str)
-    def addItem(self, file_name: str, file_type: str, file_path: str) -> None:
-        full_path = Path(file_path) / file_name
+    def addItem(self, file_name: str, file_type: str, original_file_path: str) -> None:
+        """
+        Adds a detected file to the quarantine model and moves it.
+        NOTE: original_file_path is ALREADY the full path (e.g., 'C:/virus/malware.exe').
+        """
+        new_quarantine_path = self._quarantine_service.quarantine(original_file_path)
 
-        try:
-            token = self._quarantine_service.quarantine(str(full_path))
-        except Exception as e:
-            print(f"Failed to quarantine file: {e}")
+        if not new_quarantine_path:
+            logger.error(f"Failed to quarantine file: {original_file_path}")
             return
 
         row = len(self._items)
         self.beginInsertRows(QModelIndex(), row, row)
+
         self._items.append(
             QuarantineItem(
-                token=token,
                 name=file_name,
-                type=file_type,
-                location=file_path,
+                file_type=file_type,
+                original_location=original_file_path,
+                quarantine_location=str(new_quarantine_path),
+                date=datetime.now(timezone.utc),
             )
         )
+
         self.endInsertRows()
+        self.rowsChanged.emit()
+        self.save()
+
+    @Slot(int, result=bool)
+    def restoreItem(self, row: int) -> bool:
+        """Restores a file from quarantine and removes it from the model."""
+        if 0 <= row < len(self._items):
+            item = self._items[row]
+            success = self._quarantine_service.restore(
+                Path(item.quarantine_location), Path(item.original_location)
+            )
+            if success:
+                self._removeRow(row)
+            return success
+        return False
+
+    @Slot(int, result=bool)
+    def deleteItem(self, row: int) -> bool:
+        """Permanently deletes a quarantined file and removes it from the model."""
+        if 0 <= row < len(self._items):
+            item = self._items[row]
+            success = self._quarantine_service.delete(Path(item.quarantine_location))
+            if success:
+                self._removeRow(row)
+            return success
+        return False
+
+    def _removeRow(self, row: int):
+        """Internal helper to cleanly remove a row from the model."""
+        self.beginRemoveRows(QModelIndex(), row, row)
+        self._items.pop(row)
+        self.endRemoveRows()
         self.rowsChanged.emit()
         self.save()

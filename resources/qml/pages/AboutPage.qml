@@ -5,7 +5,7 @@ import QtQuick.Layouts
 Page {
     id: pageAbout
 
-    signal aboutGoHome
+    signal goToHome
 
     background: Rectangle {
         color: "transparent"
@@ -48,7 +48,7 @@ Page {
                     border.color: "#b48ead"
                 }
 
-                onClicked: pageAbout.aboutGoHome()
+                onClicked: pageAbout.goToHome()
             }
 
             Image {
