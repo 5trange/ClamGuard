@@ -129,19 +129,28 @@ class QuarantineModel(QAbstractTableModel):
 
                 self._items = []
                 for item in raw_data:
-                    original_location = item.get("original_location", item.get("location", ""))
+                    original_location = item.get(
+                        "original_location", item.get("location", "")
+                    )
                     quarantine_location = item.get("quarantine_location", "")
 
                     if not quarantine_location and original_location:
-                        quarantine_location = str(self._quarantine_service.quarantine_dir / f"{item.get('token', 'unknown')}.quarantine")
+                        quarantine_location = str(
+                            self._quarantine_service.quarantine_dir
+                            / f"{item.get('token', 'unknown')}.quarantine"
+                        )
 
                     self._items.append(
                         QuarantineItem(
                             name=item["name"],
-                            file_type=item.get("type", item.get("file_type", "Unknown")),
+                            file_type=item.get(
+                                "type", item.get("file_type", "Unknown")
+                            ),
                             original_location=original_location,
                             quarantine_location=quarantine_location,
-                            date=datetime.fromisoformat(item["date"]) if "date" in item else datetime.now(timezone.utc)
+                            date=datetime.fromisoformat(item["date"])
+                            if "date" in item
+                            else datetime.now(timezone.utc),
                         )
                     )
             except (json.JSONDecodeError, KeyError, ValueError) as e:

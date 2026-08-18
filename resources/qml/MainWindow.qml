@@ -55,9 +55,7 @@ ApplicationWindow {
                     color: minMouse.containsMouse ? "#A3BE8C" : "#EBCB8B"
 
                     Behavior on color {
-                        ColorAnimation {
-                            duration: 120
-                        }
+                        ColorAnimation { duration: 120 }
                     }
 
                     MouseArea {
@@ -65,10 +63,11 @@ ApplicationWindow {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
+
                         onClicked: {
-                            if (mainwindow)
+                            if (mainwindow) {
                                 mainwindow.minimizeWindow(root);
+                            }
                         }
                     }
                 }
@@ -82,9 +81,7 @@ ApplicationWindow {
                     color: closeMouse.containsMouse ? "#BF616A" : "#D08770"
 
                     Behavior on color {
-                        ColorAnimation {
-                            duration: 120
-                        }
+                        ColorAnimation { duration: 120 }
                     }
 
                     MouseArea {
@@ -92,10 +89,11 @@ ApplicationWindow {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.NoButton
+
                         onClicked: {
-                            if (mainwindow)
+                            if (mainwindow) {
                                 mainwindow.hideToTray(root);
+                            }
                         }
                     }
                 }
@@ -106,7 +104,6 @@ ApplicationWindow {
             id: pages
             Layout.fillWidth: true
             Layout.fillHeight: true
-
             currentIndex: 0
 
             HomePage {

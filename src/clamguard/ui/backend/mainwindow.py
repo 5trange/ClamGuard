@@ -23,7 +23,6 @@ class MainWindowBackend(QObject):
     runFinished = Signal()
     runOutputReceived = Signal(str)
 
-
     def __init__(self, quarantineModel, parent=None):
         super().__init__(parent)
         self._window_title = "ClamGuard Antivirus"

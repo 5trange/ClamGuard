@@ -19,47 +19,6 @@ Page {
         anchors.fill: parent
         spacing: 16
 
-        // --- Navigation Header ---
-        Rectangle {
-            id: frameQuarantineNav
-            Layout.fillWidth: true
-            Layout.preferredHeight: 160
-            color: "transparent"
-
-            Button {
-                id: quarantineHomeButton
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.verticalCenter: parent.verticalCenter
-                width: 182
-                height: 120
-                text: ""
-                icon.source: "qrc:/img/home.png"
-                icon.width: 50
-                icon.height: 50
-                hoverEnabled: true
-
-                background: Rectangle {
-                    radius: 5
-                    color: quarantineHomeButton.hovered ? "#3b4252" : "#2e3440"
-                    border.width: quarantineHomeButton.hovered ? 3 : 1
-                    border.color: "#b48ead"
-                }
-
-                onClicked: pageQuarantine.goToHome()
-            }
-
-            Image {
-                id: moonG4
-                anchors.top: parent.top
-                anchors.right: parent.right
-                width: 191
-                height: 171
-                source: "qrc:/img/pixelmoon.png"
-                fillMode: Image.PreserveAspectFit
-            }
-        }
-
         // --- Main Content Area ---
         Rectangle {
             id: frameQuarantineContent
@@ -74,9 +33,29 @@ Page {
                 anchors.margins: 12
                 spacing: 12
 
-                // Top Bar: Title + Refresh
+                // Top Bar: Title + Refresh + Home Button
                 RowLayout {
                     Layout.fillWidth: true
+
+                    Button {
+                        id: quarantineHomeButton
+                        text: ""
+                        icon.source: "qrc:/img/home.png"
+                        icon.width: 32
+                        icon.height: 32
+                        hoverEnabled: true
+                        Layout.preferredWidth: 40
+                        Layout.preferredHeight: 40
+
+                        background: Rectangle {
+                            radius: 5
+                            color: quarantineHomeButton.hovered ? "#3b4252" : "#2e3440"
+                            border.width: quarantineHomeButton.hovered ? 2 : 1
+                            border.color: "#b48ead"
+                        }
+
+                        onClicked: pageQuarantine.goToHome()
+                    }
 
                     Label {
                         text: qsTr("Quarantine")
@@ -207,10 +186,11 @@ Page {
                         ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }
                     }
 
+                    // Empty State
                     Rectangle {
                         anchors.fill: parent
                         color: "#2e3440"
-                        visible: quarantineModel && quarantineModel.count > 0
+                        visible: !quarantineModel || quarantineModel.count === 0
 
                         Column {
                             anchors.centerIn: parent
