@@ -18,6 +18,10 @@ dependencies = [
 [project.scripts]
 clamguard = "clamguard.main:main"
 
+[tool.basedpyright]
+typeCheckingMode = "basic"
+reportUnannotatedClassAttribute = "none"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

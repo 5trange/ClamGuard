@@ -5,19 +5,15 @@ import "pages"
 
 ApplicationWindow {
     id: root
-
-    width: mainwindow ? mainwindow.windowWidth : 800
-    height: mainwindow ? mainwindow.windowHeight : 600
+    width: 800
+    height: 600
     minimumWidth: 800
     minimumHeight: 600
     maximumWidth: 800
     maximumHeight: 600
-
     flags: Qt.FramelessWindowHint
-
     visible: true
-    title: mainwindow ? mainwindow.windowTitle : ""
-
+    title: "ClamGuard Security"
     color: "#2e3440"
 
     ColumnLayout {
@@ -33,16 +29,12 @@ ApplicationWindow {
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
-                onPressed: {
-                    root.startSystemMove();
-                }
+                onPressed: root.startSystemMove()
                 z: -1
             }
 
             RowLayout {
                 anchors.fill: parent
-                anchors.top: parent.top
-                anchors.right: parent.right
                 anchors.rightMargin: 12
                 spacing: 8
 
@@ -50,46 +42,46 @@ ApplicationWindow {
                     text: "ClamGuard Security"
                     color: "#81a1c1"
                     font.bold: true
-
                     Layout.fillWidth: true
                     leftPadding: 15
                 }
 
+                // Minimize Button
                 Rectangle {
                     id: minButton
                     width: 16
                     height: 16
                     radius: 8
-                    color: mouse.containsMouse ? "#A3BE8C" : "#EBCB8B"
+                    color: minMouse.containsMouse ? "#A3BE8C" : "#EBCB8B"
 
                     Behavior on color {
-                        ColorAnimation {
-                            duration: 120
-                        }
+                        ColorAnimation { duration: 120 }
                     }
 
                     MouseArea {
-                        id: mouse
+                        id: minMouse
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
 
-                        onClicked: mainwindow.minimizeWindow(root)
+                        onClicked: {
+                            if (mainwindow) {
+                                mainwindow.minimizeWindow(root);
+                            }
+                        }
                     }
                 }
 
+                // Close/Hide Button
                 Rectangle {
                     id: closeButton
-
                     width: 16
                     height: 16
                     radius: 8
                     color: closeMouse.containsMouse ? "#BF616A" : "#D08770"
 
                     Behavior on color {
-                        ColorAnimation {
-                            duration: 120
-                        }
+                        ColorAnimation { duration: 120 }
                     }
 
                     MouseArea {
@@ -98,7 +90,11 @@ ApplicationWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
 
-                        onClicked: mainwindow.hideToTray(root)
+                        onClicked: {
+                            if (mainwindow) {
+                                mainwindow.hideToTray(root);
+                            }
+                        }
                     }
                 }
             }
@@ -108,39 +104,45 @@ ApplicationWindow {
             id: pages
             Layout.fillWidth: true
             Layout.fillHeight: true
+            currentIndex: 0
 
             HomePage {
                 id: home
-
                 onOpenScanPage: pages.currentIndex = 1
                 onOpenUpdatePage: pages.currentIndex = 2
                 onOpenAboutPage: pages.currentIndex = 3
                 onOpenQuarantinePage: pages.currentIndex = 4
             }
+
             ScanPage {
-                onScanGoToHome: pages.currentIndex = 0
+                id: scanPage
+                onGoToHome: pages.currentIndex = 0
             }
+
             UpdatePage {
-                onUpdateGoToHome: pages.currentIndex = 0
+                id: updatePage
+                onGoToHome: pages.currentIndex = 0
             }
+
             AboutPage {
-                onAboutGoHome: pages.currentIndex = 0
+                id: aboutPage
+                onGoToHome: pages.currentIndex = 0
             }
+
             QuarantinePage {
-                onQuarantineGoHome: pages.currentIndex = 0
+                id: quarantinePage
+                onGoToHome: pages.currentIndex = 0
             }
         }
 
         Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 25
-
             color: "#3b4252"
 
             Label {
                 anchors.centerIn: parent
-
-                text: mainwindow ? mainwindow.engineVersion : ""
+                text: mainwindow ? mainwindow.engineVersion : "Engine Version 1.3.0"
                 color: "#eceff4"
             }
         }

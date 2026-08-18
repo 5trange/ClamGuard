@@ -5,27 +5,28 @@ import QtQuick.Dialogs
 
 Page {
     id: pageScan
-
-    signal scanGoToHome
+    signal goToHome
 
     Connections {
         target: mainwindow
-
         function onRunStarted() {
-            scanStatus.text = "";
+            scanLog.clear();
             homeButton.enabled = false;
             quickscanButton.enabled = false;
             fullscanButton.enabled = false;
             customscanButton.enabled = false;
             cancelscanButton.enabled = true;
         }
-
         function onRunFinished() {
             homeButton.enabled = true;
             quickscanButton.enabled = true;
             fullscanButton.enabled = true;
             customscanButton.enabled = true;
             cancelscanButton.enabled = false;
+        }
+
+        function onRunOutputReceived(output) {
+            scanLog.appendLimited(output);
         }
     }
 
@@ -39,31 +40,23 @@ Page {
 
         Rectangle {
             id: frameHome
-
             Layout.fillWidth: true
             Layout.preferredHeight: 160
-
             color: "transparent"
 
             Button {
                 id: homeButton
-
                 anchors.left: parent.left
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
-
                 width: 182
                 height: 120
-
                 icon.source: "qrc:/img/home.png"
                 icon.width: 50
                 icon.height: 50
-
                 text: ""
-
                 font.pixelSize: 18
                 font.bold: true
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -72,45 +65,34 @@ Page {
                     border.width: homeButton.hovered ? 3 : 1
                     border.color: "#b48ead"
                 }
-                onClicked: pageScan.scanGoToHome()
+
+                onClicked: pageScan.goToHome()
             }
 
             Image {
                 id: moonG
-
                 anchors.right: parent.right
                 anchors.top: parent.top
-
                 width: 191
                 height: 171
-
                 source: "qrc:/img/pixelmoon.png"
                 fillMode: Image.PreserveAspectFit
             }
         }
 
-        //
-        // Scan Buttons
-        //
         RowLayout {
             id: frameScanButtons
-
             Layout.fillWidth: true
             Layout.preferredHeight: 120
-
             spacing: 10
 
             Button {
                 id: quickscanButton
-
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-
                 text: "Quick Scan"
-
                 font.pixelSize: 18
                 font.bold: true
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -128,22 +110,16 @@ Page {
                     font: quickscanButton.font
                 }
 
-                onClicked: {
-                    mainwindow.quickScan();
-                }
+                onClicked: mainwindow.quickScan()
             }
 
             Button {
                 id: fullscanButton
-
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-
                 text: "Full Scan"
-
                 font.pixelSize: 18
                 font.bold: true
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -160,20 +136,17 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                     font: fullscanButton.font
                 }
+
                 onClicked: mainwindow.fullScan()
             }
 
             Button {
                 id: customscanButton
-
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-
                 text: "Custom Scan"
-
                 font.pixelSize: 18
                 font.bold: true
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -197,7 +170,7 @@ Page {
                     id: folderDialog
                     title: "Select a Folder"
                     onAccepted: {
-                        scanStatus.append("Scanning... " + selectedFolder + "\n");
+                        scanLog.appendLimited("Scanning... " + selectedFolder + "\n");
                         mainwindow.customScan(selectedFolder);
                     }
                 }
@@ -205,15 +178,11 @@ Page {
 
             Button {
                 id: cancelscanButton
-
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-
                 text: "Cancel Scan"
-
                 font.pixelSize: 18
                 font.bold: true
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -235,15 +204,10 @@ Page {
             }
         }
 
-        //
-        // Scan Output
-        //
         Rectangle {
             id: frameScanStatus
-
             Layout.fillWidth: true
             Layout.preferredHeight: 175
-
             color: "#2e3440"
             border.color: "#434c5e"
             radius: 5
@@ -252,28 +216,45 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 5
 
-                TextArea {
-                    id: scanStatus
+                ListView {
+                    id: scanLog
+                    anchors.fill: parent
+                    anchors.margins: 5
+                    clip: true
+                    spacing: 2
+                    property bool userAtBottom: true
+                    model: ListModel { id: logModel }
 
-                    readOnly: true
-                    wrapMode: TextArea.Wrap
-
-                    color: "#d8dee9"
-                    selectionColor: "#5e81ac"
-                    selectedTextColor: "white"
-
-                    text: ""
-
-                    Connections {
-                        target: mainwindow
-
-                        function onRunOutputReceived(output) {
-                            scanStatus.append(output);
-                        }
+                    delegate: Text {
+                        text: message
+                        color: "#d8dee9"
+                        width: ListView.view.width
+                        wrapMode: Text.Wrap
+                        lineHeight: 1.2
+                        lineHeightMode: Text.ProportionalHeight
                     }
 
-                    background: Rectangle {
+                    onContentYChanged: {
+                        userAtBottom = (contentHeight - contentY - height) < 50;
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
                         color: "#2e3440"
+                        z: -1
+                    }
+
+                    function clear(){
+                        logModel.clear();
+                    }
+
+                    function appendLimited(text) {
+                        logModel.append({ message: text });
+                        while (logModel.count > 500) {
+                            logModel.remove(0);
+                        }
+                        scanLog.forceLayout();
+                        scanLog.positionViewAtEnd();
                     }
                 }
             }

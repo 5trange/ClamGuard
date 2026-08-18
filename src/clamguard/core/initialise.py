@@ -1,26 +1,29 @@
-import os
+import logging
 import subprocess
+
+from clamguard.services.platform import platform_service
 
 from .default import DEFAULT_CLAMD_SETTINGS, DEFAULT_FRESHCLAM_SETTINGS
 from .paths import get_clamd_path, get_config_path, get_freshclam_path
+
+logger = logging.getLogger(__name__)
 
 
 def write_default_clamav_settings():
     main_config_path = get_config_path()
     config_path = main_config_path / "config"
-    config_path.mkdir(exist_ok=True)
+    config_path.mkdir(parents=True, exist_ok=True)
+
     db_path = main_config_path / "db"
-    db_path.mkdir(exist_ok=True)
+    db_path.mkdir(parents=True, exist_ok=True)
 
-    if not (config_path / "clamd.conf").exists():
-        (config_path / "clamd.conf").write_text(
-            DEFAULT_CLAMD_SETTINGS, encoding="utf-8"
-        )
+    clamd_conf = config_path / "clamd.conf"
+    if not clamd_conf.exists():
+        clamd_conf.write_text(DEFAULT_CLAMD_SETTINGS, encoding="utf-8")
 
-    if not (config_path / "freshclam.conf").exists():
-        (config_path / "freshclam.conf").write_text(
-            DEFAULT_FRESHCLAM_SETTINGS, encoding="utf-8"
-        )
+    freshclam_conf = config_path / "freshclam.conf"
+    if not freshclam_conf.exists():
+        freshclam_conf.write_text(DEFAULT_FRESHCLAM_SETTINGS, encoding="utf-8")
 
 
 def initialise_config_folder():
@@ -31,24 +34,19 @@ def initialise_config_folder():
 
 def init_clamd():
     try:
-        if os.name == "nt":
-            clamd_process = subprocess.Popen(
-                ["clamd", "--config-file", get_clamd_path()],
-                creationflags=subprocess.CREATE_NO_WINDOW,
-            )
-        else:
-            clamd_process = subprocess.Popen(
-                ["clamd", "--config-file", get_clamd_path()]
-            )
+        clamd_process = subprocess.Popen(
+            ["clamd", "--config-file", str(get_clamd_path())],
+            creationflags=platform_service.get_subprocess_creation_flags(),
+        )
         return clamd_process
     except FileNotFoundError:
-        print("Debug: clamd not found")
+        logger.error("clamd executable not found in system PATH.")
         return None
     except PermissionError:
-        print("Debug: Permission denied")
+        logger.error("Permission denied when trying to start clamd.")
         return None
-    except OSError:
-        print("Debug: OSError")
+    except OSError as e:
+        logger.error(f"OS error while starting clamd: {e}")
         return None
 
 
@@ -59,69 +57,63 @@ def init_freshclam():
             "--config-file",
             str(get_freshclam_path()),
         ]
-        if os.name == "nt":
-
-            freshclam_process = subprocess.Popen(
-                command,
-                creationflags=subprocess.CREATE_NO_WINDOW,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                bufsize=1,
-            )
-            print(command)
-        else:
-            freshclam_process = subprocess.Popen(
-                command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                bufsize=1,
-            )
+        freshclam_process = subprocess.Popen(
+            command,
+            creationflags=platform_service.get_subprocess_creation_flags(),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+        )
         return freshclam_process
     except FileNotFoundError:
-        print("Debug: freshclam not found")
+        logger.error("freshclam executable not found in system PATH.")
         return None
     except PermissionError:
-        print("Debug: Permission denied")
+        logger.error("Permission denied when trying to start freshclam.")
         return None
-    except OSError:
-        print("Debug: OSError")
+    except OSError as e:
+        logger.error(f"OS error while starting freshclam: {e}")
         return None
 
 
-def scan_file(path: list[str]) -> subprocess.Popen | None:
+def scan_file(paths: list[str]) -> subprocess.Popen | None:
     try:
-
         db_path = get_config_path() / "db"
+        config_dir_str = str(get_config_path())
 
-        if os.name == "nt":
-            result = subprocess.Popen(
-                ["clamscan", "-r", "--exclude-dir", str(get_config_path()), "--database", db_path, *path],
-                creationflags=subprocess.CREATE_NO_WINDOW,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                bufsize=1,
-            )
-        else:
-            result = subprocess.Popen(
-                ["clamscan", "-r", "--exclude-dir", str(get_config_path()), "--database", db_path, *path],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                bufsize=1,
-            )
+        # Base command
+        command = [
+            "clamscan",
+            "-r",
+            "--exclude-dir",
+            config_dir_str,
+            "--database",
+            str(db_path),
+        ]
+
+        # Dynamically add OS-specific exclude directories
+        for exclude_dir in platform_service.get_clamscan_exclude_dirs():
+            command.extend(["--exclude-dir", exclude_dir])
+
+        command.extend(paths)
+
+        result = subprocess.Popen(
+            args=command,
+            creationflags=platform_service.get_subprocess_creation_flags(),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+        )
         return result
 
     except FileNotFoundError:
-        print("clamscan not found")
+        logger.error("clamscan executable not found in system PATH.")
         return None
-
     except PermissionError:
-        print("Permission denied")
+        logger.error("Permission denied when trying to run clamscan.")
         return None
-
     except OSError as e:
-        print(f"OS error: {e}")
+        logger.error(f"OS error while running clamscan: {e}")
         return None

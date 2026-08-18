@@ -4,8 +4,7 @@ import QtQuick.Layouts
 
 Page {
     id: pageUpdate
-
-    signal updateGoToHome
+    signal goToHome
 
     Connections {
         target: mainwindow
@@ -22,6 +21,14 @@ Page {
             checkUpdate.enabled = true;
             cancelUpdate.enabled = false;
         }
+
+        function onUpdateOutputReceived(output) {
+            updateStatus.append(output);
+
+            if (updateStatus.length > updateStatus.maxLength) {
+                updateStatus.text = updateStatus.text.slice(-updateStatus.maxLength);
+            }
+        }
     }
 
     background: Rectangle {
@@ -34,30 +41,22 @@ Page {
 
         Rectangle {
             id: frameGoHome
-
             Layout.fillWidth: true
             Layout.preferredHeight: 159
-
             color: "transparent"
 
             Button {
                 id: updatehomeButton
-
                 enabled: true
-
                 anchors.left: parent.left
                 anchors.leftMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
-
                 width: 182
                 height: 120
-
                 text: ""
-
                 icon.source: "qrc:/img/home.png"
                 icon.width: 50
                 icon.height: 50
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -67,18 +66,15 @@ Page {
                     border.color: "#b48ead"
                 }
 
-                onClicked: pageUpdate.updateGoToHome()
+                onClicked: pageUpdate.goToHome()
             }
 
             Image {
                 id: moonG2
-
                 anchors.top: parent.top
                 anchors.right: parent.right
-
                 width: 191
                 height: 171
-
                 source: "qrc:/img/pixelmoon.png"
                 fillMode: Image.PreserveAspectFit
             }
@@ -86,24 +82,18 @@ Page {
 
         RowLayout {
             id: frameUpdateButtons
-
             Layout.fillWidth: true
             Layout.preferredHeight: 158
-
             spacing: 10
 
             Button {
                 id: checkUpdate
                 enabled: true
-
                 Layout.preferredWidth: 182
                 Layout.preferredHeight: 120
-
                 text: "Check for Updates"
-
                 font.pixelSize: 18
                 font.bold: true
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -122,9 +112,7 @@ Page {
                     wrapMode: Text.WordWrap
                 }
 
-                onClicked: {
-                    mainwindow.checkForUpdates();
-                }
+                onClicked: mainwindow.checkForUpdates()
             }
 
             Item {
@@ -133,17 +121,12 @@ Page {
 
             Button {
                 id: cancelUpdate
-
                 Layout.preferredWidth: 182
                 Layout.preferredHeight: 120
-
                 enabled: false
-
                 text: "Cancel Update"
-
                 font.pixelSize: 18
                 font.bold: true
-
                 hoverEnabled: true
 
                 background: Rectangle {
@@ -161,18 +144,14 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                onClicked: {
-                    mainwindow.cancelUpdate();
-                }
+                onClicked: mainwindow.cancelUpdate()
             }
         }
 
         Rectangle {
             id: frameUpdateStatus
-
             Layout.fillWidth: true
             Layout.fillHeight: true
-
             color: "#2e3440"
             radius: 5
             border.color: "#434c5e"
@@ -181,33 +160,14 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 9
 
-
                 TextArea {
                     id: updateStatus
-
                     readOnly: true
                     wrapMode: TextArea.Wrap
-
-                    property int maxLength: 100
-
+                    property int maxLength: 1000
                     color: "#d8dee9"
                     selectionColor: "#5e81ac"
                     selectedTextColor: "white"
-
-                    Connections {
-                        target: mainwindow
-
-                        function onRunOutputReceived(output) {
-                            updateStatus.append(output)
-
-                            if (updateStatus.length > updateStatus.maxLength) {
-                                updateStatus.text =
-                                    updateStatus.text.slice(-updateStatus.maxLength)
-                            }
-
-                            console.log("Text length:", updateStatus.length)
-                        }
-                    }
 
                     background: Rectangle {
                         color: "#2e3440"

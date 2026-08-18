@@ -58,14 +58,9 @@ class SplashScreenBackend(QObject):
     def start(self):
         self.freshclam_thread = FreshClamInit()
         self.freshclam_thread.finished.connect(self.on_freshclam_finished)
-        # Safe to delete once finished: unlike clamav_thread, nothing needs to
-        # reach back into this one-shot startup worker afterwards.
         self.freshclam_thread.finished.connect(self.freshclam_thread.deleteLater)
         self.freshclam_thread.start()
 
     def stop_clamd(self):
-        # clamav_thread is deliberately kept alive (no deleteLater) after it
-        # finishes so we can still reach its clamd_process here to terminate
-        # the daemon on app quit.
         if self.clamav_thread:
             self.clamav_thread.stop()

@@ -14,8 +14,6 @@ from clamguard.ui import create_main_window
 from clamguard.ui.backend.mainwindow import MainWindowBackend
 from clamguard.ui.backend.splashscreen import SplashScreenBackend
 
-instance_manager = InstanceManager()
-
 
 def set_app_id(app_id: str):
     import ctypes
@@ -23,24 +21,18 @@ def set_app_id(app_id: str):
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 
 
-def stop_running_processes(
-    splashscreen_backend: SplashScreenBackend,
-    main_window_backend: MainWindowBackend,
-):
-    """Terminate any clamd/freshclam/clamscan child processes still running
-    when the app quits, so they don't survive as orphaned processes."""
+def stop_running_processes(splashscreen_backend, main_window_backend):
+    """Terminate orphaned processes on exit."""
     splashscreen_backend.stop_clamd()
-
-    if main_window_backend.update_worker is not None:
+    if main_window_backend.update_worker:
         main_window_backend.update_worker.stop_run()
-
-    if main_window_backend.scan_worker is not None:
+    if main_window_backend.scan_worker:
         main_window_backend.scan_worker.stop()
 
 
 def main():
-
     app = QApplication(sys.argv)
+
     if os.name == "nt":
         set_app_id("com.clamguard.app")
     elif os.name == "linux":
@@ -48,18 +40,19 @@ def main():
 
     initialise_config_folder()
 
+    instance_manager = InstanceManager()
     if not instance_manager.start_server():
-        print("Failed to start server. Exiting.")
-        print(f"already running: {instance_manager.is_running()}")
+        print("Failed to start server. App already running?")
         sys.exit(0)
 
     app.setWindowIcon(QIcon("qrc:/img/clamguard.ico"))
+
     engine = QQmlApplicationEngine()
-
     quarantineModel = QuarantineModel()
-
     splashscreen_backend = SplashScreenBackend()
     main_window_backend = MainWindowBackend(quarantineModel)
+
+    # Connect signals
     splashscreen_backend.fatalError.connect(engine.quit)
     splashscreen_backend.startupFinished.connect(
         lambda: create_main_window(app, engine)
@@ -79,7 +72,3 @@ def main():
         sys.exit(-1)
 
     sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()
