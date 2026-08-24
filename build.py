@@ -1,8 +1,9 @@
 # This File exist to build the resource data use this file before running the program
 
 import argparse
-from operator import sub
 import subprocess
+import platform
+import sys
 
 import requests
 from tqdm import tqdm
@@ -11,6 +12,10 @@ CLAMAV_VERSION = "1.5.4"
 WINDOWS_FILE_URL = (
     f"https://github.com/Cisco-Talos/clamav/releases/download/"
     f"clamav-{CLAMAV_VERSION}/clamav-{CLAMAV_VERSION}.win.x64.zip"
+)
+LINUX_FILE_URL = (
+    f"https://github.com/Cisco-Talos/clamav/releases/download/"
+    f"clamav-{CLAMAV_VERSION}/clamav-{CLAMAV_VERSION}.linux.x86_64.deb"
 )
 
 
@@ -72,20 +77,61 @@ def build_executable():
     if return_code != 0:
         print("Error : Running the pyinstaller command")
 
+def download_file(url):
+    try:
+        with requests.get(url, stream=True) as response:
+            response.raise_for_status()
+            with open(f"build/dist/Clamav.{url.split('64.')[-1]}", "wb") as f, tqdm(
+                desc=f"Downloading Clamav.{url.split('64.')[-1]}",
+                total=int(response.headers.get("content-length", 0)),
+                unit='B',
+                unit_scale=True,
+                unit_divisor=1024,
+            ) as pbar:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+                    pbar.update(len(chunk))
+    except:
+        return False
+    return True
+
 
 def build_production():
-    with requests.get(WINDOWS_FILE_URL, stream=True) as response:
-        response.raise_for_status()
-        with open("build/dist/Clamav.zip", "wb") as f, tqdm(
-            desc="Downloading Clamav.zip",
-            total=int(response.headers.get("content-length", 0)),
-            unit='B',
-            unit_scale=True,
-            unit_divisor=1024,
-        ) as pbar:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-                pbar.update(len(chunk))
+    if platform.system() == "Windows":
+        if(not download_file(WINDOWS_FILE_URL)):
+            print("Failed to download the clamav zip")
+            sys.exit(1)
+        else:
+            try:
+                subprocess.run(
+                    ["Expand-Archive", "-Path", "build/dist/Clamav.zip", "-DestinationPath", "build/dist/Clamav"],
+                    check=True
+                )
+            except subprocess.CalledProcessError as e:
+                print("found error when unzippping : ", e)
+            except Exception as e:
+                print("found exception : ", e)
+
+    elif platform.system() == "Linux":
+        if(not download_file(LINUX_FILE_URL)):
+            print("Failed to download the clamav zip")
+            sys.exit(1)
+        else:
+            try:
+                subprocess.run(
+                    ["ar", "x", "Clamav.deb"],
+                    cwd="build/dist/",
+                    check=True,
+                )
+                subprocess.run(
+                    ["tar", "-xf", "data.tar.gz"],
+                    cwd="build/dist/",
+                    check=True,
+                )
+            except subprocess.CalledProcessError as e:
+                print("found error when unzippping : ", e)
+            except Exception as e:
+                print("found exception : ", e)
 
 
 def clean_build():
@@ -102,6 +148,7 @@ def main():
         build_executable()
 
     elif args.command == "production":
+        build_executable()
         build_production()
 
     elif args.command == "clean":
