@@ -1,14 +1,18 @@
 # This File exist to build the resource data use this file before running the program
 
 import argparse
-import subprocess
+import os
 import platform
+import shutil
+import stat
+import subprocess
 import sys
 
 import requests
 from tqdm import tqdm
 
 CLAMAV_VERSION = "1.5.4"
+CLAMGUARD_VERSION = "1.3.0"
 WINDOWS_FILE_URL = (
     f"https://github.com/Cisco-Talos/clamav/releases/download/"
     f"clamav-{CLAMAV_VERSION}/clamav-{CLAMAV_VERSION}.win.x64.zip"
@@ -18,6 +22,12 @@ LINUX_FILE_URL = (
     f"clamav-{CLAMAV_VERSION}/clamav-{CLAMAV_VERSION}.linux.x86_64.deb"
 )
 
+APPIMAGETOOL_URL = (
+    "https://github.com/AppImage/AppImageKit/releases/download/"
+    "continuous/appimagetool-x86_64.AppImage"
+)
+APPIMAGETOOL_PATH = "build/tools/appimagetool-x86_64.AppImage"
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Manage the ClamGuard project")
@@ -26,7 +36,10 @@ def parse_args():
         dest="command", required=False, help="Available subcommands"
     )
     subparsers.add_parser("build", help="Build the project using PyInstaller")
-    subparsers.add_parser("production", help="Build the project for production")
+    subparsers.add_parser(
+        "production",
+        help="Build the project for production (auto-detects Linux/Windows)",
+    )
     subparsers.add_parser("clean", help="Clean the build artifacts")
     parser.add_argument(
         "--no-resources", action="store_true", help="Skip resources building step"
@@ -77,66 +90,224 @@ def build_executable():
     if return_code != 0:
         print("Error : Running the pyinstaller command")
 
-def download_file(url):
+
+def download_file(url, dest_path=None, label=None):
+    """Download a URL to dest_path (or the legacy build/dist/Clamav.<ext> path
+    when dest_path is not given, kept for backwards compatibility)."""
+    if dest_path is None:
+        dest_path = f"build/dist/Clamav.{url.split('64.')[-1]}"
+
+    os.makedirs(os.path.dirname(dest_path) or ".", exist_ok=True)
+
     try:
         with requests.get(url, stream=True) as response:
             response.raise_for_status()
-            with open(f"build/dist/Clamav.{url.split('64.')[-1]}", "wb") as f, tqdm(
-                desc=f"Downloading Clamav.{url.split('64.')[-1]}",
-                total=int(response.headers.get("content-length", 0)),
-                unit='B',
-                unit_scale=True,
-                unit_divisor=1024,
-            ) as pbar:
+            with (
+                open(dest_path, "wb") as f,
+                tqdm(
+                    desc=label or f"Downloading {os.path.basename(dest_path)}",
+                    total=int(response.headers.get("content-length", 0)),
+                    unit="B",
+                    unit_scale=True,
+                    unit_divisor=1024,
+                ) as pbar,
+            ):
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
                     pbar.update(len(chunk))
-    except:
+    except Exception as e:
+        print("found exception while downloading : ", e)
         return False
     return True
 
 
 def build_production():
-    if platform.system() == "Windows":
-        if(not download_file(WINDOWS_FILE_URL)):
-            print("Failed to download the clamav zip")
-            sys.exit(1)
-        else:
-            try:
-                subprocess.run(
-                    ["Expand-Archive", "-Path", "build/dist/Clamav.zip", "-DestinationPath", "build/dist/Clamav"],
-                    check=True
-                )
-            except subprocess.CalledProcessError as e:
-                print("found error when unzippping : ", e)
-            except Exception as e:
-                print("found exception : ", e)
+    system = platform.system()
 
-    elif platform.system() == "Linux":
-        if(not download_file(LINUX_FILE_URL)):
+    if system == "Windows":
+        if not download_file(WINDOWS_FILE_URL):
             print("Failed to download the clamav zip")
             sys.exit(1)
+        try:
+            subprocess.run(
+                [
+                    "Expand-Archive",
+                    "-Path",
+                    "build/dist/Clamav.zip",
+                    "-DestinationPath",
+                    "build/dist/Clamav",
+                ],
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            print("found error when unzippping : ", e)
+        except Exception as e:
+            print("found exception : ", e)
+
+    elif system == "Linux":
+        if not download_file(LINUX_FILE_URL):
+            print("Failed to download the clamav zip")
+            sys.exit(1)
+        try:
+            subprocess.run(
+                ["ar", "x", "Clamav.deb"],
+                cwd="build/dist/",
+                check=True,
+            )
+            subprocess.run(
+                ["tar", "-xf", "data.tar.gz"],
+                cwd="build/dist/",
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            print("found error when unzippping : ", e)
+        except Exception as e:
+            print("found exception : ", e)
         else:
-            try:
-                subprocess.run(
-                    ["ar", "x", "Clamav.deb"],
-                    cwd="build/dist/",
-                    check=True,
-                )
-                subprocess.run(
-                    ["tar", "-xf", "data.tar.gz"],
-                    cwd="build/dist/",
-                    check=True,
-                )
-            except subprocess.CalledProcessError as e:
-                print("found error when unzippping : ", e)
-            except Exception as e:
-                print("found exception : ", e)
+            build_appimage()
+
+    else:
+        print(f"Error: unsupported platform '{system}', nothing to build.")
+        sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
+# Linux AppImage
+# ---------------------------------------------------------------------------
+
+def ensure_appimagetool():
+    """Download appimagetool if it isn't already cached locally."""
+    if os.path.isfile(APPIMAGETOOL_PATH) and os.access(APPIMAGETOOL_PATH, os.X_OK):
+        return APPIMAGETOOL_PATH
+
+    print("appimagetool not found, downloading...")
+    if not download_file(
+        APPIMAGETOOL_URL, dest_path=APPIMAGETOOL_PATH, label="Downloading appimagetool"
+    ):
+        print("Failed to download appimagetool")
+        sys.exit(1)
+
+    st = os.stat(APPIMAGETOOL_PATH)
+    os.chmod(APPIMAGETOOL_PATH, st.st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
+    return APPIMAGETOOL_PATH
+
+
+def build_appimage():
+    """
+    Assemble build/dist/ClamGuard.AppDir out of:
+      - build/dist/ClamGuard          (PyInstaller onefile binary)
+      - build/dist/usr                (extracted ClamAV data.tar.gz tree)
+    and package it into an AppImage using appimagetool, moved into build/output/.
+    """
+    print("Building AppImage...")
+
+    dist_dir = "build/dist"
+    output_dir = "build/output"
+
+    appdir = os.path.join(dist_dir, "ClamGuard.AppDir")
+    clamguard_bin = os.path.join(dist_dir, "ClamGuard")
+    clamav_usr = os.path.join(dist_dir, "usr")
+
+    if not os.path.isfile(clamguard_bin):
+        print(f"Error: {clamguard_bin} not found. Run build_executable() first.")
+        return
+    if not os.path.isdir(clamav_usr):
+        print(f"Error: {clamav_usr} not found. Extract data.tar.gz first.")
+        return
+
+    # Fresh AppDir every time
+    if os.path.isdir(appdir):
+        shutil.rmtree(appdir)
+    os.makedirs(os.path.join(appdir, "usr", "bin"), exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
+
+    # 1. Merge extracted ClamAV tree into AppDir/usr
+    shutil.copytree(clamav_usr, os.path.join(appdir, "usr"), dirs_exist_ok=True)
+
+    # 2. Put the ClamGuard binary into AppDir/usr/bin
+    shutil.copy2(clamguard_bin, os.path.join(appdir, "usr", "bin", "ClamGuard"))
+    os.chmod(os.path.join(appdir, "usr", "bin", "ClamGuard"), 0o755)
+
+    # 3. Icon — appimagetool REQUIRES a valid icon file matching the
+    # .desktop file's Icon= key, or it fails validation (confusingly
+    # reported as "Desktop file not found, aborting"). AppImage only
+    # accepts png/svg/xpm per the freedesktop icon spec, so a .ico source
+    # gets converted to png.
+    icon_src_candidates = [
+        "resources/icon.png",
+        "resources/icon.svg",
+        "resources/img/clamguard.png",
+        "resources/img/clamguard.ico",
+    ]
+    icon_found = False
+    for candidate in icon_src_candidates:
+        if not os.path.isfile(candidate):
+            continue
+        ext = os.path.splitext(candidate)[1].lower()
+        if ext in (".png", ".svg"):
+            shutil.copy2(candidate, os.path.join(appdir, f"clamguard{ext}"))
+            icon_found = True
+            break
+    if not icon_found:
+        print(
+            f"Error: no icon found. Checked {', '.join(icon_src_candidates)}. "
+            "appimagetool requires a root icon — add one before packaging."
+        )
+        return
+
+    # 4. .desktop file (required at AppDir root). Using the one already
+    # maintained at the project root instead of generating one here.
+    desktop_src = "clamguard.desktop"
+    if not os.path.isfile(desktop_src):
+        print(
+            f"Error: {desktop_src} not found in project root. "
+            "appimagetool requires a .desktop file at the AppDir root."
+        )
+        return
+    shutil.copy2(desktop_src, os.path.join(appdir, "clamguard.desktop"))
+
+    # 5. AppRun launcher — sets LD_LIBRARY_PATH so bundled ClamAV libs resolve
+    apprun_path = os.path.join(appdir, "AppRun")
+    with open(apprun_path, "w") as f:
+        f.write(
+            "#!/bin/bash\n"
+            'HERE="$(dirname "$(readlink -f "${0}")")"\n'
+            'export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"\n'
+            'export PATH="${HERE}/usr/bin:${PATH}"\n'
+            'exec "${HERE}/usr/bin/ClamGuard" "$@"\n'
+        )
+    os.chmod(apprun_path, 0o755)
+
+    # 6. Package with appimagetool
+    os.makedirs("dist", exist_ok=True)
+    appimage_name = f"dist/ClamGuard-{CLAMGUARD_VERSION}-x86_64.AppImage"
+    appimagetool = ensure_appimagetool()
+    try:
+        subprocess.run(
+            [os.path.abspath(appimagetool), "build/dist/ClamGuard.AppDir", appimage_name],
+            cwd=dist_dir,
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print("found error when building the AppImage : ", e)
+        return
+
+    # 7. Move the built AppImage from build/dist/ into build/output/
+    built_path = os.path.join(dist_dir, appimage_name)
+    final_path = os.path.join(output_dir, appimage_name)
+    shutil.move(built_path, final_path)
+
+    print(f"AppImage built: {final_path}")
 
 
 def clean_build():
     print("Cleaning build artifacts...")
-    subprocess.run(["rm", "-rf", "ClamGuard.spec", "build/", "dist/"], check=False)
+    targets = ["ClamGuard.spec", "build", "dist"]
+    for target in targets:
+        if os.path.isdir(target):
+            shutil.rmtree(target, ignore_errors=True)
+        elif os.path.isfile(target):
+            os.remove(target)
 
 
 def main():
