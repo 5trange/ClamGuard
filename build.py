@@ -1,6 +1,5 @@
 # This File exist to build the resource data use this file before running the program
 
-import zipfile
 import argparse
 import os
 import platform
@@ -8,12 +7,13 @@ import shutil
 import stat
 import subprocess
 import sys
+import zipfile
 
 import requests
 from tqdm import tqdm
 
 CLAMAV_VERSION = "1.5.4"
-CLAMAV_WIN_SUBFOLDER = f'clamav-{CLAMAV_VERSION}.win.x64'
+CLAMAV_WIN_SUBFOLDER = f"clamav-{CLAMAV_VERSION}.win.x64"
 CLAMGUARD_VERSION = "1.3.0"
 STAGING_DIR = "dist"
 INSTALLER_SCRIPT = "install/setup.iss"
@@ -95,6 +95,7 @@ def build_executable():
     if return_code != 0:
         print("Error : Running the pyinstaller command")
 
+
 def build_windows_installer():
     """
     Stage ClamGuard.exe + the extracted ClamAV win.x64 files into one folder,
@@ -109,7 +110,9 @@ def build_windows_installer():
         print(f"Error: {exe_path} not found. Run build_executable() first.")
         sys.exit(1)
     if not os.path.isdir(clamav_src):
-        print(f"Error: {clamav_src} not found. Check CLAMAV_WIN_SUBFOLDER matches the zip contents.")
+        print(
+            f"Error: {clamav_src} not found. Check CLAMAV_WIN_SUBFOLDER matches the zip contents."
+        )
         sys.exit(1)
 
     # Fresh staging folder every time
@@ -128,7 +131,9 @@ def build_windows_installer():
         if os.path.isfile(default_path):
             iscc = default_path
         else:
-            print("Error: ISCC.exe (Inno Setup compiler) not found on PATH or in the default install location.")
+            print(
+                "Error: ISCC.exe (Inno Setup compiler) not found on PATH or in the default install location."
+            )
             sys.exit(1)
 
     if not os.path.isfile(INSTALLER_SCRIPT):
@@ -142,6 +147,7 @@ def build_windows_installer():
         sys.exit(1)
 
     print("Installer built successfully.")
+
 
 def download_file(url, dest_path=None, label=None):
     """Download a URL to dest_path (or the legacy build/dist/Clamav.<ext> path
@@ -222,6 +228,7 @@ def build_production():
 # ---------------------------------------------------------------------------
 # Linux AppImage
 # ---------------------------------------------------------------------------
+
 
 def ensure_appimagetool():
     """Download appimagetool if it isn't already cached locally."""
@@ -327,14 +334,18 @@ def build_appimage():
     os.chmod(apprun_path, 0o755)
 
     # 6. Package with appimagetool
-    os.makedirs("dist", exist_ok=True)
-    appimage_name = f"dist/ClamGuard-{CLAMGUARD_VERSION}-x86_64.AppImage"
-    final_path = os.path.abspath(os.path.join("dist", appimage_name))
+    appimage_name = f"ClamGuard-{CLAMGUARD_VERSION}-x86_64.AppImage"
+    built_path = os.path.join(dist_dir, appimage_name)
+    final_path = os.path.join(output_dir, appimage_name)
 
     appimagetool = ensure_appimagetool()
     try:
         subprocess.run(
-            [os.path.abspath(appimagetool), os.path.abspath(appdir), final_path],
+            [
+                os.path.abspath(appimagetool),
+                os.path.abspath(appdir),
+                os.path.abspath(built_path),
+            ],
             cwd=dist_dir,
             check=True,
         )
@@ -345,10 +356,7 @@ def build_appimage():
     print(f"AppImage built: {final_path}")
 
     # 7. Move the built AppImage from build/dist/ into build/output/
-    built_path = os.path.join(dist_dir, appimage_name)
-    final_path = os.path.join(output_dir, appimage_name)
     shutil.move(built_path, final_path)
-
     print(f"AppImage built: {final_path}")
 
 

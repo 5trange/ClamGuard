@@ -19,7 +19,7 @@ jobs:
             artifact_glob: "ClamGuard-Setup*.exe"
             asset_name: ClamGuard-Setup-windows-x64.exe
           - os: ubuntu-latest
-            search_dir: "dist"
+            search_dir: "build/output"
             artifact_glob: "ClamGuard-*.AppImage"
             asset_name: ClamGuard-linux-x86_64.AppImage
 
