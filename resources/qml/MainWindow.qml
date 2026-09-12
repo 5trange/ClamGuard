@@ -11,7 +11,7 @@ ApplicationWindow {
     minimumHeight: 600
     maximumWidth: 800
     maximumHeight: 600
-    flags: Qt.FramelessWindowHint
+    flags: Qt.Window | Qt.FramelessWindowHint
     visible: true
     title: "ClamGuard Security"
     color: "#2e3440"
