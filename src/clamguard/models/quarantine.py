@@ -37,7 +37,7 @@ class QuarantineModel(QAbstractTableModel):
         super().__init__(parent)
         self._quarantine_service = QuarantineService()
         self._items: list[QuarantineItem] = []
-        self._headers = ["Name", "Type", "Original Location", "Date"]
+        self._headers = ["Name", "Type", "Original Location", "Date", "Actions"]
 
         from clamguard.core.paths import get_config_path
 
@@ -95,6 +95,8 @@ class QuarantineModel(QAbstractTableModel):
                 return f"{delta.seconds // 60}m ago"
             else:
                 return "Just now"
+        if col == 4:
+            return ""
 
         return None
 
@@ -111,7 +113,10 @@ class QuarantineModel(QAbstractTableModel):
         return section + 1
 
     def roleNames(self) -> dict[int, QByteArray]:
-        return {self.TextRole: QByteArray(b"text")}
+        return {
+            Qt.ItemDataRole.DisplayRole: QByteArray(b"display"),
+            self.TextRole: QByteArray(b"text"),
+        }
 
     @Property(int, notify=rowsChanged)
     def count(self) -> int:

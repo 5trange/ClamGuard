@@ -5,6 +5,7 @@ from PySide6.QtCore import QUrl
 from PySide6.QtGui import QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtWidgets import QApplication
+from PySide6.QtQuickControls2 import QQuickStyle
 
 import clamguard.resources_rc
 from clamguard.core.initialise import initialise_config_folder
@@ -37,6 +38,8 @@ def main():
         set_app_id("com.clamguard.app")
     elif os.name == "linux":
         app.setDesktopFileName("clamguard")
+
+    QQuickStyle.setStyle("Fusion")
 
     initialise_config_folder()
 

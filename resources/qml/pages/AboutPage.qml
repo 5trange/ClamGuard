@@ -79,30 +79,6 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 20
 
-                    ScrollBar.vertical: ScrollBar {
-                        id: logScrollBar
-                        parent: frameScanStatus
-                        x: frameScanStatus.width - width - 3
-                        y: 5
-                        height: frameScanStatus.height - 10
-                        width: 8
-                        policy: ScrollBar.AsNeeded
-
-                        contentItem: Rectangle {
-                            implicitWidth: 6
-                            radius: width / 2
-                            color: logScrollBar.pressed ? "#88c0d0" : "#4c566a"
-                            opacity: logScrollBar.policy === ScrollBar.AlwaysOn || logScrollBar.active ? 0.9 : 0.4
-
-                            Behavior on opacity { NumberAnimation { duration: 150 } }
-                            Behavior on color { ColorAnimation { duration: 120 } }
-                        }
-
-                        background: Rectangle {
-                            color: "transparent"
-                        }
-                    }
-
                 Column {
                     width: parent.width
                     spacing: 18

@@ -140,7 +140,7 @@ Page {
 
                         delegate: Rectangle {
                             id: cell
-                            implicitWidth: column === 4 ? 140 : 150
+                            implicitWidth: cell.column === 4 ? 140 : 150
                             implicitHeight: 40
 
                             required property int column
@@ -150,13 +150,6 @@ Page {
                             color: mouseArea.containsMouse ? "#3b4252" : "#2e3440"
                             border.width: 1
                             border.color: "#434c5e"
-
-                            Loader {
-                                anchors.fill: parent
-                                anchors.margins: 4
-                                active: cell.column === 4
-                                sourceComponent: actionsComponent
-                            }
 
                             Text {
                                 id: cellText
@@ -175,10 +168,74 @@ Page {
                                 }
                             }
 
+                            // Action buttons inline (column 4 only)
+                            Row {
+                                visible: cell.column === 4
+                                enabled: visible
+                                spacing: 8
+                                anchors.centerIn: parent
+
+                                Button {
+                                    text: "Restore"
+                                    width: 60
+                                    height: 28
+                                    hoverEnabled: true
+
+                                    background: Rectangle {
+                                        radius: 4
+                                        color: parent.hovered ? "#A3BE8C" : "#2e3440"
+                                        border.width: 1
+                                        border.color: "#A3BE8C"
+                                    }
+
+                                    contentItem: Text {
+                                        text: parent.text
+                                        color: parent.hovered ? "#2e3440" : "#A3BE8C"
+                                        font.bold: true
+                                        horizontalAlignment: Text.AlignHCenter
+                                        verticalAlignment: Text.AlignVCenter
+                                    }
+
+                                    onClicked: {
+                                        console.log("Restore clicked, row =", cell.row)
+                                        quarantineModel.restoreItem(cell.row)
+                                    }
+                                }
+
+                                Button {
+                                    text: "Delete"
+                                    width: 60
+                                    height: 28
+                                    hoverEnabled: true
+
+                                    background: Rectangle {
+                                        radius: 4
+                                        color: parent.hovered ? "#BF616A" : "#2e3440"
+                                        border.width: 1
+                                        border.color: "#BF616A"
+                                    }
+
+                                    contentItem: Text {
+                                        text: parent.text
+                                        color: parent.hovered ? "#2e3440" : "#BF616A"
+                                        font.bold: true
+                                        horizontalAlignment: Text.AlignHCenter
+                                        verticalAlignment: Text.AlignVCenter
+                                    }
+
+                                    onClicked: {
+                                        console.log("Delete clicked, row =", cell.row)
+                                        deleteConfirmDialog.pendingRow = cell.row
+                                        deleteConfirmDialog.open()
+                                    }
+                                }
+                            }
+
                             MouseArea {
                                 id: mouseArea
                                 anchors.fill: parent
                                 hoverEnabled: true
+                                acceptedButtons: Qt.NoButton
                             }
                         }
 
@@ -218,68 +275,41 @@ Page {
         }
     }
 
-    // --- Component: Action Buttons for TableView ---
-    Component {
-        id: actionsComponent
-        Row {
-            spacing: 8
-            anchors.centerIn: parent
+    // Confirmation dialog before permanent deletion
+    Dialog {
+        id: deleteConfirmDialog
+        title: qsTr("Delete permanently?")
+        modal: true
+        anchors.centerIn: Overlay.overlay
+        standardButtons: Dialog.Yes | Dialog.No
 
-            Button {
-                text: "Restore"
-                width: 60
-                height: 28
-                hoverEnabled: true
+        width: 340
+        height: 170
 
-                background: Rectangle {
-                    radius: 4
-                    color: parent.hovered ? "#A3BE8C" : "#2e3440"
-                    border.width: 1
-                    border.color: "#A3BE8C"
-                }
+        property int pendingRow: -1
 
-                contentItem: Text {
-                    text: parent.text
-                    color: parent.hovered ? "#2e3440" : "#A3BE8C"
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
+        background: Rectangle {
+            color: "#2e3440"
+            border.color: "#bf616a"
+            radius: 5
+        }
 
-                onClicked: {
-                    if (quarantineModel.restoreItem(cell.row)) {
-                        console.log("Restored successfully")
-                    }
-                }
-            }
+        contentItem: Text {
+            width: parent.width
+            height: parent.height
+            verticalAlignment: Text.AlignVCenter
+            text: qsTr("This file will be permanently deleted and cannot be restored. Are you sure?")
+            color: "#d8dee9"
+            wrapMode: Text.Wrap
+        }
 
-            Button {
-                text: "Delete"
-                width: 60
-                height: 28
-                hoverEnabled: true
-
-                background: Rectangle {
-                    radius: 4
-                    color: parent.hovered ? "#BF616A" : "#2e3440"
-                    border.width: 1
-                    border.color: "#BF616A"
-                }
-
-                contentItem: Text {
-                    text: parent.text
-                    color: parent.hovered ? "#2e3440" : "#BF616A"
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                onClicked: {
-                    if (quarantineModel.deleteItem(cell.row)) {
-                        console.log("Deleted successfully")
-                    }
-                }
+        onAccepted: {
+            if (pendingRow >= 0) {
+                quarantineModel.deleteItem(pendingRow)
+                pendingRow = -1
             }
         }
+
+        onRejected: pendingRow = -1
     }
 }
