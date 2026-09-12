@@ -15,10 +15,12 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-            artifact_glob: "*.exe"
-            asset_name: ClamGuard-windows-x64.exe
+            search_dir: "install/dist"
+            artifact_glob: "ClamGuard-Setup*.exe"
+            asset_name: ClamGuard-Setup-windows-x64.exe
           - os: ubuntu-latest
-            artifact_glob: "*.AppImage"
+            search_dir: "dist"
+            artifact_glob: "ClamGuard-*.AppImage"
             asset_name: ClamGuard-linux-x86_64.AppImage
 
     runs-on: ${{ matrix.os }}
@@ -38,6 +40,11 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      - name: Install Inno Setup
+        if: matrix.os == 'windows-latest'
+        run: choco install innosetup -y
+        shell: cmd
+
       - name: Build executable
         run: uv run python build.py production
 
@@ -45,10 +52,10 @@ jobs:
         shell: bash
         run: |
           mkdir -p release
-          src=$(find dist -maxdepth 1 -iname "${{ matrix.artifact_glob }}" | head -n 1)
+          src=$(find "${{ matrix.search_dir }}" -type f -iname "${{ matrix.artifact_glob }}" | head -n 1)
           if [ -z "$src" ]; then
-            echo "No file matching ${{ matrix.artifact_glob }} found in dist/"
-            ls -la dist
+            echo "No file matching ${{ matrix.artifact_glob }} found in ${{ matrix.search_dir }}"
+            find "${{ matrix.search_dir }}" -type f
             exit 1
           fi
           cp "$src" "release/${{ matrix.asset_name }}"

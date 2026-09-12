@@ -1,5 +1,6 @@
 # This File exist to build the resource data use this file before running the program
 
+import zipfile
 import argparse
 import os
 import platform
@@ -12,7 +13,10 @@ import requests
 from tqdm import tqdm
 
 CLAMAV_VERSION = "1.5.4"
+CLAMAV_WIN_SUBFOLDER = f'clamav-{CLAMAV_VERSION}.win.x64'
 CLAMGUARD_VERSION = "1.3.0"
+STAGING_DIR = "dist"
+INSTALLER_SCRIPT = "install/setup.iss"
 WINDOWS_FILE_URL = (
     f"https://github.com/Cisco-Talos/clamav/releases/download/"
     f"clamav-{CLAMAV_VERSION}/clamav-{CLAMAV_VERSION}.win.x64.zip"
@@ -91,6 +95,53 @@ def build_executable():
     if return_code != 0:
         print("Error : Running the pyinstaller command")
 
+def build_windows_installer():
+    """
+    Stage ClamGuard.exe + the extracted ClamAV win.x64 files into one folder,
+    then compile setup.iss with Inno Setup to produce the installer exe.
+    """
+    print("Staging files for installer...")
+
+    exe_path = "build/dist/ClamGuard.exe"
+    clamav_src = os.path.join("build/dist/Clamav", CLAMAV_WIN_SUBFOLDER)
+
+    if not os.path.isfile(exe_path):
+        print(f"Error: {exe_path} not found. Run build_executable() first.")
+        sys.exit(1)
+    if not os.path.isdir(clamav_src):
+        print(f"Error: {clamav_src} not found. Check CLAMAV_WIN_SUBFOLDER matches the zip contents.")
+        sys.exit(1)
+
+    # Fresh staging folder every time
+    if os.path.isdir(STAGING_DIR):
+        shutil.rmtree(STAGING_DIR)
+    os.makedirs(STAGING_DIR, exist_ok=True)
+
+    shutil.copy2(exe_path, os.path.join(STAGING_DIR, "ClamGuard.exe"))
+    shutil.copytree(clamav_src, STAGING_DIR, dirs_exist_ok=True)
+
+    print("Building installer with Inno Setup...")
+
+    iscc = shutil.which("iscc") or shutil.which("ISCC")
+    if not iscc:
+        default_path = r"C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+        if os.path.isfile(default_path):
+            iscc = default_path
+        else:
+            print("Error: ISCC.exe (Inno Setup compiler) not found on PATH or in the default install location.")
+            sys.exit(1)
+
+    if not os.path.isfile(INSTALLER_SCRIPT):
+        print(f"Error: {INSTALLER_SCRIPT} not found in project root.")
+        sys.exit(1)
+
+    try:
+        subprocess.run([iscc, INSTALLER_SCRIPT], check=True)
+    except subprocess.CalledProcessError as e:
+        print("found error when building the installer : ", e)
+        sys.exit(1)
+
+    print("Installer built successfully.")
 
 def download_file(url, dest_path=None, label=None):
     """Download a URL to dest_path (or the legacy build/dist/Clamav.<ext> path
@@ -130,20 +181,16 @@ def build_production():
             print("Failed to download the clamav zip")
             sys.exit(1)
         try:
-            subprocess.run(
-                [
-                    "Expand-Archive",
-                    "-Path",
-                    "build/dist/Clamav.zip",
-                    "-DestinationPath",
-                    "build/dist/Clamav",
-                ],
-                check=True,
-            )
-        except subprocess.CalledProcessError as e:
-            print("found error when unzippping : ", e)
+            with zipfile.ZipFile("build/dist/Clamav.zip") as zf:
+                zf.extractall("build/dist/Clamav")
+        except zipfile.BadZipFile as e:
+            print("found error when unzipping : ", e)
+            sys.exit(1)
         except Exception as e:
             print("found exception : ", e)
+            sys.exit(1)
+
+        build_windows_installer()
 
     elif system == "Linux":
         if not download_file(LINUX_FILE_URL):
@@ -258,7 +305,7 @@ def build_appimage():
 
     # 4. .desktop file (required at AppDir root). Using the one already
     # maintained at the project root instead of generating one here.
-    desktop_src = "clamguard.desktop"
+    desktop_src = "install/clamguard.desktop"
     if not os.path.isfile(desktop_src):
         print(
             f"Error: {desktop_src} not found in project root. "
@@ -282,16 +329,20 @@ def build_appimage():
     # 6. Package with appimagetool
     os.makedirs("dist", exist_ok=True)
     appimage_name = f"dist/ClamGuard-{CLAMGUARD_VERSION}-x86_64.AppImage"
+    final_path = os.path.abspath(os.path.join("dist", appimage_name))
+
     appimagetool = ensure_appimagetool()
     try:
         subprocess.run(
-            [os.path.abspath(appimagetool), "build/dist/ClamGuard.AppDir", appimage_name],
+            [os.path.abspath(appimagetool), os.path.abspath(appdir), final_path],
             cwd=dist_dir,
             check=True,
         )
     except subprocess.CalledProcessError as e:
         print("found error when building the AppImage : ", e)
         return
+
+    print(f"AppImage built: {final_path}")
 
     # 7. Move the built AppImage from build/dist/ into build/output/
     built_path = os.path.join(dist_dir, appimage_name)
