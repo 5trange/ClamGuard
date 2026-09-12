@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=ClamGuard
+Exec=ClamGuard
+Icon=clamguard
+Type=Application
+Categories=Utility;Security;

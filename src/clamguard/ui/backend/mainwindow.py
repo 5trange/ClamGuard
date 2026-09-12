@@ -1,4 +1,5 @@
 import re
+from pathlib import Path
 
 from PySide6.QtCore import Property, QObject, QUrl, Signal, Slot
 from PySide6.QtQuick import QQuickWindow
@@ -7,7 +8,8 @@ from clamguard.core.paths import get_full_scan_path, get_quick_scan_path
 from clamguard.services.clamav.daemon import ClamAVScanner, FreshClamInit
 
 DICT_FORMAT = re.compile(
-    r"^(?P<file_path>.+/)(?P<file_name>[^/]+):\s+(?:(?P<type>.+?)\s+)?(?P<status>FOUND|OK)$"
+    r"^(?P<file_path>.+[/\\])(?P<file_name>[^/\\]+):\s+"
+    r"(?:(?P<type>.+?)\s+)?(?P<status>FOUND|OK)$"
 )
 
 
@@ -105,15 +107,17 @@ class MainWindowBackend(QObject):
     def _process_scan_output(self, output: str):
         """Parses ClamAV output and handles quarantining."""
         match = DICT_FORMAT.match(output)
-        if match:
-            status = match.group("status")
-            if status == "FOUND":
-                file_path = match.group("file_path")
-                file_name = match.group("file_name")
-                file_type = match.group("type") or "Unknown"
+        if not match or match.group("status") != "FOUND":
+            return
 
-                self.quarantine_model.addItem(file_name, file_type, file_path)
-                self.runOutputReceived.emit(f"Quarantined: {file_name}")
+        file_path = match.group("file_path")
+        file_name = match.group("file_name")
+        file_type = match.group("type") or "Unknown"
+
+        full_path = (file_path + file_name).replace("\\", "/")
+
+        self.quarantine_model.addItem(file_name, file_type, full_path)
+        self.runOutputReceived.emit(f"Quarantined: {file_name}")
 
     def _cleanup_scan_worker(self):
         if self.scan_worker:

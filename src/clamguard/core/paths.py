@@ -5,15 +5,15 @@ from platformdirs import user_config_dir
 
 
 def get_config_path() -> Path:
-    return Path(user_config_dir("Clamguard"))
+    return Path(user_config_dir("Clamguard", appauthor=False))
 
 
 def get_clamd_path() -> Path:
-    return Path(user_config_dir("Clamguard")) / "config/clamd.conf"
+    return Path(user_config_dir("Clamguard", appauthor=False)) / "config/clamd.conf"
 
 
 def get_freshclam_path() -> Path:
-    return Path(user_config_dir("Clamguard")) / "config/freshclam.conf"
+    return Path(user_config_dir("Clamguard", appauthor=False)) / "config/freshclam.conf"
 
 
 def get_quick_scan_path() -> list[Path]:
