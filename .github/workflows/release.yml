@@ -10,89 +10,261 @@ permissions:
 
 jobs:
   build:
+    name: Build ${{ matrix.name }}
+
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: windows-latest
-            search_dir: "install/dist"
-            artifact_glob: "ClamGuard-Setup*.exe"
+          - name: Windows
+            os: windows-latest
             asset_name: ClamGuard-Setup-windows-x64.exe
-          - os: ubuntu-latest
-            search_dir: "build/output"
-            artifact_glob: "ClamGuard-*.AppImage"
+
+          - name: Linux
+            os: ubuntu-22.04
             asset_name: ClamGuard-linux-x86_64.AppImage
 
     runs-on: ${{ matrix.os }}
 
     steps:
+      # --------------------------------------------------
+      # Checkout
+      # --------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # --------------------------------------------------
+      # Install uv
+      # --------------------------------------------------
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
 
+      # --------------------------------------------------
+      # Python
+      # --------------------------------------------------
       - name: Set up Python
         run: uv python install
 
+      # --------------------------------------------------
+      # Dependencies
+      # --------------------------------------------------
       - name: Install dependencies
         run: uv sync
 
+      # --------------------------------------------------
+      # Linux dependencies
+      # --------------------------------------------------
+      - name: Install Linux build dependencies
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y \
+            binutils \
+            desktop-file-utils \
+            fuse \
+            libfuse2
+
+      # --------------------------------------------------
+      # Windows - Inno Setup
+      # --------------------------------------------------
       - name: Install Inno Setup
         if: matrix.os == 'windows-latest'
-        run: choco install innosetup -y
-        shell: cmd
+        shell: powershell
+        run: |
+          choco install innosetup -y
 
-      - name: Build executable
+      # --------------------------------------------------
+      # Build
+      # --------------------------------------------------
+      - name: Build production
         run: uv run python build.py production
 
-      - name: Rename artifact
+      # --------------------------------------------------
+      # Debug build output
+      # --------------------------------------------------
+      - name: List build output
         shell: bash
         run: |
+          echo "========== Build directory =========="
+          if [ -d build ]; then
+            find build -maxdepth 5 -type f -print
+          else
+            echo "build directory does not exist"
+          fi
+
+          echo ""
+          echo "========== Dist directory =========="
+          if [ -d build/dist ]; then
+            ls -lah build/dist
+          fi
+
+          echo ""
+          echo "========== Output directory =========="
+          if [ -d build/output ]; then
+            ls -lah build/output
+          fi
+
+      # --------------------------------------------------
+      # Linux AppImage
+      # --------------------------------------------------
+      - name: Prepare Linux AppImage
+        if: matrix.os == 'ubuntu-22.04'
+        shell: bash
+        run: |
+          set -euo pipefail
+
           mkdir -p release
-          src=$(find "${{ matrix.search_dir }}" -type f -iname "${{ matrix.artifact_glob }}" | head -n 1)
+
+          echo "Searching for AppImage..."
+
+          src=$(find build/output \
+            -type f \
+            -iname "ClamGuard-*.AppImage" \
+            | head -n 1)
+
           if [ -z "$src" ]; then
-            echo "No file matching ${{ matrix.artifact_glob }} found in ${{ matrix.search_dir }}"
-            find "${{ matrix.search_dir }}" -type f
+            echo ""
+            echo "ERROR: No AppImage found."
+            echo ""
+            echo "Files in build/output:"
+            find build/output -type f 2>/dev/null || true
+
+            echo ""
+            echo "Files in build/dist:"
+            find build/dist -type f 2>/dev/null || true
+
             exit 1
           fi
-          cp "$src" "release/${{ matrix.asset_name }}"
 
+          echo "Found AppImage:"
+          echo "$src"
+
+          cp "$src" \
+            "release/${{ matrix.asset_name }}"
+
+          chmod +x \
+            "release/${{ matrix.asset_name }}"
+
+          echo ""
+          echo "Release artifact:"
+          ls -lh release/
+
+      # --------------------------------------------------
+      # Windows installer
+      # --------------------------------------------------
+      - name: Prepare Windows installer
+        if: matrix.os == 'windows-latest'
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          New-Item `
+            -ItemType Directory `
+            -Force `
+            -Path release
+
+          Write-Host "Searching for ClamGuard installer..."
+
+          $installer = Get-ChildItem `
+            -Path . `
+            -Recurse `
+            -File `
+            -Filter "ClamGuard-Setup*.exe" |
+            Select-Object -First 1
+
+          if ($null -eq $installer) {
+            Write-Host ""
+            Write-Host "ERROR: No ClamGuard installer found."
+            Write-Host ""
+            Write-Host "Available EXE files:"
+
+            Get-ChildItem `
+              -Path . `
+              -Recurse `
+              -File `
+              -Filter "*.exe" |
+              Select-Object FullName
+
+            exit 1
+          }
+
+          Write-Host "Found installer:"
+          Write-Host $installer.FullName
+
+          Copy-Item `
+            -Path $installer.FullName `
+            -Destination "release/${{ matrix.asset_name }}"
+
+          Write-Host ""
+          Write-Host "Release artifact:"
+          Get-ChildItem release
+
+      # --------------------------------------------------
+      # Upload artifact
+      # --------------------------------------------------
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.asset_name }}
           path: release/${{ matrix.asset_name }}
+          if-no-files-found: error
+
+  # ======================================================
+  # GitHub Release
+  # ======================================================
 
   release:
+    name: Create GitHub Release
     needs: build
+
     runs-on: ubuntu-latest
 
     steps:
+      # --------------------------------------------------
+      # Checkout
+      # --------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Download all artifacts
+      # --------------------------------------------------
+      # Download artifacts from both platforms
+      # --------------------------------------------------
+      - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
 
-      - name: Flatten artifact folders
+      # --------------------------------------------------
+      # Flatten artifacts
+      # --------------------------------------------------
+      - name: Prepare release files
+        shell: bash
         run: |
+          set -euo pipefail
+
           mkdir -p release
-          find artifacts -type f -exec mv {} release/ \;
 
-      - name: List release files
-        run: ls -la release
+          find artifacts \
+            -type f \
+            -exec cp {} release/ \;
 
+          echo "========== Release files =========="
+          ls -lah release
+
+      # --------------------------------------------------
+      # Create GitHub Release
+      # --------------------------------------------------
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
-          files: release/*
+          files: |
+            release/ClamGuard-Setup-windows-x64.exe
+            release/ClamGuard-linux-x86_64.AppImage

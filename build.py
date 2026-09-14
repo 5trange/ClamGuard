@@ -248,116 +248,146 @@ def ensure_appimagetool():
 
 
 def build_appimage():
-    """
-    Assemble build/dist/ClamGuard.AppDir out of:
-      - build/dist/ClamGuard          (PyInstaller onefile binary)
-      - build/dist/usr                (extracted ClamAV data.tar.gz tree)
-    and package it into an AppImage using appimagetool, moved into build/output/.
-    """
     print("Building AppImage...")
 
-    dist_dir = "build/dist"
-    output_dir = "build/output"
+    dist_dir = os.path.abspath("build/dist")
+    output_dir = os.path.abspath("build/output")
 
     appdir = os.path.join(dist_dir, "ClamGuard.AppDir")
     clamguard_bin = os.path.join(dist_dir, "ClamGuard")
     clamav_usr = os.path.join(dist_dir, "usr")
 
     if not os.path.isfile(clamguard_bin):
-        print(f"Error: {clamguard_bin} not found. Run build_executable() first.")
-        return
-    if not os.path.isdir(clamav_usr):
-        print(f"Error: {clamav_usr} not found. Extract data.tar.gz first.")
-        return
+        print(f"Error: {clamguard_bin} not found.")
+        sys.exit(1)
 
-    # Fresh AppDir every time
+    if not os.path.isdir(clamav_usr):
+        print(f"Error: {clamav_usr} not found.")
+        sys.exit(1)
+
+    # Fresh AppDir
     if os.path.isdir(appdir):
         shutil.rmtree(appdir)
+
     os.makedirs(os.path.join(appdir, "usr", "bin"), exist_ok=True)
     os.makedirs(output_dir, exist_ok=True)
 
-    # 1. Merge extracted ClamAV tree into AppDir/usr
-    shutil.copytree(clamav_usr, os.path.join(appdir, "usr"), dirs_exist_ok=True)
+    # Copy ClamAV
+    shutil.copytree(
+        clamav_usr,
+        os.path.join(appdir, "usr"),
+        dirs_exist_ok=True,
+    )
 
-    # 2. Put the ClamGuard binary into AppDir/usr/bin
-    shutil.copy2(clamguard_bin, os.path.join(appdir, "usr", "bin", "ClamGuard"))
-    os.chmod(os.path.join(appdir, "usr", "bin", "ClamGuard"), 0o755)
+    # Copy ClamGuard executable
+    target_bin = os.path.join(
+        appdir,
+        "usr",
+        "bin",
+        "ClamGuard",
+    )
 
-    # 3. Icon — appimagetool REQUIRES a valid icon file matching the
-    # .desktop file's Icon= key, or it fails validation (confusingly
-    # reported as "Desktop file not found, aborting"). AppImage only
-    # accepts png/svg/xpm per the freedesktop icon spec, so a .ico source
-    # gets converted to png.
-    icon_src_candidates = [
-        "resources/icon.png",
-        "resources/icon.svg",
-        "resources/img/clamguard.png",
-        "resources/img/clamguard.ico",
-    ]
-    icon_found = False
-    for candidate in icon_src_candidates:
-        if not os.path.isfile(candidate):
-            continue
-        ext = os.path.splitext(candidate)[1].lower()
-        if ext in (".png", ".svg"):
-            shutil.copy2(candidate, os.path.join(appdir, f"clamguard{ext}"))
-            icon_found = True
-            break
-    if not icon_found:
-        print(
-            f"Error: no icon found. Checked {', '.join(icon_src_candidates)}. "
-            "appimagetool requires a root icon — add one before packaging."
-        )
-        return
+    shutil.copy2(clamguard_bin, target_bin)
+    os.chmod(target_bin, 0o755)
 
-    # 4. .desktop file (required at AppDir root). Using the one already
-    # maintained at the project root instead of generating one here.
+    # Icon
+    icon_src = "resources/img/clamguard.png"
+
+    if not os.path.isfile(icon_src):
+        print(f"Error: icon not found: {icon_src}")
+        sys.exit(1)
+
+    shutil.copy2(
+        icon_src,
+        os.path.join(appdir, "clamguard.png"),
+    )
+
+    # Desktop file
     desktop_src = "install/clamguard.desktop"
-    if not os.path.isfile(desktop_src):
-        print(
-            f"Error: {desktop_src} not found in project root. "
-            "appimagetool requires a .desktop file at the AppDir root."
-        )
-        return
-    shutil.copy2(desktop_src, os.path.join(appdir, "clamguard.desktop"))
 
-    # 5. AppRun launcher — sets LD_LIBRARY_PATH so bundled ClamAV libs resolve
+    if not os.path.isfile(desktop_src):
+        print(f"Error: desktop file not found: {desktop_src}")
+        sys.exit(1)
+
+    shutil.copy2(
+        desktop_src,
+        os.path.join(appdir, "clamguard.desktop"),
+    )
+
+    # AppRun
     apprun_path = os.path.join(appdir, "AppRun")
+
     with open(apprun_path, "w") as f:
         f.write(
             "#!/bin/bash\n"
             'HERE="$(dirname "$(readlink -f "${0}")")"\n'
-            'export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"\n'
+            'export LD_LIBRARY_PATH="${HERE}/usr/lib:${HERE}/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"\n'
             'export PATH="${HERE}/usr/bin:${PATH}"\n'
             'exec "${HERE}/usr/bin/ClamGuard" "$@"\n'
         )
+
     os.chmod(apprun_path, 0o755)
 
-    # 6. Package with appimagetool
-    appimage_name = f"ClamGuard-{CLAMGUARD_VERSION}-x86_64.AppImage"
-    built_path = os.path.join(dist_dir, appimage_name)
-    final_path = os.path.join(output_dir, appimage_name)
+    # Output
+    appimage_name = (
+        f"ClamGuard-{CLAMGUARD_VERSION}-x86_64.AppImage"
+    )
+
+    built_path = os.path.join(
+        dist_dir,
+        appimage_name,
+    )
+
+    final_path = os.path.join(
+        output_dir,
+        appimage_name,
+    )
+
+    # Remove old build
+    if os.path.isfile(built_path):
+        os.remove(built_path)
+
+    if os.path.isfile(final_path):
+        os.remove(final_path)
 
     appimagetool = ensure_appimagetool()
+
+    print("\nAppDir contents:")
+    for root, dirs, files in os.walk(appdir):
+        for file in files:
+            print(os.path.join(root, file))
+
+    print("\nRunning appimagetool...")
+
     try:
         subprocess.run(
             [
                 os.path.abspath(appimagetool),
-                os.path.abspath(appdir),
-                os.path.abspath(built_path),
+                appdir,
+                built_path,
             ],
-            cwd=dist_dir,
             check=True,
         )
+
     except subprocess.CalledProcessError as e:
-        print("found error when building the AppImage : ", e)
-        return
+        print("\nError when building the AppImage")
+        print(f"Return code: {e.returncode}")
+        print(f"Command: {e.cmd}")
+        sys.exit(1)
 
-    print(f"AppImage built: {final_path}")
+    if not os.path.isfile(built_path):
+        print(
+            f"Error: appimagetool completed successfully but "
+            f"output was not found: {built_path}"
+        )
+        sys.exit(1)
 
-    # 7. Move the built AppImage from build/dist/ into build/output/
-    shutil.move(built_path, final_path)
-    print(f"AppImage built: {final_path}")
+    shutil.move(
+        built_path,
+        final_path,
+    )
+
+    print(f"\nAppImage built successfully: {final_path}")
 
 
 def clean_build():
