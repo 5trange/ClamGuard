@@ -321,8 +321,12 @@ def build_appimage():
         f.write(
             "#!/bin/bash\n"
             'HERE="$(dirname "$(readlink -f "${0}")")"\n'
-            'export LD_LIBRARY_PATH="${HERE}/usr/lib:${HERE}/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}"\n'
+            "\n"
             'export PATH="${HERE}/usr/bin:${PATH}"\n'
+            "\n"
+            "# Use software rendering for maximum compatibility\n"
+            'export QT_QUICK_BACKEND="${QT_QUICK_BACKEND:-software}"\n'
+            "\n"
             'exec "${HERE}/usr/bin/ClamGuard" "$@"\n'
         )
 

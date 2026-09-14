@@ -1,6 +1,6 @@
 [Setup]
 AppName=ClamGuard Security
-AppVersion=1.3.0
+AppVersion=1.3.1
 AppCopyright=Copyright © 2026, ClamGuard
 AppId={{1A402BF3-535F-412A-87A2-BE331147C413}
 LicenseFile=..\LICENSE
