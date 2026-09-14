@@ -217,8 +217,8 @@ def build_production():
             print("found error when unzippping : ", e)
         except Exception as e:
             print("found exception : ", e)
-        else:
-            build_appimage()
+
+        build_appimage()
 
     else:
         print(f"Error: unsupported platform '{system}', nothing to build.")
